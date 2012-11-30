@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+  <FrameLayout android:id="@+id/remaining_frame"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:layout_alignParentLeft="true"
+	       android:layout_centerVertical="true"
+	       android:padding="2dp">
+    <ImageView android:id="@+id/remaining_bg"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" />
+    <TextView android:id="@+id/remaining"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:layout_gravity="center"
+	      android:textSize="22sp"
+	      android:textStyle="bold" />
+  </FrameLayout>
+  <TextView  android:id="@+id/label"
+	     android:layout_width="match_parent" 
+	     android:layout_height="wrap_content" 
+	     android:layout_toRightOf="@id/remaining_frame"
+	     android:padding="2dp"
+	     android:textStyle="bold" />
+  <TextView  android:id="@+id/group"
+	     android:layout_width="match_parent" 
+	     android:layout_height="wrap_content"
+	     android:layout_toRightOf="@id/remaining_frame"
+	     android:layout_below="@id/label"
+	     android:padding="2dp" />
+  <CheckBox android:id="@+id/done"
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	    android:layout_alignParentRight="true"
+	    android:layout_centerVertical="true"
+	    android:padding="2dp"
+	    android:focusable="false" />
+  <TextView android:id="@+id/due_date"
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content"
+	    android:layout_toLeftOf="@id/done"
+	    android:layout_below="@id/label"
+	    android:padding="2dp" />
+</RelativeLayout>

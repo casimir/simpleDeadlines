@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="act_new">Nouveau</string>
+  <string name="act_edit">Modifier</string>
+  <string name="act_done">Ok</string>
+  <string name="act_cancel">Annuler</string>
+  <string name="act_delete">Supprimer</string>
+</resources>
