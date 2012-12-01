@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory android:title="@string/pref_title_notif"
+		      android:key="@string/pref_key_notif">
+  </PreferenceCategory>
+</PreferenceScreen>

@@ -47,6 +47,7 @@ public class Deadlines extends ListActivity
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.deadlines, menu);
     MenuItemCompat.setShowAsAction(menu.findItem(R.id.act_new), MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+    MenuItemCompat.setShowAsAction(menu.findItem(R.id.act_new), MenuItemCompat.SHOW_AS_ACTION_NEVER);
     return true;
   }
 
@@ -55,6 +56,8 @@ public class Deadlines extends ListActivity
   {
     if (item.getItemId() == R.id.act_new)
       onActNew(null);
+    else if (item.getItemId() == R.id.act_settings)
+      startActivity(new Intent(this, Settings.class));
     return super.onOptionsItemSelected(item);
   }
 
