@@ -24,9 +24,7 @@ public class Deadlines extends ListActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.deadlines);
 
-    if (savedInstanceState == null)
-      _db = new DataHelper(this);
-
+    _db = new DataHelper(this);
     setListAdapter(new DeadlineListAdapter(this, _db));
     getListView().setOnItemClickListener(new AdapterView.OnItemClickListener()
     {
