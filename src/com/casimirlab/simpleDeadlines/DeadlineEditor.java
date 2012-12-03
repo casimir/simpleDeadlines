@@ -81,7 +81,7 @@ public class DeadlineEditor extends Activity
     }
 
     DeadlineModel model = makeModel();
-    if (model.Label().isEmpty())
+    if (model.Label().length() == 0)
     {
       Toast.makeText(this, R.string.empty_label, Toast.LENGTH_SHORT).show();
       return super.onOptionsItemSelected(item);
