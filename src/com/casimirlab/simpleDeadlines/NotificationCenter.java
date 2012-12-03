@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 import java.util.Calendar;
 
 public class NotificationCenter extends BroadcastReceiver
@@ -75,8 +74,6 @@ public class NotificationCenter extends BroadcastReceiver
     PendingIntent pi = PendingIntent.getBroadcast(context, ALARM_ID, new Intent(ACTION_SHOW), PendingIntent.FLAG_CANCEL_CURRENT);
     am.cancel(pi);
     am.setRepeating(AlarmManager.RTC, time.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pi);
-
-    Log.i(TAG, "Setting alarm " + hour + ":" + minute);
   }
 
   private void displayNotification(Context context, Intent intent)
