@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <string name="pref_title_notif">Notifications</string>
-  <string name="pref_key_notif">notifications</string>
+  <string name="pref_key_notif">notif</string>
+
+  <string name="pref_title_notif_active">Notification quotidienne</string>
+  <string name="pref_key_notif_active">notif_hour</string>
+  <string name="pref_default_notif_active">true</string>
+
+  <string name="pref_title_notif_hour">Heure de notification</string>
+  <string name="pref_key_notif_hour">notif_hour</string>
+  <string name="pref_default_notif_hour">8:00</string>
+
+  <string name="pref_title_notif_toggle">Tester la notification</string>
+  <string name="pref_key_notif_toggle">notif_toggle</string>
+  <string name="pref_sum_notif_toggle">Afficher ou cacher la notification</string>
 </resources>

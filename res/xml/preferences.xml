@@ -2,5 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
   <PreferenceCategory android:title="@string/pref_title_notif"
 		      android:key="@string/pref_key_notif">
+    <com.casimirlab.simpleDeadlines.TimePickerPreference android:title="@string/pref_title_notif_hour"
+							 android:key="@string/pref_key_notif_hour"
+							 android:defaultValue="@string/pref_default_notif_hour"
+							 android:persistent="true" />
+    <Preference android:title="@string/pref_title_notif_toggle"
+		android:key="@string/pref_key_notif_toggle"
+		android:summary="@string/pref_sum_notif_toggle" />
   </PreferenceCategory>
 </PreferenceScreen>
