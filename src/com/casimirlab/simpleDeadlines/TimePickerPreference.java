@@ -2,27 +2,24 @@ package com.casimirlab.simpleDeadlines;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.preference.DialogPreference;
-import android.view.View;
-import android.widget.TimePicker;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.TimePicker;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimePickerPreference extends DialogPreference
 {
-  private static final String DEFAULT_VALUE = Resources.getSystem().getString(R.string.pref_default_notif_hour);
-  private Context _context;
+  private static String DEFAULT_VALUE;
   private TimePicker _picker;
 
   public TimePickerPreference(Context context, AttributeSet attrs)
   {
     super(context, attrs);
-    setDialogLayoutResource(R.layout.time_picker_preference);
 
-    _context = context;
+    DEFAULT_VALUE = context.getString(R.string.pref_default_notif_hour);
   }
 
   @Override
@@ -61,13 +58,13 @@ public class TimePickerPreference extends DialogPreference
       Intent i = new Intent(NotificationCenter.ACTION_SET);
       i.putExtra(NotificationCenter.EXTRA_HOUR, _picker.getCurrentHour());
       i.putExtra(NotificationCenter.EXTRA_MINUTE, _picker.getCurrentMinute());
-      _context.sendBroadcast(i);
+      getContext().sendBroadcast(i);
     }
   }
 
   private void setSummary(int hour, int minute)
   {
-    String format = DateFormat.is24HourFormat(_context) ? "HH:mm" : "h:mm aa";
+    String format = DateFormat.is24HourFormat(getContext()) ? "HH:mm" : "h:mm aa";
     SimpleDateFormat df = new SimpleDateFormat(format);
     setSummary(df.format(new Date(0, 0, 0, hour, minute)));
   }

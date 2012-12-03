@@ -4,6 +4,7 @@
 		      android:key="@string/pref_key_notif">
     <com.casimirlab.simpleDeadlines.TimePickerPreference android:title="@string/pref_title_notif_hour"
 							 android:key="@string/pref_key_notif_hour"
+							 android:dialogLayout="@layout/time_picker_preference"
 							 android:defaultValue="@string/pref_default_notif_hour"
 							 android:persistent="true" />
     <Preference android:title="@string/pref_title_notif_toggle"
