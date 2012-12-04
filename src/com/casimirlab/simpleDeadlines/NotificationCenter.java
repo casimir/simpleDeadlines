@@ -1,6 +1,7 @@
 package com.casimirlab.simpleDeadlines;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -26,25 +27,23 @@ public class NotificationCenter extends BroadcastReceiver
   private static final int NOTIFICATION_ID = 0x1234;
   private static final int ALARM_ID = 0x4321;
   private static boolean _notificationShown = false;
-  private NotificationCompat.Builder _builder;
+  private Context _context;
 
   @Override
   public void onReceive(Context context, Intent intent)
   {
-    if (_builder == null)
-      _builder = new NotificationCompat.Builder(context);
-
+    _context = context;
     String action = intent.getAction();
     if (action.equals(ACTION_SET)
 	|| action.equals(Intent.ACTION_BOOT_COMPLETED))
-      setAlarm(context, intent);
+      setAlarm(intent);
     else if (action.equals(ACTION_SHOW)
 	     || action.equals(ACTION_HIDE)
 	     || action.equals(ACTION_TOGGLE))
-      displayNotification(context, intent);
+      displayNotification(intent);
   }
 
-  private void setAlarm(Context context, Intent intent)
+  private void setAlarm(Intent intent)
   {
     Bundle extras = intent.getExtras();
     int hour = 0;
@@ -58,9 +57,9 @@ public class NotificationCenter extends BroadcastReceiver
     }
     else
     {
-      SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-      String timekey = context.getString(R.string.pref_key_notif_hour);
-      String timedefault = context.getString(R.string.pref_default_notif_hour);
+      SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
+      String timekey = _context.getString(R.string.pref_key_notif_hour);
+      String timedefault = _context.getString(R.string.pref_default_notif_hour);
       String[] timetab = sp.getString(timekey, timedefault).split(":");
       hour = Integer.valueOf(timetab[0]);
       minute = Integer.valueOf(timetab[1]);
@@ -70,15 +69,15 @@ public class NotificationCenter extends BroadcastReceiver
     time.set(Calendar.HOUR_OF_DAY, hour);
     time.set(Calendar.MINUTE, minute);
 
-    AlarmManager am = (AlarmManager)context.getSystemService(Service.ALARM_SERVICE);
-    PendingIntent pi = PendingIntent.getBroadcast(context, ALARM_ID, new Intent(ACTION_SHOW), PendingIntent.FLAG_CANCEL_CURRENT);
+    AlarmManager am = (AlarmManager)_context.getSystemService(Service.ALARM_SERVICE);
+    PendingIntent pi = PendingIntent.getBroadcast(_context, ALARM_ID, new Intent(ACTION_SHOW), PendingIntent.FLAG_CANCEL_CURRENT);
     am.cancel(pi);
     am.setRepeating(AlarmManager.RTC, time.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pi);
   }
 
-  private void displayNotification(Context context, Intent intent)
+  private void displayNotification(Intent intent)
   {
-    NotificationManager nm = (NotificationManager)context.getSystemService(Service.NOTIFICATION_SERVICE);
+    NotificationManager nm = (NotificationManager)_context.getSystemService(Service.NOTIFICATION_SERVICE);
     String action = intent.getAction();
 
     if (action.equals(ACTION_TOGGLE))
@@ -86,9 +85,13 @@ public class NotificationCenter extends BroadcastReceiver
 
     if (action.equals(ACTION_SHOW))
     {
-      refreshBuilder(context);
-      nm.notify(NOTIFICATION_ID, _builder.build());
-      _notificationShown = true;
+      DataHelper db = new DataHelper(_context);
+      NotificationAdapter adapter = new NotificationAdapter(_context, db, R.layout.notif);
+      if (!adapter.isEmpty())
+      {
+	nm.notify(NOTIFICATION_ID, makeNotification(adapter));
+	_notificationShown = true;
+      }
     }
     else if (action.equals(ACTION_HIDE))
     {
@@ -97,18 +100,23 @@ public class NotificationCenter extends BroadcastReceiver
     }
   }
 
-  private void refreshBuilder(Context context)
+  private Notification makeNotification(NotificationAdapter adapter)
   {
-    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+    TaskStackBuilder stackBuilder = TaskStackBuilder.create(_context);
     stackBuilder.addParentStack(Deadlines.class);
-    stackBuilder.addNextIntent(new Intent(context, Deadlines.class));
+    stackBuilder.addNextIntent(new Intent(_context, Deadlines.class));
     PendingIntent pi = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-    _builder.setSmallIcon(R.drawable.app_icon);
-    _builder.setContentTitle(TAG);
-    _builder.setContentText(TAG);
-    _builder.setContentIntent(pi);
-    _builder.setAutoCancel(true);
-    _builder.setLights(0xFF00F0F0, 300, 300);
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(_context);
+    builder.setAutoCancel(true);
+    builder.setSmallIcon(R.drawable.app_icon);
+    builder.setContentTitle(TAG);
+    builder.setContent(adapter.getView());
+    builder.setContentIntent(pi);
+
+    Notification notif = builder.build();
+    notif.contentView = adapter.getView();
+    notif.flags |= Notification.DEFAULT_LIGHTS;
+    return notif;
   }
 }

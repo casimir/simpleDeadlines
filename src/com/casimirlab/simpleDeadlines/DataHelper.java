@@ -112,11 +112,14 @@ public class DataHelper extends SQLiteOpenHelper
     Date today = new Date();
     today.setHours(0);
 
+    int count = 0;
     for (int lvl : levels)
     {
       long diff = today.getTime() + lvl * DeadlineModel.DAY_LEN;
       param[0] = String.valueOf(diff);
-      ret.put(lvl, (int)DatabaseUtils.longForQuery(req, param));
+      int value = (int)DatabaseUtils.longForQuery(req, param) - count;
+      ret.put(lvl, value);
+      count += value;
     }
 
     return ret;
