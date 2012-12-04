@@ -2,9 +2,14 @@ package com.casimirlab.simpleDeadlines;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DataHelper extends SQLiteOpenHelper
 {
@@ -87,5 +92,33 @@ public class DataHelper extends SQLiteOpenHelper
   {
     Cursor c = getReadableDatabase().query(TABLE_NAME, null, null, null, null, null, KEY_DUE_DATE);
     return DeadlineModel.fromMultipleCursor(c);
+  }
+
+  public int count()
+  {
+    return (int)DatabaseUtils.queryNumEntries(getReadableDatabase(), TABLE_NAME);
+  }
+
+  public Map<Integer, Integer> counts()
+  {
+    Map<Integer, Integer> ret = new HashMap<Integer, Integer>();
+    String sql = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE " + KEY_DUE_DATE + " <= ?";
+    SQLiteStatement req = getReadableDatabase().compileStatement(sql);
+    String[] param = new String[1];
+    int[] levels = new int[]
+    {
+      DeadlineModel.LVL_TODAY, DeadlineModel.LVL_URGENT, DeadlineModel.LVL_WORRYING, DeadlineModel.LVL_NICE
+    };
+    Date today = new Date();
+    today.setHours(0);
+
+    for (int lvl : levels)
+    {
+      long diff = today.getTime() + lvl * DeadlineModel.DAY_LEN;
+      param[0] = String.valueOf(diff);
+      ret.put(lvl, (int)DatabaseUtils.longForQuery(req, param));
+    }
+
+    return ret;
   }
 }

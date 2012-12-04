@@ -9,6 +9,11 @@ import java.util.List;
 
 public class DeadlineModel
 {
+  public static final long DAY_LEN = 1000 * 60 * 60 * 24;
+  public static final int LVL_TODAY = 1;
+  public static final int LVL_URGENT = 3;
+  public static final int LVL_WORRYING = 7;
+  public static final int LVL_NICE = 15;
   private int _id;
   private String _label;
   private String _group;
