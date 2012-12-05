@@ -68,11 +68,12 @@ public class NotificationCenter extends BroadcastReceiver
     Calendar time = Calendar.getInstance();
     time.set(Calendar.HOUR_OF_DAY, hour);
     time.set(Calendar.MINUTE, minute);
+    time.set(Calendar.SECOND, 0);
 
     AlarmManager am = (AlarmManager)_context.getSystemService(Service.ALARM_SERVICE);
     PendingIntent pi = PendingIntent.getBroadcast(_context, ALARM_ID, new Intent(ACTION_SHOW), PendingIntent.FLAG_CANCEL_CURRENT);
     am.cancel(pi);
-    am.setRepeating(AlarmManager.RTC, time.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pi);
+    am.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pi);
   }
 
   private void displayNotification(Intent intent)
@@ -111,12 +112,11 @@ public class NotificationCenter extends BroadcastReceiver
     builder.setAutoCancel(true);
     builder.setSmallIcon(R.drawable.app_icon);
     builder.setContentTitle(TAG);
-    builder.setContent(adapter.getView());
+    builder.setContent(adapter.getView()); // bugged
     builder.setContentIntent(pi);
 
     Notification notif = builder.build();
     notif.contentView = adapter.getView();
-    notif.flags |= Notification.DEFAULT_LIGHTS;
     return notif;
   }
 }
