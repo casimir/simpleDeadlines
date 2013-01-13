@@ -4,7 +4,7 @@
 ## Author:	Martin Chaine (chaine.martin@gmail.com)
 ## Contrib:	Martin Chaine (chaine.martin@gmail.com)
 ## Created:	25 Nov 2012 15:45:47
-## Modified:	13 Jan 2013 17:01:22
+## Modified:	13 Jan 2013 23:06:44
 ## Description:	TODO Put the description here.
 ##
 
@@ -38,7 +38,7 @@ unless (-d $DIR_SRC)
 }
 
 print 'Converting...';
-for (<"$DIR_SRC/ic_*.png">)
+for (<"$DIR_SRC/*.png">)
 {
   my $file = basename($_);
   for ($i = 0; $i < 4; $i++)
