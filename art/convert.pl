@@ -4,7 +4,7 @@
 ## Author:	Martin Chaine (chaine.martin@gmail.com)
 ## Contrib:	Martin Chaine (chaine.martin@gmail.com)
 ## Created:	25 Nov 2012 15:45:47
-## Modified:	29 Nov 2012 05:23:26
+## Modified:	13 Jan 2013 17:01:22
 ## Description:	TODO Put the description here.
 ##
 
@@ -43,7 +43,7 @@ for (<"$DIR_SRC/ic_*.png">)
   my $file = basename($_);
   for ($i = 0; $i < 4; $i++)
   {
-    my $size = ($file =~ /^ic_act_/) ? $SIZES_ACT[$i] : $SIZES[$i];
+    my $size = ($file =~ /^ic_(act_|status)/) ? $SIZES_ACT[$i] : $SIZES[$i];
     system "convert $DIR_SRC/$file -resize $size $DIRS[$i]/$file\n";
   }
 }
