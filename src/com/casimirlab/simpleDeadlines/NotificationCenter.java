@@ -11,8 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import java.util.Calendar;
 
 public class NotificationCenter extends BroadcastReceiver
@@ -103,20 +101,18 @@ public class NotificationCenter extends BroadcastReceiver
 
   private Notification makeNotification(NotificationAdapter adapter)
   {
-    TaskStackBuilder stackBuilder = TaskStackBuilder.create(_context);
-    stackBuilder.addParentStack(Deadlines.class);
-    stackBuilder.addNextIntent(new Intent(_context, Deadlines.class));
-    PendingIntent pi = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+    Intent i = new Intent(_context, Deadlines.class);
+    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    PendingIntent pi = PendingIntent.getActivity(_context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
     Notification.Builder builder = new Notification.Builder(_context);
     builder.setAutoCancel(true);
     builder.setSmallIcon(R.drawable.ic_status);
     builder.setContentTitle(TAG);
-    builder.setContent(adapter.getView()); // bugged
+    builder.setContent(adapter.getView());
     builder.setContentIntent(pi);
 
     Notification notif = builder.getNotification();
-//    notif.contentView = adapter.getView();
     return notif;
   }
 }

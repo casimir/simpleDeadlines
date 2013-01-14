@@ -2,7 +2,6 @@ package com.casimirlab.simpleDeadlines;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -63,9 +62,6 @@ public class DeadlineEditor extends Activity
   {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.deadline_editor, menu);
-    MenuItemCompat.setShowAsAction(menu.findItem(R.id.act_done), MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
-    MenuItemCompat.setShowAsAction(menu.findItem(R.id.act_cancel), MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
-    MenuItemCompat.setShowAsAction(menu.findItem(R.id.act_delete), MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
     menu.findItem(R.id.act_delete).setVisible(!_isNew);
     return true;
   }

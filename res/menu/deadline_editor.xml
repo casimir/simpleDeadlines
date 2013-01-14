@@ -2,11 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:id="@+id/act_done"
 	android:title="@android:string/ok"
-	android:icon="@drawable/ic_act_done" />
+	android:icon="@drawable/ic_act_done"
+	android:showAsAction="always" />
   <item android:id="@+id/act_cancel"
 	android:title="@android:string/cancel"
-	android:icon="@drawable/ic_act_cancel" />
+	android:icon="@drawable/ic_act_cancel"
+	android:showAsAction="always" />
   <item android:id="@+id/act_delete"
 	android:title="@string/act_delete"
-	android:icon="@drawable/ic_act_delete" />
+	android:icon="@drawable/ic_act_delete"
+	android:showAsAction="always" />
 </menu>
