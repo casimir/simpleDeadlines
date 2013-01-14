@@ -18,6 +18,7 @@ import android.widget.SpinnerAdapter;
 public class Deadlines extends ListActivity
 {
   private static final int MAGIC = 0x4242;
+  private DrawerLayout _drawer;
   private DataHelper _db;
   private int _currentType;
 
@@ -29,7 +30,7 @@ public class Deadlines extends ListActivity
 
     ActionBar bar = getActionBar();
     bar.setDisplayShowTitleEnabled(false);
-//    bar.setDisplayHomeAsUpEnabled(true);
+    bar.setDisplayHomeAsUpEnabled(true);
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
     SpinnerAdapter navAdapter = ArrayAdapter.createFromResource(this,
 								R.array.act_nav_list,
@@ -45,6 +46,7 @@ public class Deadlines extends ListActivity
     };
     bar.setListNavigationCallbacks(navAdapter, navListener);
 
+    _drawer = new DrawerLayout(this, R.layout.drawer);
     _db = new DataHelper(this);
     _currentType = DataHelper.TYPE_PENDING;
     getListView().setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -79,11 +81,21 @@ public class Deadlines extends ListActivity
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
-//    if (item.getItemId() == android.R.id.home)
+    if (item.getItemId() == android.R.id.home)
+    {
+      _drawer.toggle();
+      return true;
+    }
     if (item.getItemId() == R.id.act_new)
+    {
       onActNew(null);
+      return true;
+    }
     else if (item.getItemId() == R.id.act_settings)
+    {
       startActivity(new Intent(this, Settings.class));
+      return true;
+    }
     return super.onOptionsItemSelected(item);
   }
 
@@ -139,6 +151,6 @@ public class Deadlines extends ListActivity
 
   private void resetListAdapter()
   {
-    setListAdapter(new DeadlineListAdapter(this, _db, _currentType));
+    setListAdapter(new DeadlineAdapter(this, _db, _currentType));
   }
 }

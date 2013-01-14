@@ -152,4 +152,37 @@ public class DataHelper extends SQLiteOpenHelper
 
     return ret;
   }
+
+  public Cursor groups(int type)
+  {
+    Cursor c;
+    String[] cols = new String[]
+    {
+      KEY_GROUP
+    };
+    String selection = KEY_DUE_DATE + " < ? AND " + KEY_DONE + " = ?";
+    String[] selectionArgs = new String[]
+    {
+      String.valueOf(new Date().getTime()), "1"
+    };
+    switch (type)
+    {
+      case TYPE_PENDING:
+	c = getReadableDatabase().query(TABLE_NAME, cols,
+					"NOT(" + selection + ")", selectionArgs,
+					null, null, KEY_GROUP);
+	break;
+      case TYPE_ARCHIVED:
+	c = getReadableDatabase().query(TABLE_NAME, cols,
+					selection, selectionArgs,
+					null, null, KEY_GROUP);
+	break;
+      case TYPE_ALL:
+      default:
+	c = getReadableDatabase().query(TABLE_NAME, cols,
+					null, null,
+					null, null, KEY_GROUP);
+    }
+    return c;
+  }
 }

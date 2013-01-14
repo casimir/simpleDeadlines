@@ -16,18 +16,16 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class DeadlineListAdapter extends BaseAdapter
+public class DeadlineAdapter extends BaseAdapter
 {
   private Context _context;
   private DataHelper _db;
-  private int _type;
   private List<DeadlineModel> _data;
 
-  public DeadlineListAdapter(Context context, DataHelper db, int type)
+  public DeadlineAdapter(Context context, DataHelper db, int type)
   {
     _context = context;
     _db = db;
-    _type = type;
     _data = _db.readAll(type);
   }
 
