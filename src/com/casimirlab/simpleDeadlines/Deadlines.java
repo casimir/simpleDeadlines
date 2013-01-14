@@ -29,7 +29,7 @@ public class Deadlines extends ListActivity
 
     ActionBar bar = getActionBar();
     bar.setDisplayShowTitleEnabled(false);
-    bar.setDisplayHomeAsUpEnabled(true);
+//    bar.setDisplayHomeAsUpEnabled(true);
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
     SpinnerAdapter navAdapter = ArrayAdapter.createFromResource(this,
 								R.array.act_nav_list,

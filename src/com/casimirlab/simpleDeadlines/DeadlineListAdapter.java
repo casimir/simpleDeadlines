@@ -107,7 +107,6 @@ public class DeadlineListAdapter extends BaseAdapter
 
     holder.Done.setChecked(model.Done());
     final TextView label = holder.Label;
-    final int pos = position;
     holder.Done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
     {
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
