@@ -129,7 +129,8 @@ public class DataHelper extends SQLiteOpenHelper
   public Map<Integer, Integer> counts()
   {
     Map<Integer, Integer> ret = new HashMap<Integer, Integer>();
-    String sql = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE " + KEY_DUE_DATE + " <= ?";
+    String sql = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE " + KEY_DUE_DATE
+		 + " <= ? AND " + KEY_DONE + " = 0;";
     SQLiteStatement req = getReadableDatabase().compileStatement(sql);
     String[] param = new String[1];
     int[] levels = new int[]
