@@ -108,15 +108,15 @@ public class NotificationCenter extends BroadcastReceiver
     stackBuilder.addNextIntent(new Intent(_context, Deadlines.class));
     PendingIntent pi = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(_context);
+    Notification.Builder builder = new Notification.Builder(_context);
     builder.setAutoCancel(true);
-    builder.setSmallIcon(R.drawable.app_icon);
+    builder.setSmallIcon(R.drawable.ic_status);
     builder.setContentTitle(TAG);
     builder.setContent(adapter.getView()); // bugged
     builder.setContentIntent(pi);
 
-    Notification notif = builder.build();
-    notif.contentView = adapter.getView();
+    Notification notif = builder.getNotification();
+//    notif.contentView = adapter.getView();
     return notif;
   }
 }
