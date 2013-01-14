@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+  <string-array name="act_nav_list">
+    <item>En cours</item>
+    <item>Archivé</item>
+  </string-array>
   <string name="act_delete">Supprimer</string>
   <string name="act_edit">Modifier</string>
   <string name="act_new">Nouveau</string>

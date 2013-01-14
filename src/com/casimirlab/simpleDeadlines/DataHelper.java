@@ -13,14 +13,17 @@ import java.util.Map;
 
 public class DataHelper extends SQLiteOpenHelper
 {
-  private static final String DB_NAME = "deadlines.db";
-  private static final int DB_VERSION = 1;
+  public static final int TYPE_PENDING = 0;
+  public static final int TYPE_ARCHIVED = 1;
+  public static final int TYPE_ALL = 2;
   public static final String TABLE_NAME = "deadlines";
   public static final String KEY_ID = "_id";
   public static final String KEY_LABEL = "label";
   public static final String KEY_GROUP = "groupname";
   public static final String KEY_DUE_DATE = "due_date";
   public static final String KEY_DONE = "done";
+  private static final String DB_NAME = "deadlines.db";
+  private static final int DB_VERSION = 1;
 
   public DataHelper(Context context)
   {
@@ -88,9 +91,33 @@ public class DataHelper extends SQLiteOpenHelper
     getWritableDatabase().delete(TABLE_NAME, where, whereArgs);
   }
 
-  public List<DeadlineModel> readAll()
+  public List<DeadlineModel> readAll(int type)
   {
-    Cursor c = getReadableDatabase().query(TABLE_NAME, null, null, null, null, null, KEY_DUE_DATE);
+    Cursor c;
+    String selection = KEY_DUE_DATE + " < ? AND " + KEY_DONE + " = ?";
+    String[] selectionArgs = new String[]
+    {
+      String.valueOf(new Date().getTime()), "1"
+    };
+    switch (type)
+    {
+      case TYPE_PENDING:
+	c = getReadableDatabase().query(TABLE_NAME, null,
+					"NOT(" + selection + ")", selectionArgs,
+					null, null, KEY_DUE_DATE);
+	break;
+      case TYPE_ARCHIVED:
+	c = getReadableDatabase().query(TABLE_NAME, null,
+					selection, selectionArgs,
+					null, null, KEY_DUE_DATE);
+	break;
+      case TYPE_ALL:
+      default:
+	c = getReadableDatabase().query(TABLE_NAME, null,
+					null, null,
+					null, null, KEY_DUE_DATE);
+    }
+
     return DeadlineModel.fromMultipleCursor(c);
   }
 

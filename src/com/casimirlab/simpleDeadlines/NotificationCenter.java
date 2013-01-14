@@ -17,13 +17,13 @@ import java.util.Calendar;
 
 public class NotificationCenter extends BroadcastReceiver
 {
-  public static final String TAG = "NotificationCenter";
   public static final String ACTION_SET = "NotificationCenter.ACTION_SET";
   public static final String ACTION_SHOW = "NotificationCenter.ACTION_SHOW";
   public static final String ACTION_HIDE = "NotificationCenter.ACTION_HIDE";
   public static final String ACTION_TOGGLE = "NotificationCenter.ACTION_TOGGLE";
   public static final String EXTRA_HOUR = "NotificationCenter.EXTRA_HOUR";
   public static final String EXTRA_MINUTE = "NotificationCenter.EXTRA_MINUTE";
+  private static final String TAG = "NotificationCenter";
   private static final int NOTIFICATION_ID = 0x1234;
   private static final int ALARM_ID = 0x4321;
   private static boolean _notificationShown = false;

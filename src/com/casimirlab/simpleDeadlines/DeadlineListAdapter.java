@@ -20,13 +20,15 @@ public class DeadlineListAdapter extends BaseAdapter
 {
   private Context _context;
   private DataHelper _db;
+  private int _type;
   private List<DeadlineModel> _data;
 
-  public DeadlineListAdapter(Context context, DataHelper db)
+  public DeadlineListAdapter(Context context, DataHelper db, int type)
   {
     _context = context;
     _db = db;
-    _data = _db.readAll();
+    _type = type;
+    _data = _db.readAll(type);
   }
 
   public int getCount()
@@ -105,6 +107,7 @@ public class DeadlineListAdapter extends BaseAdapter
 
     holder.Done.setChecked(model.Done());
     final TextView label = holder.Label;
+    final int pos = position;
     holder.Done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
     {
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
@@ -112,6 +115,7 @@ public class DeadlineListAdapter extends BaseAdapter
 	model.setDone(isChecked);
 	setStrikeText(label, isChecked);
 	_db.update(model);
+	// FIXME autorefresh
       }
     });
 

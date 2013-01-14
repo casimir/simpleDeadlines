@@ -2,8 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:id="@+id/act_new"
 	android:title="@string/act_new"
-	android:icon="@drawable/ic_act_new" />
+	android:icon="@drawable/ic_act_new"
+	android:showAsAction="always" />
   <item android:id="@+id/act_settings"
 	android:title="@string/act_settings"
-	android:icon="@drawable/ic_act_settings" />
+	android:icon="@drawable/ic_act_settings"
+	android:showAsAction="never" />
 </menu>
