@@ -1,0 +1,10 @@
+<resources>
+  <string-array name="act_nav_list">
+    <item>"In progress"</item>
+    <item>"Archived"</item>
+  </string-array>
+  <string name="act_delete">"Delete"</string>
+  <string name="act_edit">"Edit"</string>
+  <string name="act_new">"New"</string>
+  <string name="act_settings">"Settings"</string>
+</resources>

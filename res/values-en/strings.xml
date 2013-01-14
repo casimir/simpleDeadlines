@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">"simpleDeadlines"</string>
+  <string name="empty_list">"To start press the button"</string>
+  <string name="empty_label">"At least a label is required"</string>
+  <string name="hint_label">"Label"</string>
+  <string name="hint_group">"Group"</string>
+  <string name="hint_due_date">"Date"</string>
+</resources>
