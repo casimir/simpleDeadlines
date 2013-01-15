@@ -13,14 +13,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 public class Deadlines extends ListActivity
 {
   private static final int MAGIC = 0x4242;
   private DrawerLayout _drawer;
+  private ListView _grouplist;
   private DataHelper _db;
   private int _currentType;
+  private String _currentGroup;
 
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -47,8 +51,18 @@ public class Deadlines extends ListActivity
     bar.setListNavigationCallbacks(navAdapter, navListener);
 
     _drawer = new DrawerLayout(this, R.layout.drawer);
-    _db = new DataHelper(this);
-    _currentType = DataHelper.TYPE_PENDING;
+    _grouplist = (ListView)_drawer.findViewById(R.id.grouplist);
+
+    _grouplist.setOnItemClickListener(new AdapterView.OnItemClickListener()
+    {
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+      {
+	TextView label = (TextView)view.findViewById(R.id.group);
+	_currentGroup = label.getText().toString();
+	_drawer.close();
+	resetListAdapter();
+      }
+    });
     getListView().setOnItemClickListener(new AdapterView.OnItemClickListener()
     {
       public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -60,6 +74,10 @@ public class Deadlines extends ListActivity
     });
     getListView().setOnItemLongClickListener(null);
     registerForContextMenu(getListView());
+
+    _db = new DataHelper(this);
+    _currentType = DataHelper.TYPE_PENDING;
+    _currentGroup = null;
   }
 
   @Override
@@ -151,6 +169,7 @@ public class Deadlines extends ListActivity
 
   private void resetListAdapter()
   {
-    setListAdapter(new DeadlineAdapter(this, _db, _currentType));
+    _grouplist.setAdapter(new GroupAdapter(this, _db.groups(_currentType), _currentGroup));
+    setListAdapter(new DeadlineAdapter(this, _db, _currentType, _currentGroup));
   }
 }

@@ -91,24 +91,30 @@ public class DataHelper extends SQLiteOpenHelper
     getWritableDatabase().delete(TABLE_NAME, where, whereArgs);
   }
 
-  public List<DeadlineModel> readAll(int type)
+  public List<DeadlineModel> readAll(int type, String group)
   {
+    // TODO LAME!
     Cursor c;
     String selection = KEY_DUE_DATE + " < ? AND " + KEY_DONE + " = ?";
     String[] selectionArgs = new String[]
     {
       String.valueOf(new Date().getTime()), "1"
     };
+
+    String groupSelection = "";
+    if (group != null && !group.isEmpty())
+      groupSelection = " AND " + KEY_GROUP + " = " + DatabaseUtils.sqlEscapeString(group);
+
     switch (type)
     {
       case TYPE_PENDING:
 	c = getReadableDatabase().query(TABLE_NAME, null,
-					"NOT(" + selection + ")", selectionArgs,
+					"NOT(" + selection + ")" + groupSelection, selectionArgs,
 					null, null, KEY_DUE_DATE);
 	break;
       case TYPE_ARCHIVED:
 	c = getReadableDatabase().query(TABLE_NAME, null,
-					selection, selectionArgs,
+					selection + groupSelection, selectionArgs,
 					null, null, KEY_DUE_DATE);
 	break;
       case TYPE_ALL:
@@ -149,7 +155,6 @@ public class DataHelper extends SQLiteOpenHelper
       ret.put(lvl, value);
       count += value;
     }
-
     return ret;
   }
 
@@ -158,30 +163,31 @@ public class DataHelper extends SQLiteOpenHelper
     Cursor c;
     String[] cols = new String[]
     {
-      KEY_GROUP
+      KEY_ID, KEY_GROUP
     };
     String selection = KEY_DUE_DATE + " < ? AND " + KEY_DONE + " = ?";
     String[] selectionArgs = new String[]
     {
       String.valueOf(new Date().getTime()), "1"
     };
+    String having = KEY_GROUP + " != ''";
     switch (type)
     {
       case TYPE_PENDING:
 	c = getReadableDatabase().query(TABLE_NAME, cols,
 					"NOT(" + selection + ")", selectionArgs,
-					null, null, KEY_GROUP);
+					KEY_GROUP, having, KEY_GROUP);
 	break;
       case TYPE_ARCHIVED:
 	c = getReadableDatabase().query(TABLE_NAME, cols,
 					selection, selectionArgs,
-					null, null, KEY_GROUP);
+					KEY_GROUP, having, KEY_GROUP);
 	break;
       case TYPE_ALL:
       default:
 	c = getReadableDatabase().query(TABLE_NAME, cols,
 					null, null,
-					null, null, KEY_GROUP);
+					KEY_GROUP, having, KEY_GROUP);
     }
     return c;
   }

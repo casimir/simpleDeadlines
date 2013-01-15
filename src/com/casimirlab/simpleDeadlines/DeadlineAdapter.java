@@ -22,11 +22,11 @@ public class DeadlineAdapter extends BaseAdapter
   private DataHelper _db;
   private List<DeadlineModel> _data;
 
-  public DeadlineAdapter(Context context, DataHelper db, int type)
+  public DeadlineAdapter(Context context, DataHelper db, int type, String group)
   {
     _context = context;
     _db = db;
-    _data = _db.readAll(type);
+    _data = _db.readAll(type, group);
   }
 
   public int getCount()
