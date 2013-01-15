@@ -22,6 +22,7 @@ public class Deadlines extends ListActivity
   private static final int MAGIC = 0x4242;
   private DrawerLayout _drawer;
   private ListView _grouplist;
+  private View _filterReset;
   private DataHelper _db;
   private int _currentType;
   private String _currentGroup;
@@ -52,15 +53,14 @@ public class Deadlines extends ListActivity
 
     _drawer = new DrawerLayout(this, R.layout.drawer);
     _grouplist = (ListView)_drawer.findViewById(R.id.grouplist);
+    _filterReset = _drawer.findViewById(R.id.filter_reset);
 
     _grouplist.setOnItemClickListener(new AdapterView.OnItemClickListener()
     {
       public void onItemClick(AdapterView<?> parent, View view, int position, long id)
       {
 	TextView label = (TextView)view.findViewById(R.id.group);
-	_currentGroup = label.getText().toString();
-	_drawer.close();
-	resetListAdapter();
+	updateFilter(label.getText().toString());
       }
     });
     getListView().setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -77,7 +77,7 @@ public class Deadlines extends ListActivity
 
     _db = new DataHelper(this);
     _currentType = DataHelper.TYPE_PENDING;
-    _currentGroup = null;
+    updateFilter(null);
   }
 
   @Override
@@ -167,9 +167,22 @@ public class Deadlines extends ListActivity
     startActivityForResult(i, MAGIC);
   }
 
+  public void resetFilter(View v)
+  {
+    updateFilter(null);
+  }
+
   private void resetListAdapter()
   {
     _grouplist.setAdapter(new GroupAdapter(this, _db.groups(_currentType), _currentGroup));
     setListAdapter(new DeadlineAdapter(this, _db, _currentType, _currentGroup));
+  }
+
+  private void updateFilter(String group)
+  {
+    _filterReset.setVisibility(group == null ? View.GONE : View.VISIBLE);
+    _currentGroup = group;
+    _drawer.close();
+    resetListAdapter();
   }
 }
