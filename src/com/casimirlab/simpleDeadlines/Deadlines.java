@@ -55,6 +55,31 @@ public class Deadlines extends ListActivity
 
     _drawer = new DrawerLayout(this, R.layout.drawer);
     _drawer.setBackgroundColor(Color.CYAN);
+    final AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener()
+    {
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+      {
+	Intent i = new Intent(Deadlines.this, DeadlineEditor.class);
+	i.putExtra(DeadlineEditor.MODEL_ID, (int)id);
+	startActivityForResult(i, MAGIC);
+      }
+    };
+    _drawer.setCallback(new DrawerLayout.Callback()
+    {
+      public void toggle(boolean opening)
+      {
+      }
+
+      public void open()
+      {
+	getListView().setOnItemClickListener(null);
+      }
+
+      public void close()
+      {
+	getListView().setOnItemClickListener(listener);
+      }
+    });
     _grouplist = (ListView)_drawer.findViewById(R.id.grouplist);
     _filterReset = _drawer.findViewById(R.id.filter_reset);
 
@@ -66,15 +91,7 @@ public class Deadlines extends ListActivity
 	updateFilter(label.getText().toString());
       }
     });
-    getListView().setOnItemClickListener(new AdapterView.OnItemClickListener()
-    {
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-      {
-	Intent i = new Intent(Deadlines.this, DeadlineEditor.class);
-	i.putExtra(DeadlineEditor.MODEL_ID, (int)id);
-	startActivityForResult(i, MAGIC);
-      }
-    });
+    getListView().setOnItemClickListener(listener);
     getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
     getListView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener()
     {
@@ -162,38 +179,6 @@ public class Deadlines extends ListActivity
     }
     return super.onOptionsItemSelected(item);
   }
-  /*
-   @Override
-   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
-   {
-   super.onCreateContextMenu(menu, v, menuInfo);
-
-   MenuInflater inflater = getMenuInflater();
-   inflater.inflate(R.menu.ctxt_deadlines, menu);
-   }
-
-   @Override
-   public boolean onContextItemSelected(MenuItem item)
-   {
-   AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-   ListAdapter adapter = getListAdapter();
-
-   if (item.getItemId() == R.id.act_edit)
-   {
-   Intent i = new Intent(Deadlines.this, DeadlineEditor.class);
-   i.putExtra(DeadlineEditor.MODEL_ID, (int)adapter.getItemId(info.position));
-   startActivityForResult(i, MAGIC);
-   return true;
-   }
-   if (item.getItemId() == R.id.act_delete)
-   {
-   _db.delete((int)adapter.getItemId(info.position));
-   resetAdapters();
-   return true;
-   }
-   return super.onContextItemSelected(item);
-   }
-   */
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data)

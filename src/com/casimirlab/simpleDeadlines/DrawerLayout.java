@@ -47,9 +47,10 @@ public class DrawerLayout extends FrameLayout
   private ViewConfiguration _vc;
   private VelocityTracker _vt;
   /* Threads */
+  private Callback _callback;
+  private Handler _scrollerHandler;
   private Runnable _closeRunnable;
   private Runnable _openRunnable;
-  private Handler _scrollerHandler;
 
   public DrawerLayout(Activity act, int drawerLayout)
   {
@@ -71,6 +72,7 @@ public class DrawerLayout extends FrameLayout
     _vc = ViewConfiguration.get(getContext());
     _vt = VelocityTracker.obtain();
 
+    _callback = null;
     _scrollerHandler = new Handler();
     _scroller = new Scroller(act, new Interpolator()
     {
@@ -239,6 +241,7 @@ public class DrawerLayout extends FrameLayout
 	  _drawerContent.setVisibility(INVISIBLE);
 	  _isMoving = false;
 	  _isOpened = false;
+	  _callback.close();
 	}
 	else
 	  _scrollerHandler.post(this);
@@ -293,6 +296,7 @@ public class DrawerLayout extends FrameLayout
 	{
 	  _isMoving = false;
 	  _isOpened = true;
+	  _callback.open();
 	}
 	else
 	  _scrollerHandler.post(this);
@@ -339,6 +343,11 @@ public class DrawerLayout extends FrameLayout
     });
   }
 
+  public void setCallback(Callback callback)
+  {
+    _callback = callback;
+  }
+
   /**
    * Toggles drawer.
    */
@@ -348,5 +357,16 @@ public class DrawerLayout extends FrameLayout
       open();
     else
       close();
+
+    _callback.toggle(_isOpened);
+  }
+
+  public static interface Callback
+  {
+    public void toggle(boolean opening);
+
+    public void open();
+
+    public void close();
   }
 }
