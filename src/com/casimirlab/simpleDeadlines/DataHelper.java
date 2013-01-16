@@ -191,4 +191,17 @@ public class DataHelper extends SQLiteOpenHelper
     }
     return c;
   }
+
+  public Cursor filteredGroups(CharSequence constraint)
+  {
+    String[] cols = new String[]
+    {
+      KEY_ID, KEY_GROUP
+    };
+    String filter = DatabaseUtils.sqlEscapeString(constraint + "%");
+    String having = KEY_GROUP + " != '' AND " + KEY_GROUP + " LIKE " + filter;
+    return getReadableDatabase().query(TABLE_NAME, cols,
+				       null, null,
+				       KEY_GROUP, having, KEY_GROUP);
+  }
 }

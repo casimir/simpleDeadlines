@@ -3,7 +3,6 @@ package com.casimirlab.simpleDeadlines;
 import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.Menu;

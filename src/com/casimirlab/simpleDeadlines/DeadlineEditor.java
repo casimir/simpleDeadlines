@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -46,8 +46,9 @@ public class DeadlineEditor extends Activity
       EditText label = (EditText)findViewById(R.id.label);
       label.setText(model.Label());
 
-      EditText group = (EditText)findViewById(R.id.group);
+      AutoCompleteTextView group = (AutoCompleteTextView)findViewById(R.id.group);
       group.setText(model.Group());
+      group.setAdapter(new GroupAdapter(this, _db.groups(DataHelper.TYPE_ALL), null));
 
       DatePicker dueDate = (DatePicker)findViewById(R.id.due_date);
       Calendar dateValue = Calendar.getInstance();
