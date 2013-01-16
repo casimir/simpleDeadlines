@@ -50,7 +50,7 @@ public class DeadlineAdapter extends BaseAdapter
     if (v == null)
     {
       LayoutInflater inflater = LayoutInflater.from(_context);
-      v = inflater.inflate(R.layout.deadlines_entry, parent, false);
+      v = inflater.inflate(R.layout.deadline_entry, parent, false);
       Holder holder = new Holder();
       holder.RemainingBg = (ImageView)v.findViewById(R.id.remaining_bg);
       holder.Remaining = (TextView)v.findViewById(R.id.remaining);
