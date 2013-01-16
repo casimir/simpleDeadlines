@@ -20,6 +20,7 @@ import android.widget.TextView;
 public class Deadlines extends ListActivity
 {
   private static final int MAGIC = 0x4242;
+  private ActionBar _actionBar;
   private DrawerLayout _drawer;
   private ListView _grouplist;
   private View _filterReset;
@@ -33,10 +34,9 @@ public class Deadlines extends ListActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.deadlines);
 
-    ActionBar bar = getActionBar();
-    bar.setDisplayShowTitleEnabled(false);
-    bar.setDisplayHomeAsUpEnabled(true);
-    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+    _actionBar = getActionBar();
+    _actionBar.setDisplayShowTitleEnabled(false);
+    _actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
     SpinnerAdapter navAdapter = ArrayAdapter.createFromResource(this,
 								R.array.act_nav_list,
 								android.R.layout.simple_spinner_dropdown_item);
@@ -45,11 +45,11 @@ public class Deadlines extends ListActivity
       public boolean onNavigationItemSelected(int position, long itemId)
       {
 	_currentType = position;
-	resetListAdapter();
+	resetAdapters();
 	return true;
       }
     };
-    bar.setListNavigationCallbacks(navAdapter, navListener);
+    _actionBar.setListNavigationCallbacks(navAdapter, navListener);
 
     _drawer = new DrawerLayout(this, R.layout.drawer);
     _grouplist = (ListView)_drawer.findViewById(R.id.grouplist);
@@ -85,7 +85,7 @@ public class Deadlines extends ListActivity
   {
     super.onStart();
 
-    resetListAdapter();
+    resetAdapters();
   }
 
   @Override
@@ -106,7 +106,7 @@ public class Deadlines extends ListActivity
     }
     if (item.getItemId() == R.id.act_new)
     {
-      onActNew(null);
+      actionNew(null);
       return true;
     }
     else if (item.getItemId() == R.id.act_settings)
@@ -142,7 +142,7 @@ public class Deadlines extends ListActivity
     if (item.getItemId() == R.id.act_delete)
     {
       _db.delete((int)adapter.getItemId(info.position));
-      resetListAdapter();
+      resetAdapters();
       return true;
     }
     return super.onContextItemSelected(item);
@@ -156,15 +156,24 @@ public class Deadlines extends ListActivity
     if (requestCode == MAGIC && resultCode == RESULT_OK)
     {
       _currentType = DataHelper.TYPE_PENDING;
-      resetListAdapter();
+      resetAdapters();
     }
   }
 
-  public void onActNew(View v)
+  public void actionNew(View v)
   {
     Intent i = new Intent(this, DeadlineEditor.class);
     i.putExtra(DeadlineEditor.TYPE_NEW, true);
     startActivityForResult(i, MAGIC);
+  }
+
+  private void resetAdapters()
+  {
+    GroupAdapter groups = new GroupAdapter(this, _db.groups(_currentType), _currentGroup);
+    _actionBar.setIcon(groups.getCount() > 0 ? R.drawable.ic_act_filter : R.drawable.app_icon);
+    _actionBar.setDisplayHomeAsUpEnabled(groups.getCount() > 0);
+    _grouplist.setAdapter(groups);
+    setListAdapter(new DeadlineAdapter(this, _db, _currentType, _currentGroup));
   }
 
   public void resetFilter(View v)
@@ -172,17 +181,11 @@ public class Deadlines extends ListActivity
     updateFilter(null);
   }
 
-  private void resetListAdapter()
-  {
-    _grouplist.setAdapter(new GroupAdapter(this, _db.groups(_currentType), _currentGroup));
-    setListAdapter(new DeadlineAdapter(this, _db, _currentType, _currentGroup));
-  }
-
   private void updateFilter(String group)
   {
     _filterReset.setVisibility(group == null ? View.GONE : View.VISIBLE);
     _currentGroup = group;
     _drawer.close();
-    resetListAdapter();
+    resetAdapters();
   }
 }
