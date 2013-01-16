@@ -54,7 +54,6 @@ public class Deadlines extends ListActivity
     _actionBar.setListNavigationCallbacks(navAdapter, navListener);
 
     _drawer = new DrawerLayout(this, R.layout.drawer);
-    _drawer.setBackgroundColor(Color.CYAN);
     final AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener()
     {
       public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -66,15 +65,13 @@ public class Deadlines extends ListActivity
     };
     _drawer.setCallback(new DrawerLayout.Callback()
     {
-      public void toggle(boolean opening)
-      {
-      }
-
+      @Override
       public void open()
       {
 	getListView().setOnItemClickListener(null);
       }
 
+      @Override
       public void close()
       {
 	getListView().setOnItemClickListener(listener);

@@ -361,12 +361,18 @@ public class DrawerLayout extends FrameLayout
     _callback.toggle(_isOpened);
   }
 
-  public static interface Callback
+  public static class Callback
   {
-    public void toggle(boolean opening);
+    public void toggle(boolean opening)
+    {
+    }
 
-    public void open();
+    public void open()
+    {
+    }
 
-    public void close();
+    public void close()
+    {
+    }
   }
 }
