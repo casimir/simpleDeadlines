@@ -6,6 +6,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -105,13 +106,13 @@ public class DataHelper extends SQLiteOpenHelper
     {
       DeadlineModel.LVL_TODAY, DeadlineModel.LVL_URGENT, DeadlineModel.LVL_WORRYING, DeadlineModel.LVL_NICE
     };
-    Date today = new Date();
-    today.setHours(0);
+    Calendar today = Calendar.getInstance();
+    today.set(Calendar.HOUR_OF_DAY, 0);
 
     int count = 0;
     for (int lvl : levels)
     {
-      long diff = today.getTime() + lvl * DeadlineModel.DAY_LEN;
+      long diff = today.getTimeInMillis() + lvl * DeadlineModel.DAY_LEN;
       param[0] = String.valueOf(diff);
       int value = (int)DatabaseUtils.longForQuery(req, param) - count;
       ret.put(lvl, value);

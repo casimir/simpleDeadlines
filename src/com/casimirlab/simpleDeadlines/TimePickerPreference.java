@@ -8,7 +8,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class TimePickerPreference extends DialogPreference
 {
@@ -66,6 +68,6 @@ public class TimePickerPreference extends DialogPreference
   {
     String format = DateFormat.is24HourFormat(getContext()) ? "HH:mm" : "h:mm aa";
     SimpleDateFormat df = new SimpleDateFormat(format);
-    setSummary(df.format(new Date(0, 0, 0, hour, minute)));
+    setSummary(df.format(new GregorianCalendar(0, 0, 0, hour, minute, 0).getTime()));
   }
 }
