@@ -1,8 +1,9 @@
-package com.casimirlab.simpleDeadlines;
+package com.casimirlab.simpleDeadlines.data;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.widget.RemoteViews;
+import com.casimirlab.simpleDeadlines.R;
 import java.util.Map;
 
 public class NotificationAdapter

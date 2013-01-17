@@ -1,5 +1,8 @@
 package com.casimirlab.simpleDeadlines;
 
+import com.casimirlab.simpleDeadlines.data.DataHelper;
+import com.casimirlab.simpleDeadlines.data.GroupAdapter;
+import com.casimirlab.simpleDeadlines.data.DeadlineModel;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;

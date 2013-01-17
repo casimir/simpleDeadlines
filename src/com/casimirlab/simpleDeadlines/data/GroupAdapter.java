@@ -1,4 +1,4 @@
-package com.casimirlab.simpleDeadlines;
+package com.casimirlab.simpleDeadlines.data;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
+import com.casimirlab.simpleDeadlines.R;
 
 public class GroupAdapter extends CursorAdapter
 {

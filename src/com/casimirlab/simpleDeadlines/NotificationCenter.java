@@ -1,5 +1,7 @@
 package com.casimirlab.simpleDeadlines;
 
+import com.casimirlab.simpleDeadlines.data.NotificationAdapter;
+import com.casimirlab.simpleDeadlines.data.DataHelper;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;

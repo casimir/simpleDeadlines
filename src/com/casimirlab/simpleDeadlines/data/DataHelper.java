@@ -1,4 +1,4 @@
-package com.casimirlab.simpleDeadlines;
+package com.casimirlab.simpleDeadlines.data;
 
 import android.content.Context;
 import android.database.Cursor;

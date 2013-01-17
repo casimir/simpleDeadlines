@@ -1,5 +1,8 @@
 package com.casimirlab.simpleDeadlines;
 
+import com.casimirlab.simpleDeadlines.data.DataHelper;
+import com.casimirlab.simpleDeadlines.data.GroupAdapter;
+import com.casimirlab.simpleDeadlines.data.DeadlineAdapter;
 import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
