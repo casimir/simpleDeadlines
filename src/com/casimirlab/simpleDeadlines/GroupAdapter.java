@@ -28,7 +28,8 @@ public class GroupAdapter extends CursorAdapter
   @Override
   public void bindView(View view, Context context, Cursor cursor)
   {
-    TextView label = (TextView)view.findViewById(R.id.group);
+    Holder h = (Holder)view.getTag();
+    TextView label = h.Label;
     int idx = cursor.getColumnIndex(DataHelper.KEY_GROUP);
     label.setText(cursor.getString(idx));
 
@@ -39,7 +40,11 @@ public class GroupAdapter extends CursorAdapter
   @Override
   public View newView(Context context, Cursor cursor, ViewGroup parent)
   {
-    return LayoutInflater.from(context).inflate(R.layout.group_entry, parent, false);
+    View v = LayoutInflater.from(context).inflate(R.layout.group_entry, parent, false);
+    Holder h = new Holder();
+    h.Label = (TextView)v.findViewById(R.id.group);
+    v.setTag(h);
+    return v;
   }
 
   @Override
@@ -62,5 +67,10 @@ public class GroupAdapter extends CursorAdapter
   {
     Log.d(TAG, "Filter required");
     return super.getFilter();
+  }
+
+  private static class Holder
+  {
+    public TextView Label;
   }
 }

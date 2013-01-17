@@ -201,7 +201,7 @@ public class Deadlines extends ListActivity
     _actionBar.setIcon(groups.getCount() > 0 ? R.drawable.ic_act_filter : R.drawable.app_icon);
     _actionBar.setDisplayHomeAsUpEnabled(groups.getCount() > 0);
     _grouplist.setAdapter(groups);
-    setListAdapter(new DeadlineAdapter(this, _db, _currentType, _currentGroup));
+    setListAdapter(new DeadlineAdapter(this, _db.deadlines(_currentType, _currentGroup)));
   }
 
   public void resetFilter(View v)

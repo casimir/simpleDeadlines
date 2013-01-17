@@ -2,73 +2,43 @@ package com.casimirlab.simpleDeadlines;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
 
-public class DeadlineAdapter extends BaseAdapter
+public class DeadlineAdapter extends CursorAdapter
 {
-  private Context _context;
   private DataHelper _db;
-  private List<DeadlineModel> _data;
 
-  public DeadlineAdapter(Context context, DataHelper db, int type, String group)
+  public DeadlineAdapter(Context context, Cursor c)
   {
-    _context = context;
-    _db = db;
-    _data = _db.readAll(type, group);
+    super(context, c);
+
+    _db = new DataHelper(context);
   }
 
-  public int getCount()
+  @Override
+  public void bindView(View view, Context context, Cursor cursor)
   {
-    return _data.size();
-  }
-
-  public Object getItem(int position)
-  {
-    return _data.get(position);
-  }
-
-  public long getItemId(int position)
-  {
-    return ((DeadlineModel)getItem(position)).Id();
-  }
-
-  public View getView(int position, View convertView, ViewGroup parent)
-  {
-    View v = convertView;
-    if (v == null)
-    {
-      LayoutInflater inflater = LayoutInflater.from(_context);
-      v = inflater.inflate(R.layout.deadline_entry, parent, false);
-      Holder holder = new Holder();
-      holder.RemainingBg = (ImageView)v.findViewById(R.id.remaining_bg);
-      holder.Remaining = (TextView)v.findViewById(R.id.remaining);
-      holder.Label = (TextView)v.findViewById(R.id.label);
-      holder.Group = (TextView)v.findViewById(R.id.group);
-      holder.DueDate = (TextView)v.findViewById(R.id.due_date);
-      holder.Done = (CheckBox)v.findViewById(R.id.done);
-      v.setTag(holder);
-    }
-    Holder holder = (Holder)v.getTag();
-    final DeadlineModel model = (DeadlineModel)getItem(position);
+    Holder holder = (Holder)view.getTag();
+    final DeadlineModel model = DeadlineModel.fromCursor(cursor);
 
     Date today = new Date();
     today.setHours(0);
     long days = model.DueDate().getTime() / DeadlineModel.DAY_LEN - today.getTime() / DeadlineModel.DAY_LEN;
     holder.Remaining.setText(String.valueOf(days));
 
-    Resources res = parent.getResources();
+    Resources res = context.getResources();
     if (days <= DeadlineModel.LVL_TODAY)
     {
       holder.RemainingBg.setImageDrawable(res.getDrawable(R.drawable.red));
@@ -115,7 +85,20 @@ public class DeadlineAdapter extends BaseAdapter
 	// FIXME autorefresh
       }
     });
+  }
 
+  @Override
+  public View newView(Context context, Cursor cursor, ViewGroup parent)
+  {
+    View v = LayoutInflater.from(context).inflate(R.layout.deadline_entry, parent, false);
+    Holder h = new Holder();
+    h.RemainingBg = (ImageView)v.findViewById(R.id.remaining_bg);
+    h.Remaining = (TextView)v.findViewById(R.id.remaining);
+    h.Label = (TextView)v.findViewById(R.id.label);
+    h.Group = (TextView)v.findViewById(R.id.group);
+    h.DueDate = (TextView)v.findViewById(R.id.due_date);
+    h.Done = (CheckBox)v.findViewById(R.id.done);
+    v.setTag(h);
     return v;
   }
 

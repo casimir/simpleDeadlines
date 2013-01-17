@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DataHelper extends SQLiteOpenHelper
@@ -66,9 +65,8 @@ public class DataHelper extends SQLiteOpenHelper
     };
 
     Cursor c = getReadableDatabase().query(TABLE_NAME, null, where, whereArgs, null, null, null);
-    DeadlineModel model = DeadlineModel.fromCursor(c);
-
-    return model;
+    c.moveToFirst();
+    return DeadlineModel.fromCursor(c);
   }
 
   public void update(DeadlineModel model)
@@ -89,42 +87,6 @@ public class DataHelper extends SQLiteOpenHelper
       String.valueOf(id)
     };
     getWritableDatabase().delete(TABLE_NAME, where, whereArgs);
-  }
-
-  public List<DeadlineModel> readAll(int type, String group)
-  {
-    // TODO LAME!
-    Cursor c;
-    String selection = KEY_DUE_DATE + " < ? AND " + KEY_DONE + " = ?";
-    String[] selectionArgs = new String[]
-    {
-      String.valueOf(new Date().getTime()), "1"
-    };
-
-    String groupSelection = "";
-    if (group != null && !group.isEmpty())
-      groupSelection = " AND " + KEY_GROUP + " = " + DatabaseUtils.sqlEscapeString(group);
-
-    switch (type)
-    {
-      case TYPE_PENDING:
-	c = getReadableDatabase().query(TABLE_NAME, null,
-					"NOT(" + selection + ")" + groupSelection, selectionArgs,
-					null, null, KEY_DUE_DATE);
-	break;
-      case TYPE_ARCHIVED:
-	c = getReadableDatabase().query(TABLE_NAME, null,
-					selection + groupSelection, selectionArgs,
-					null, null, KEY_DUE_DATE);
-	break;
-      case TYPE_ALL:
-      default:
-	c = getReadableDatabase().query(TABLE_NAME, null,
-					null, null,
-					null, null, KEY_DUE_DATE);
-    }
-
-    return DeadlineModel.fromMultipleCursor(c);
   }
 
   public int count()
@@ -156,6 +118,37 @@ public class DataHelper extends SQLiteOpenHelper
       count += value;
     }
     return ret;
+  }
+
+  public Cursor deadlines(int type, String group)
+  {
+    // TODO LAME!
+    String selection = KEY_DUE_DATE + " < ? AND " + KEY_DONE + " = ?";
+    String[] selectionArgs = new String[]
+    {
+      String.valueOf(new Date().getTime()), "1"
+    };
+
+    String groupSelection = "";
+    if (group != null && !group.isEmpty())
+      groupSelection = " AND " + KEY_GROUP + " = " + DatabaseUtils.sqlEscapeString(group);
+
+    switch (type)
+    {
+      case TYPE_PENDING:
+	return getReadableDatabase().query(TABLE_NAME, null,
+					   "NOT(" + selection + ")" + groupSelection, selectionArgs,
+					   null, null, KEY_DUE_DATE);
+      case TYPE_ARCHIVED:
+	return getReadableDatabase().query(TABLE_NAME, null,
+					   selection + groupSelection, selectionArgs,
+					   null, null, KEY_DUE_DATE);
+      case TYPE_ALL:
+      default:
+	return getReadableDatabase().query(TABLE_NAME, null,
+					   null, null,
+					   null, null, KEY_DUE_DATE);
+    }
   }
 
   public Cursor groups(int type)

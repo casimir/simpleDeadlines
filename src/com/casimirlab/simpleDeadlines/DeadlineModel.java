@@ -4,8 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 public class DeadlineModel
 {
@@ -72,51 +70,24 @@ public class DeadlineModel
 
   public static DeadlineModel fromCursor(Cursor cursor)
   {
-    if (!cursor.moveToNext())
-      return null;
-
     ContentValues values = new ContentValues();
     DatabaseUtils.cursorRowToContentValues(cursor, values);
     DeadlineModel model = new DeadlineModel();
-
     model.setId(values.getAsInteger(DataHelper.KEY_ID));
     model.setLabel(values.getAsString(DataHelper.KEY_LABEL));
     model.setGroup(values.getAsString(DataHelper.KEY_GROUP));
     model.setDueDate(new Date(values.getAsLong(DataHelper.KEY_DUE_DATE)));
     model.setDone(values.getAsInteger(DataHelper.KEY_DONE) == 1);
-
     return model;
-  }
-
-  public static List<DeadlineModel> fromMultipleCursor(Cursor cursor)
-  {
-    List<DeadlineModel> list = new LinkedList<DeadlineModel>();
-
-    while (cursor.moveToNext())
-    {
-      ContentValues values = new ContentValues();
-      DatabaseUtils.cursorRowToContentValues(cursor, values);
-      DeadlineModel model = new DeadlineModel();
-      model.setId(values.getAsInteger(DataHelper.KEY_ID));
-      model.setLabel(values.getAsString(DataHelper.KEY_LABEL));
-      model.setGroup(values.getAsString(DataHelper.KEY_GROUP));
-      model.setDueDate(new Date(values.getAsLong(DataHelper.KEY_DUE_DATE)));
-      model.setDone(values.getAsInteger(DataHelper.KEY_DONE) == 1);
-      list.add(model);
-    }
-
-    return list;
   }
 
   public static ContentValues toValues(DeadlineModel model)
   {
     ContentValues values = new ContentValues();
-
     values.put(DataHelper.KEY_LABEL, model.Label());
     values.put(DataHelper.KEY_GROUP, model.Group());
     values.put(DataHelper.KEY_DUE_DATE, model.DueDate().getTime());
     values.put(DataHelper.KEY_DONE, model.Done() ? 1 : 0);
-
     return values;
   }
 }
