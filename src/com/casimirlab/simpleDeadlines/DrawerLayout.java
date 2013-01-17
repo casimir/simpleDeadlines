@@ -27,7 +27,7 @@ public class DrawerLayout extends FrameLayout
   private boolean _isDrawerAdded;
   private boolean _isInGesture;
   private boolean _isMoving;
-  private boolean _isOpened;
+  private boolean _isOpen;
   /* Graphics */
   private ViewGroup _contentGroup;
   private ViewGroup _decorContentGroup;
@@ -91,7 +91,7 @@ public class DrawerLayout extends FrameLayout
   {
     super.dispatchDraw(canvas);
 
-    if (_isOpened || _isMoving)
+    if (_isOpen || _isMoving)
     {
       canvas.save();
       canvas.translate(_offset, 0);
@@ -110,13 +110,13 @@ public class DrawerLayout extends FrameLayout
 	_startY = (int)ev.getY();
 	_currentX = _startX;
 	_currentY = _startY;
-	_isInGesture = (_startX < _minWidth && !_isOpened)
-		       || (_startX > _drawerWidth && _isOpened);
+	_isInGesture = (_startX < _minWidth && !_isOpen)
+		       || (_startX > _drawerWidth && _isOpen);
 	return false;
       case MotionEvent.ACTION_MOVE:
 	if (!_isInGesture)
 	  return false;
-	if (!_isOpened && (ev.getX() < _currentX || ev.getX() < _startX))
+	if (!_isOpen && (ev.getX() < _currentX || ev.getX() < _startX))
 	{
 	  _isInGesture = false;
 	  return false;
@@ -128,7 +128,7 @@ public class DrawerLayout extends FrameLayout
 	double abs = Math.hypot(_currentX - _startX, _currentY - _startY);
 	return abs >= _vc.getScaledTouchSlop();
       case MotionEvent.ACTION_UP:
-	if (_startX > _drawerWidth && _isOpened)
+	if (_startX > _drawerWidth && _isOpen)
 	  close();
 
 	_isInGesture = false;
@@ -174,13 +174,13 @@ public class DrawerLayout extends FrameLayout
 	_isMoving = true;
 	if (_offset + step > _drawerWidth)
 	{
-	  _isOpened = true;
+	  _isOpen = true;
 	  _decorContentGroup.offsetLeftAndRight(_drawerWidth - _offset);
 	  _offset = _drawerWidth;
 	}
 	else if (_offset + step < 0 && _offset != 0)
 	{
-	  _isOpened = false;
+	  _isOpen = false;
 	  _decorContentGroup.offsetLeftAndRight(0 - _decorContentGroup.getLeft());
 	  _offset = 0;
 	}
@@ -197,12 +197,12 @@ public class DrawerLayout extends FrameLayout
 	_vt.computeCurrentVelocity(1000);
 	if (Math.abs(_vt.getXVelocity()) > _vc.getScaledMinimumFlingVelocity())
 	{
-	  _isOpened = _vt.getXVelocity() <= 0;
+	  _isOpen = _vt.getXVelocity() <= 0;
 	  toggle();
 	}
 	else
 	{
-	  _isOpened = _offset < (widthPixels / 2);
+	  _isOpen = _offset < (widthPixels / 2);
 	  toggle();
 	}
 	return true;
@@ -215,7 +215,7 @@ public class DrawerLayout extends FrameLayout
    */
   public void close()
   {
-    if (!_isOpened)
+    if (!_isOpen)
       return;
 
     if (_isMoving)
@@ -240,7 +240,7 @@ public class DrawerLayout extends FrameLayout
 	{
 	  _drawerContent.setVisibility(INVISIBLE);
 	  _isMoving = false;
-	  _isOpened = false;
+	  _isOpen = false;
 	  _callback.close();
 	}
 	else
@@ -261,11 +261,20 @@ public class DrawerLayout extends FrameLayout
   }
 
   /**
+   * True if the drawer is open false if it is closed.
+   * @return 
+   */
+  public boolean isOpen()
+  {
+    return _isOpen;
+  }
+
+  /**
    * Opens drawer.
    */
   public void open()
   {
-    if (_isOpened)
+    if (_isOpen)
       return;
 
     if (_isMoving)
@@ -295,7 +304,7 @@ public class DrawerLayout extends FrameLayout
 	if (!scrolling)
 	{
 	  _isMoving = false;
-	  _isOpened = true;
+	  _isOpen = true;
 	  _callback.open();
 	}
 	else
@@ -353,12 +362,12 @@ public class DrawerLayout extends FrameLayout
    */
   public void toggle()
   {
-    if (!_isOpened)
+    if (!_isOpen)
       open();
     else
       close();
 
-    _callback.toggle(_isOpened);
+    _callback.toggle(_isOpen);
   }
 
   public static class Callback

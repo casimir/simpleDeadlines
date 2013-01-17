@@ -188,6 +188,15 @@ public class Deadlines extends ListActivity
     }
   }
 
+  @Override
+  public void onBackPressed()
+  {
+    if (!_drawer.isOpen())
+      super.onBackPressed();
+    else
+      _drawer.close();
+  }
+
   public void actionNew(View v)
   {
     Intent i = new Intent(this, DeadlineEditor.class);
