@@ -1,8 +1,5 @@
 package com.casimirlab.simpleDeadlines;
 
-import com.casimirlab.simpleDeadlines.data.DataHelper;
-import com.casimirlab.simpleDeadlines.data.GroupAdapter;
-import com.casimirlab.simpleDeadlines.data.DeadlineModel;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +9,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.casimirlab.simpleDeadlines.data.DataHelper;
+import com.casimirlab.simpleDeadlines.data.DeadlineModel;
+import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 import java.util.Calendar;
 import java.util.Date;
 
