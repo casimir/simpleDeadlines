@@ -2,7 +2,6 @@ package com.casimirlab.simpleDeadlines.data;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,9 +32,7 @@ public class GroupAdapter extends CursorAdapter
     TextView label = h.Label;
     int idx = cursor.getColumnIndex(DataHelper.KEY_GROUP);
     label.setText(cursor.getString(idx));
-
-    if (_current != null && label.getText().equals(_current))
-      label.setTextColor(Color.RED);
+    label.setActivated(_current != null && label.getText().equals(_current));
   }
 
   @Override
