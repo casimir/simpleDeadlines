@@ -62,7 +62,7 @@ public class DrawerLayout extends FrameLayout
     _drawerContent.setVisibility(INVISIBLE);
     int[] colors = new int[]
     {
-      Color.parseColor("#00303030"), Color.parseColor("#7F303030")
+      Color.parseColor("#00000000"), Color.parseColor("#FF000000")
     };
     _shadow = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
 

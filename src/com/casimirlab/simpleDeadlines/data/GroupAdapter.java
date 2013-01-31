@@ -1,6 +1,7 @@
 package com.casimirlab.simpleDeadlines.data;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;

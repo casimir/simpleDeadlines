@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	      android:orientation="vertical"
 	      android:layout_width="match_parent"
 	      android:layout_height="match_parent"
-	      android:orientation="vertical">
+	      style="@style/SimpleTheme.Drawer.Panel">
   <TextView android:text="@string/drawer_group_pick"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:padding="10dp"
-	    android:textSize="22sp"
-	    android:textColor="#FFFFFF"
-	    android:textStyle="bold" />
+	    style="@style/SimpleTheme.Drawer.Title" />
   <TextView android:id="@+id/filter_reset"
 	    android:text="@string/drawer_group_clean"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:padding="10dp"
-	    android:clickable="true"
-	    android:onClick="resetFilter" />
+	    android:onClick="resetFilter"
+	    style="@style/SimpleTheme.Drawer.ActionTextView" />
   <ListView android:id="@+id/grouplist"
 	    android:layout_width="match_parent"
-	    android:layout_height="match_parent" />
+	    android:layout_height="match_parent"
+	    style="@style/SimpleTheme.Drawer.ListView" />
 </LinearLayout>

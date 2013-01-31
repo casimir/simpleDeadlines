@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	     android:layout_width="match_parent"
-	     android:layout_height="match_parent">
+	     android:layout_height="match_parent"
+	     style="@style/SimpleTheme.Drawer.ListView.Item">
   <TextView android:id="@+id/group"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:padding="8dp"
-	    android:textSize="18sp" />
+	    style="@style/SimpleTheme.Drawer.GroupLabel" />
 </FrameLayout>

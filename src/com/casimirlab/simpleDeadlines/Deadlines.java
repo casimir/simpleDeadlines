@@ -1,8 +1,5 @@
 package com.casimirlab.simpleDeadlines;
 
-import com.casimirlab.simpleDeadlines.data.DataHelper;
-import com.casimirlab.simpleDeadlines.data.GroupAdapter;
-import com.casimirlab.simpleDeadlines.data.DeadlineAdapter;
 import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -18,6 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import com.casimirlab.simpleDeadlines.data.DataHelper;
+import com.casimirlab.simpleDeadlines.data.DeadlineAdapter;
+import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,9 +99,9 @@ public class Deadlines extends ListActivity
       public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
       {
 	if (checked)
-	  _selected.add((int)id);
+	  _selected.add(Integer.valueOf((int)id));
 	else
-	  _selected.remove((int)id);
+	  _selected.remove(Integer.valueOf((int)id));
 	mode.setTitle(_selected.size() + " selected items");
       }
 

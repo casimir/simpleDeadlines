@@ -3,7 +3,6 @@ package com.casimirlab.simpleDeadlines.data;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.casimirlab.simpleDeadlines.R;
 import java.text.DateFormat;
@@ -42,28 +40,28 @@ public class DeadlineAdapter extends CursorAdapter
     Resources res = context.getResources();
     if (days <= DeadlineModel.LVL_TODAY)
     {
-      holder.RemainingBg.setImageDrawable(res.getDrawable(R.drawable.red));
-      holder.Remaining.setTextColor(Color.rgb(0xFF, 0x00, 0x00));
+      holder.RemainingBg.setBackgroundResource(R.color.simple_lvl_today);
+      holder.Remaining.setTextColor(res.getColor(R.color.simple_lvl_today));
     }
     else if (days <= DeadlineModel.LVL_URGENT)
     {
-      holder.RemainingBg.setImageDrawable(res.getDrawable(R.drawable.orange));
-      holder.Remaining.setTextColor(Color.rgb(0xFF, 0xA5, 0x00));
+      holder.RemainingBg.setBackgroundResource(R.color.simple_lvl_urgent);
+      holder.Remaining.setTextColor(res.getColor(R.color.simple_lvl_urgent));
     }
     else if (days <= DeadlineModel.LVL_WORRYING)
     {
-      holder.RemainingBg.setImageDrawable(res.getDrawable(R.drawable.yellow));
-      holder.Remaining.setTextColor(Color.rgb(0xFF, 0xFF, 0x00));
+      holder.RemainingBg.setBackgroundResource(R.color.simple_lvl_worrying);
+      holder.Remaining.setTextColor(res.getColor(R.color.simple_lvl_worrying));
     }
     else if (days <= DeadlineModel.LVL_NICE)
     {
-      holder.RemainingBg.setImageDrawable(res.getDrawable(R.drawable.green));
-      holder.Remaining.setTextColor(Color.argb(204, 0x00, 0xFF, 0x00));
+      holder.RemainingBg.setBackgroundResource(R.color.simple_lvl_nice);
+      holder.Remaining.setTextColor(res.getColor(R.color.simple_lvl_nice));
     }
     else
     {
-      holder.RemainingBg.setImageDrawable(res.getDrawable(R.drawable.blue));
-      holder.Remaining.setTextColor(Color.rgb(0x00, 0x00, 0xFF));
+      holder.RemainingBg.setBackgroundResource(R.color.simple_lvl_other);
+      holder.Remaining.setTextColor(res.getColor(R.color.simple_lvl_other));
     }
 
     holder.Label.setText(model.Label());
@@ -93,7 +91,7 @@ public class DeadlineAdapter extends CursorAdapter
   {
     View v = LayoutInflater.from(context).inflate(R.layout.deadline_entry, parent, false);
     Holder h = new Holder();
-    h.RemainingBg = (ImageView)v.findViewById(R.id.remaining_bg);
+    h.RemainingBg = v.findViewById(R.id.remaining_bg);
     h.Remaining = (TextView)v.findViewById(R.id.remaining);
     h.Label = (TextView)v.findViewById(R.id.label);
     h.Group = (TextView)v.findViewById(R.id.group);
@@ -113,7 +111,7 @@ public class DeadlineAdapter extends CursorAdapter
 
   private static class Holder
   {
-    public ImageView RemainingBg;
+    public View RemainingBg;
     public TextView Remaining;
     public TextView Label;
     public TextView Group;
