@@ -51,7 +51,7 @@ public class DeadlineEditor extends Activity
 
       AutoCompleteTextView group = (AutoCompleteTextView)findViewById(R.id.group);
       group.setText(model.Group());
-      group.setAdapter(new GroupAdapter(this, _db.groups(DataHelper.TYPE_ALL), null));
+      group.setAdapter(new GroupAdapter(this, _db.groups(DataHelper.TYPE_ALL)));
 
       DatePicker dueDate = (DatePicker)findViewById(R.id.due_date);
       Calendar dateValue = Calendar.getInstance();

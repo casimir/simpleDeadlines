@@ -2,21 +2,19 @@ package com.casimirlab.simpleDeadlines.data;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.Filter;
+import android.widget.FilterQueryProvider;
 import android.widget.TextView;
 import com.casimirlab.simpleDeadlines.R;
 
 public class GroupAdapter extends CursorAdapter
 {
-  private static final String TAG = "GroupAdapter";
   private DataHelper _db;
 
-  public GroupAdapter(Context context, Cursor c, String current)
+  public GroupAdapter(Context context, Cursor c)
   {
     super(context, c);
 
@@ -45,7 +43,7 @@ public class GroupAdapter extends CursorAdapter
   @Override
   public Cursor runQueryOnBackgroundThread(CharSequence constraint)
   {
-    if (getFilterQueryProvider() == null || constraint == null)
+    if (constraint == null)
       return super.runQueryOnBackgroundThread(constraint);
     return _db.filteredGroups(constraint);
   }
@@ -55,13 +53,6 @@ public class GroupAdapter extends CursorAdapter
   {
     int idx = cursor.getColumnIndex(DataHelper.KEY_GROUP);
     return cursor.getString(idx);
-  }
-
-  @Override
-  public Filter getFilter()
-  {
-    Log.d(TAG, "Filter required");
-    return super.getFilter();
   }
 
   private static class Holder
