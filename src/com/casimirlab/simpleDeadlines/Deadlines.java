@@ -82,12 +82,14 @@ public class Deadlines extends ListActivity
     _grouplist = (ListView)_drawer.findViewById(R.id.grouplist);
     _filterReset = _drawer.findViewById(R.id.filter_reset);
 
+    _grouplist.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     _grouplist.setOnItemClickListener(new AdapterView.OnItemClickListener()
     {
       public void onItemClick(AdapterView<?> parent, View view, int position, long id)
       {
 	TextView label = (TextView)view.findViewById(R.id.group);
 	updateFilter(label.getText().toString());
+	_grouplist.setItemChecked(position, true);
       }
     });
     getListView().setOnItemClickListener(listener);

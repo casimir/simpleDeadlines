@@ -1,7 +1,6 @@
 package com.casimirlab.simpleDeadlines.data;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,14 +15,12 @@ public class GroupAdapter extends CursorAdapter
 {
   private static final String TAG = "GroupAdapter";
   private DataHelper _db;
-  private String _current;
 
   public GroupAdapter(Context context, Cursor c, String current)
   {
     super(context, c);
 
     _db = new DataHelper(context);
-    _current = current;
   }
 
   @Override
@@ -31,9 +28,8 @@ public class GroupAdapter extends CursorAdapter
   {
     Holder h = (Holder)view.getTag();
     TextView label = h.Label;
-    int idx = cursor.getColumnIndex(DataHelper.KEY_GROUP);
+    final int idx = cursor.getColumnIndex(DataHelper.KEY_GROUP);
     label.setText(cursor.getString(idx));
-    label.setActivated(_current != null && label.getText().equals(_current));
   }
 
   @Override

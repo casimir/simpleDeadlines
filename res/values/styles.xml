@@ -40,7 +40,11 @@
   </style>
   <style name="SimpleTheme.Drawer.ActionTextView">
     <item name="android:clickable">true</item>
-    <item name="android:padding">10dp</item>
+    <item name="android:layout_margin">8dp</item>
+    <item name="android:padding">8dp</item>
+    <item name="android:background">@color/simple_foreground_light</item>
+    <item name="android:textColor">@color/simple_background_light</item>
+    <item name="android:textStyle">bold</item>
   </style>
   <style name="SimpleTheme.Drawer.ListView">
     <item name="android:divider">@color/simple_background_light</item>
