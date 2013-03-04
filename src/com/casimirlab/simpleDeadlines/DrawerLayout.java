@@ -147,8 +147,10 @@ public class DrawerLayout extends FrameLayout
     Rect window = new Rect();
     _rootGroup.getWindowVisibleDisplayFrame(window);
 
-    _drawerContent.layout(left, 0, right, bottom);
-    _decorContentGroup.layout(_decorContentGroup.getLeft(), 0, _decorContentGroup.getLeft() + right, bottom);
+    _drawerContent.layout(left, 0,
+			  right, bottom);
+    _decorContentGroup.layout(_decorContentGroup.getLeft(), 0,
+			      _decorContentGroup.getLeft() + right, bottom);
 
     _drawerWidth = _drawerContent.getMeasuredWidth();
     if (_drawerWidth > right - _minWidth)
@@ -202,7 +204,7 @@ public class DrawerLayout extends FrameLayout
 	}
 	else
 	{
-	  _isOpen = _offset < (widthPixels / 2);
+	  _isOpen = _offset < (_drawerWidth / 2);
 	  toggle();
 	}
 	return true;
@@ -262,7 +264,8 @@ public class DrawerLayout extends FrameLayout
 
   /**
    * True if the drawer is open false if it is closed.
-   * @return 
+   *
+   * @return
    */
   public boolean isOpen()
   {
@@ -355,6 +358,11 @@ public class DrawerLayout extends FrameLayout
   public void setCallback(Callback callback)
   {
     _callback = callback;
+  }
+
+  public void setMaxWidth(int width)
+  {
+    _drawerContent.setLayoutParams(new LayoutParams(width, LayoutParams.MATCH_PARENT));
   }
 
   /**

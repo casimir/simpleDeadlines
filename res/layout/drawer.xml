@@ -4,8 +4,9 @@
 	      android:layout_width="match_parent"
 	      android:layout_height="match_parent"
 	      style="@style/SimpleTheme.Drawer.Panel">
-  <TextView android:text="@string/drawer_group_pick"
-	    android:layout_width="match_parent"
+  <TextView android:id="@+id/title"
+	    android:text="@string/drawer_group_pick"
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    style="@style/SimpleTheme.Drawer.Title" />
   <TextView android:id="@+id/filter_reset"

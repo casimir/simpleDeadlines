@@ -70,6 +70,9 @@ public class Deadlines extends ListActivity
       @Override
       public void open()
       {
+	// TODO optimize
+	TextView drawerTitle = (TextView)_drawer.findViewById(R.id.title);
+	_drawer.setMaxWidth(drawerTitle.getMeasuredWidth());
 	getListView().setOnItemClickListener(null);
       }
 
