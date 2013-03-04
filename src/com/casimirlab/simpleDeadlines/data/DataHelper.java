@@ -28,7 +28,10 @@ public class DataHelper extends SQLiteOpenHelper
   public DataHelper(Context context)
   {
     super(context, DB_NAME, null, DB_VERSION);
-    getWritableDatabase();
+
+    // Easy init.
+    SQLiteDatabase db = getWritableDatabase();
+    db.close();
   }
 
   @Override
@@ -77,7 +80,9 @@ public class DataHelper extends SQLiteOpenHelper
     {
       String.valueOf(model.Id())
     };
-    getWritableDatabase().update(TABLE_NAME, DeadlineModel.toValues(model), where, whereArgs);
+    SQLiteDatabase db = getWritableDatabase();
+    db.update(TABLE_NAME, DeadlineModel.toValues(model), where, whereArgs);
+    db.close();
   }
 
   public void delete(int id)
@@ -87,7 +92,9 @@ public class DataHelper extends SQLiteOpenHelper
     {
       String.valueOf(id)
     };
-    getWritableDatabase().delete(TABLE_NAME, where, whereArgs);
+    SQLiteDatabase db = getWritableDatabase();
+    db.delete(TABLE_NAME, where, whereArgs);
+    db.close();
   }
 
   public int count()
