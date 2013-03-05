@@ -2,13 +2,22 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
   <PreferenceCategory android:title="@string/pref_title_notif"
 		      android:key="@string/pref_key_notif">
+    <CheckBoxPreference android:title="@string/pref_title_notif_persist"
+			android:key="@string/pref_key_notif_persist"
+			android:summaryOff="@string/pref_sum_notif_persist_off"
+			android:summaryOn="@string/pref_sum_notif_persist_on"
+			android:persistent="true"
+			android:disableDependentsState="true" />
     <com.casimirlab.simpleDeadlines.TimePickerPreference android:title="@string/pref_title_notif_hour"
 							 android:key="@string/pref_key_notif_hour"
 							 android:dialogLayout="@layout/time_picker_preference"
+							 android:summary="@string/pref_default_notif_hour"
 							 android:defaultValue="@string/pref_default_notif_hour"
-							 android:persistent="true" />
+							 android:persistent="true"
+							 android:dependency="@string/pref_key_notif_persist" />
     <Preference android:title="@string/pref_title_notif_toggle"
 		android:key="@string/pref_key_notif_toggle"
-		android:summary="@string/pref_sum_notif_toggle" />
+		android:summary="@string/pref_sum_notif_toggle"
+		android:dependency="@string/pref_key_notif_persist" />
   </PreferenceCategory>
 </PreferenceScreen>

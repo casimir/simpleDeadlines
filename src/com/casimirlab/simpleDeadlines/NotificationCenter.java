@@ -46,14 +46,16 @@ public class NotificationCenter extends BroadcastReceiver
   private void setAlarm(Intent intent)
   {
     Bundle extras = intent.getExtras();
-    int hour = 0;
-    int minute = 0;
+    Calendar time = Calendar.getInstance();
+    time.set(Calendar.HOUR_OF_DAY, 0);
+    time.set(Calendar.MINUTE, 0);
+    time.set(Calendar.SECOND, 0);
 
     if (extras != null
 	&& extras.containsKey(EXTRA_HOUR) && extras.containsKey(EXTRA_MINUTE))
     {
-      hour = extras.getInt(EXTRA_HOUR);
-      minute = extras.getInt(EXTRA_MINUTE);
+      time.set(Calendar.HOUR_OF_DAY, extras.getInt(EXTRA_HOUR));
+      time.set(Calendar.MINUTE, extras.getInt(EXTRA_MINUTE));
     }
     else
     {
@@ -61,14 +63,9 @@ public class NotificationCenter extends BroadcastReceiver
       String timekey = _context.getString(R.string.pref_key_notif_hour);
       String timedefault = _context.getString(R.string.pref_default_notif_hour);
       String[] timetab = sp.getString(timekey, timedefault).split(":");
-      hour = Integer.valueOf(timetab[0]);
-      minute = Integer.valueOf(timetab[1]);
+      time.set(Calendar.HOUR_OF_DAY, Integer.valueOf(timetab[0]));
+      time.set(Calendar.MINUTE, Integer.valueOf(timetab[1]));
     }
-
-    Calendar time = Calendar.getInstance();
-    time.set(Calendar.HOUR_OF_DAY, hour);
-    time.set(Calendar.MINUTE, minute);
-    time.set(Calendar.SECOND, 0);
 
     AlarmManager am = (AlarmManager)_context.getSystemService(Service.ALARM_SERVICE);
     PendingIntent pi = PendingIntent.getBroadcast(_context, ALARM_ID, new Intent(ACTION_SHOW), PendingIntent.FLAG_CANCEL_CURRENT);

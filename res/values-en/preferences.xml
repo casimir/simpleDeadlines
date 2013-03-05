@@ -1,16 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="pref_title_notif">"Notifications"</string>
-  <string name="pref_key_notif">"notif"</string>
+  <string name="pref_title_notif">Notifications</string>
+  <string name="pref_key_notif">notif</string>
 
-  <string name="pref_title_notif_active">"Daily notification"</string>
-  <string name="pref_key_notif_active">"notif_hour"</string>
-  <string name="pref_default_notif_active">"true"</string>
+  <string name="pref_title_notif_persist">Persistent notification</string>
+  <string name="pref_key_notif_persist">notif_persist</string>
+  <string name="pref_sum_notif_persist_off">Notification can be dismissed</string>
+  <string name="pref_sum_notif_persist_on">Notification is permanent</string>
 
-  <string name="pref_title_notif_hour">"Notification time"</string>
-  <string name="pref_key_notif_hour">"notif_hour"</string>
-  <string name="pref_default_notif_hour">"8:00"</string>
+  <string name="pref_title_notif_hour">Notification time</string>
+  <string name="pref_key_notif_hour">notif_hour</string>
+  <string name="pref_default_notif_hour">8:00</string>
 
-  <string name="pref_title_notif_toggle">"Test notification"</string>
-  <string name="pref_key_notif_toggle">"notif_toggle"</string>
-  <string name="pref_sum_notif_toggle">"Show or hide the notification"</string>
+  <string name="pref_title_notif_toggle">Test notification</string>
+  <string name="pref_key_notif_toggle">notif_toggle</string>
+  <string name="pref_sum_notif_toggle">Show or hide the notification</string>
 </resources>
