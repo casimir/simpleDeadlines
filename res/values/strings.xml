@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">simpleDeadlines</string>
+  <string name="app_name">Simple Deadlines</string>
   <string name="drawer_group_pick">Choisir un groupe</string>
   <string name="drawer_group_clean">Annuler la selection</string>
   <string name="empty_list">Pour commencer appuyer sur le bouton</string>

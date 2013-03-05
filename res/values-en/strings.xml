@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">"simpleDeadlines"</string>
+  <string name="app_name">"Simple Deadlines"</string>
   <string name="drawer_group_pick">Pick a group</string>
   <string name="drawer_group_clean">Clean selection</string>
   <string name="empty_list">"To start press the button"</string>
