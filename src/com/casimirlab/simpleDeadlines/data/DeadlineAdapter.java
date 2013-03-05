@@ -13,7 +13,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 import com.casimirlab.simpleDeadlines.R;
 import java.text.DateFormat;
-import java.util.Date;
+import java.util.Calendar;
 
 public class DeadlineAdapter extends CursorAdapter
 {
@@ -21,7 +21,7 @@ public class DeadlineAdapter extends CursorAdapter
 
   public DeadlineAdapter(Context context, Cursor c)
   {
-    super(context, c);
+    super(context, c, true);
 
     _db = new DataHelper(context);
   }
@@ -32,37 +32,23 @@ public class DeadlineAdapter extends CursorAdapter
     Holder holder = (Holder)view.getTag();
     final DeadlineModel model = DeadlineModel.fromCursor(cursor);
 
-    Date today = new Date();
-    today.setHours(0);
-    long days = model.DueDate().getTime() / DeadlineModel.DAY_LEN - today.getTime() / DeadlineModel.DAY_LEN;
+    Calendar today = Calendar.getInstance();
+    today.set(Calendar.HOUR_OF_DAY, 0);
+    long todayMs = today.getTimeInMillis() / DeadlineModel.DAY_LEN;
+    long deadlineMs = model.DueDate().getTime() / DeadlineModel.DAY_LEN;
+    long days = deadlineMs - todayMs;
     holder.Remaining.setText(String.valueOf(days));
 
-    Resources res = context.getResources();
     if (days <= DeadlineModel.LVL_TODAY)
-    {
-      holder.RemainingBg.setBackgroundResource(R.color.simple_lvl_today);
-      holder.Remaining.setTextColor(res.getColor(R.color.simple_lvl_today));
-    }
+      holder.setColor(context, R.color.simple_lvl_today);
     else if (days <= DeadlineModel.LVL_URGENT)
-    {
-      holder.RemainingBg.setBackgroundResource(R.color.simple_lvl_urgent);
-      holder.Remaining.setTextColor(res.getColor(R.color.simple_lvl_urgent));
-    }
+      holder.setColor(context, R.color.simple_lvl_urgent);
     else if (days <= DeadlineModel.LVL_WORRYING)
-    {
-      holder.RemainingBg.setBackgroundResource(R.color.simple_lvl_worrying);
-      holder.Remaining.setTextColor(res.getColor(R.color.simple_lvl_worrying));
-    }
+      holder.setColor(context, R.color.simple_lvl_worrying);
     else if (days <= DeadlineModel.LVL_NICE)
-    {
-      holder.RemainingBg.setBackgroundResource(R.color.simple_lvl_nice);
-      holder.Remaining.setTextColor(res.getColor(R.color.simple_lvl_nice));
-    }
+      holder.setColor(context, R.color.simple_lvl_nice);
     else
-    {
-      holder.RemainingBg.setBackgroundResource(R.color.simple_lvl_other);
-      holder.Remaining.setTextColor(res.getColor(R.color.simple_lvl_other));
-    }
+      holder.setColor(context, R.color.simple_lvl_other);
 
     holder.Label.setText(model.Label());
     setStrikeText(holder.Label, model.Done());
@@ -117,5 +103,12 @@ public class DeadlineAdapter extends CursorAdapter
     public TextView Group;
     public TextView DueDate;
     public CheckBox Done;
+
+    public void setColor(Context context, int resColor)
+    {
+      RemainingBg.setBackgroundResource(resColor);
+      Resources res = context.getResources();
+      Remaining.setTextColor(res.getColor(resColor));
+    }
   }
 }

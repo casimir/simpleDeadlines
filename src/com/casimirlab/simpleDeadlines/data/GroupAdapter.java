@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.FilterQueryProvider;
 import android.widget.TextView;
 import com.casimirlab.simpleDeadlines.R;
 
@@ -16,7 +15,7 @@ public class GroupAdapter extends CursorAdapter
 
   public GroupAdapter(Context context, Cursor c)
   {
-    super(context, c);
+    super(context, c, true);
 
     _db = new DataHelper(context);
   }

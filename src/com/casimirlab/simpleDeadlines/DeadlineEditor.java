@@ -14,6 +14,7 @@ import com.casimirlab.simpleDeadlines.data.DeadlineModel;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DeadlineEditor extends Activity
 {
@@ -110,12 +111,11 @@ public class DeadlineEditor extends Activity
     DatePicker dueDate = (DatePicker)findViewById(R.id.due_date);
 
     DeadlineModel model = new DeadlineModel();
-
     model.setId(_modelId);
     model.setDone(false);
     model.setLabel(label.getText().toString());
     model.setGroup(group.getText().toString());
-    Date dueDateValue = new Date(dueDate.getYear() - 1900, dueDate.getMonth(), dueDate.getDayOfMonth());
+    Date dueDateValue = new GregorianCalendar(dueDate.getYear(), dueDate.getMonth(), dueDate.getDayOfMonth()).getTime();
     model.setDueDate(dueDateValue);
 
     return model;
