@@ -15,4 +15,10 @@
   <string name="pref_title_notif_toggle">Tester la notification</string>
   <string name="pref_key_notif_toggle">notif_toggle</string>
   <string name="pref_sum_notif_toggle">Afficher ou cacher la notification</string>
+
+  <string name="pref_title_about">À propos de Simple Deadlines</string>
+
+  <string name="pref_title_about_version">Numéro de version</string>
+  <string name="pref_key_about_version">about_version</string>
+
 </resources>

@@ -20,4 +20,8 @@
 		android:summary="@string/pref_sum_notif_toggle"
 		android:dependency="@string/pref_key_notif_persist" />
   </PreferenceCategory>
+  <PreferenceCategory android:title="@string/pref_title_about">
+    <Preference android:title="@string/pref_title_about_version"
+		android:key="@string/pref_key_about_version" />
+  </PreferenceCategory>
 </PreferenceScreen>

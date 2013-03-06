@@ -1,6 +1,8 @@
 package com.casimirlab.simpleDeadlines;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -21,8 +23,8 @@ public class Settings extends PreferenceActivity
 	super.onCreate(savedInstanceState);
 	addPreferencesFromResource(R.xml.preferences);
 
-	Preference pref = findPreference(getString(R.string.pref_key_notif_toggle));
-	pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+	Preference prefToggle = findPreference(getString(R.string.pref_key_notif_toggle));
+	prefToggle.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
 	{
 	  public boolean onPreferenceClick(Preference preference)
 	  {
@@ -30,6 +32,17 @@ public class Settings extends PreferenceActivity
 	    return true;
 	  }
 	});
+
+	Preference prefVersion = findPreference(getString(R.string.pref_key_about_version));
+	try
+	{
+	  PackageInfo pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+	  prefVersion.setSummary(pkgInfo.versionName);
+	}
+	catch (PackageManager.NameNotFoundException ex)
+	{
+	  prefVersion.setSummary("Unknown version");
+	}
       }
     };
 
