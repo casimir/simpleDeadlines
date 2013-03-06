@@ -22,6 +22,7 @@
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_title_about">
     <Preference android:title="@string/pref_title_about_version"
-		android:key="@string/pref_key_about_version" />
+		android:key="@string/pref_key_about_version"
+		android:summary="@string/pref_sum_about_version" />
   </PreferenceCategory>
 </PreferenceScreen>
