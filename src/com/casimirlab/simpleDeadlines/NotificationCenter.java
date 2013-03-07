@@ -17,30 +17,39 @@ import java.util.Calendar;
 
 public class NotificationCenter extends BroadcastReceiver
 {
+  public static final String ACTION_HIDE = "NotificationCenter.ACTION_HIDE";
   public static final String ACTION_SET = "NotificationCenter.ACTION_SET";
   public static final String ACTION_SHOW = "NotificationCenter.ACTION_SHOW";
-  public static final String ACTION_HIDE = "NotificationCenter.ACTION_HIDE";
   public static final String ACTION_TOGGLE = "NotificationCenter.ACTION_TOGGLE";
   public static final String EXTRA_HOUR = "NotificationCenter.EXTRA_HOUR";
   public static final String EXTRA_MINUTE = "NotificationCenter.EXTRA_MINUTE";
   private static final String TAG = "NotificationCenter";
-  private static final int NOTIFICATION_ID = 0x1234;
   private static final int ALARM_ID = 0x4321;
+  private static final int NOTIFICATION_ID = 0x1234;
   private static boolean _notificationShown = false;
   private Context _context;
+  private DataHelper _db;
 
   @Override
   public void onReceive(Context context, Intent intent)
   {
     _context = context;
+    _db = new DataHelper(_context);
+
     String action = intent.getAction();
     if (action.equals(ACTION_SET)
 	|| action.equals(Intent.ACTION_BOOT_COMPLETED))
       setAlarm(intent);
     else if (action.equals(ACTION_SHOW)
 	     || action.equals(ACTION_HIDE)
-	     || action.equals(ACTION_TOGGLE))
-      displayNotification(intent);
+	     || action.equals(ACTION_TOGGLE)
+	     || action.equals(DataHelper.ACTION_UPDATE))
+    {
+      SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
+      boolean persist = sp.getBoolean(_context.getString(R.string.pref_key_notif_persist),
+				      false);
+      displayNotification(intent, persist);
+    }
   }
 
   private void setAlarm(Intent intent)
@@ -68,12 +77,14 @@ public class NotificationCenter extends BroadcastReceiver
     }
 
     AlarmManager am = (AlarmManager)_context.getSystemService(Service.ALARM_SERVICE);
-    PendingIntent pi = PendingIntent.getBroadcast(_context, ALARM_ID, new Intent(ACTION_SHOW), PendingIntent.FLAG_CANCEL_CURRENT);
+    PendingIntent pi = PendingIntent.getBroadcast(_context, ALARM_ID,
+						  new Intent(ACTION_SHOW),
+						  PendingIntent.FLAG_CANCEL_CURRENT);
     am.cancel(pi);
     am.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pi);
   }
 
-  private void displayNotification(Intent intent)
+  private void displayNotification(Intent intent, boolean persist)
   {
     NotificationManager nm = (NotificationManager)_context.getSystemService(Service.NOTIFICATION_SERVICE);
     String action = intent.getAction();
@@ -81,13 +92,13 @@ public class NotificationCenter extends BroadcastReceiver
     if (action.equals(ACTION_TOGGLE))
       action = _notificationShown ? ACTION_HIDE : ACTION_SHOW;
 
-    if (action.equals(ACTION_SHOW))
+    if (action.equals(ACTION_SHOW)
+	|| action.equals(DataHelper.ACTION_UPDATE))
     {
-      DataHelper db = new DataHelper(_context);
-      NotificationAdapter adapter = new NotificationAdapter(_context, db, R.layout.notif);
+      NotificationAdapter adapter = new NotificationAdapter(_context, _db, R.layout.notif);
       if (!adapter.isEmpty())
       {
-	nm.notify(NOTIFICATION_ID, makeNotification(adapter));
+	nm.notify(NOTIFICATION_ID, makeNotification(adapter, persist));
 	_notificationShown = true;
       }
     }
@@ -98,18 +109,20 @@ public class NotificationCenter extends BroadcastReceiver
     }
   }
 
-  private Notification makeNotification(NotificationAdapter adapter)
+  private Notification makeNotification(NotificationAdapter adapter, boolean persist)
   {
     Intent i = new Intent(_context, Deadlines.class);
     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     PendingIntent pi = PendingIntent.getActivity(_context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
     Notification.Builder builder = new Notification.Builder(_context);
-    builder.setAutoCancel(true);
     builder.setSmallIcon(R.drawable.ic_status);
     builder.setContentTitle(TAG);
     builder.setContent(adapter.getView());
     builder.setContentIntent(pi);
+    builder.setAutoCancel(!persist);
+    builder.setOngoing(persist);
+    builder.setOnlyAlertOnce(persist);
 
     Notification notif = builder.getNotification();
     return notif;

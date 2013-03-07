@@ -1,6 +1,7 @@
 package com.casimirlab.simpleDeadlines.data;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 public class DataHelper extends SQLiteOpenHelper
 {
+  public static final String ACTION_UPDATE = "DataHelper.ACTION_UPDATE";
   public static final int TYPE_PENDING = 0;
   public static final int TYPE_ARCHIVED = 1;
   public static final int TYPE_ALL = 2;
@@ -24,10 +26,12 @@ public class DataHelper extends SQLiteOpenHelper
   public static final String KEY_DONE = "done";
   private static final String DB_NAME = "deadlines.db";
   private static final int DB_VERSION = 1;
+  private Context _context;
 
   public DataHelper(Context context)
   {
     super(context, DB_NAME, null, DB_VERSION);
+    _context = context;
 
     // Easy init.
     SQLiteDatabase db = getWritableDatabase();
@@ -58,6 +62,7 @@ public class DataHelper extends SQLiteOpenHelper
   public void create(DeadlineModel model)
   {
     getWritableDatabase().insert(TABLE_NAME, null, DeadlineModel.toValues(model));
+    _context.sendBroadcast(new Intent(ACTION_UPDATE));
   }
 
   public DeadlineModel read(int id)
@@ -83,6 +88,8 @@ public class DataHelper extends SQLiteOpenHelper
     SQLiteDatabase db = getWritableDatabase();
     db.update(TABLE_NAME, DeadlineModel.toValues(model), where, whereArgs);
     db.close();
+
+    _context.sendBroadcast(new Intent(ACTION_UPDATE));
   }
 
   public void delete(int id)
@@ -95,6 +102,8 @@ public class DataHelper extends SQLiteOpenHelper
     SQLiteDatabase db = getWritableDatabase();
     db.delete(TABLE_NAME, where, whereArgs);
     db.close();
+
+    _context.sendBroadcast(new Intent(ACTION_UPDATE));
   }
 
   public int count()

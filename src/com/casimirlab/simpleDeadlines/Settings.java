@@ -23,6 +23,19 @@ public class Settings extends PreferenceActivity
 	super.onCreate(savedInstanceState);
 	addPreferencesFromResource(R.xml.preferences);
 
+	Preference prefPersit = findPreference(getString(R.string.pref_key_notif_persist));
+	prefPersit.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+	{
+	  public boolean onPreferenceChange(Preference preference, Object newValue)
+	  {
+	    String act = (Boolean)newValue
+		    ? NotificationCenter.ACTION_SHOW
+		    : NotificationCenter.ACTION_HIDE;
+	    sendBroadcast(new Intent(act));
+	    return true;
+	  }
+	});
+
 	Preference prefToggle = findPreference(getString(R.string.pref_key_notif_toggle));
 	prefToggle.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
 	{

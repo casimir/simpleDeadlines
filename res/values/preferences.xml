@@ -19,9 +19,9 @@
   <string name="pref_title_editor">Éditeur</string>
 
   <string name="pref_title_editor_calendar">Vue calendrier</string>
-  <string name="pref_key_editor_calendar">notif_persist</string>
-  <string name="pref_sum_editor_calendar_off">Choix par roues</string>
-  <string name="pref_sum_editor_calendar_on">Choix par calendrier</string>
+  <string name="pref_key_editor_calendar">editor_calendar</string>
+  <string name="pref_sum_editor_calendar_off">Date par roues</string>
+  <string name="pref_sum_editor_calendar_on">Date par calendrier</string>
 
   <string name="pref_title_about">À propos</string>
 

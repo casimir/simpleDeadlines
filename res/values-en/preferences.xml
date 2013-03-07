@@ -14,8 +14,8 @@
   <string name="pref_title_editor">Editor</string>
 
   <string name="pref_title_editor_calendar">Calendar view</string>
-  <string name="pref_sum_editor_calendar_off">Choose with spinners</string>
-  <string name="pref_sum_editor_calendar_on">Choose with a calendar view</string>
+  <string name="pref_sum_editor_calendar_off">Date with spinners</string>
+  <string name="pref_sum_editor_calendar_on">Date with a calendar view</string>
 
   <string name="pref_title_about">About</string>
 
