@@ -25,6 +25,7 @@ public class DeadlineEditor extends Activity
   private boolean _isNew;
   private int _modelId;
   private DataHelper _db;
+  private DatePicker _dueDate;
 
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -36,8 +37,14 @@ public class DeadlineEditor extends Activity
     _isNew = extras.getBoolean(TYPE_NEW, false);
     _modelId = extras.getInt(MODEL_ID, -1);
     _db = new DataHelper(this);
+    _dueDate = (DatePicker)findViewById(R.id.due_date);
 
     setTitle(_isNew ? R.string.act_new : R.string.act_edit);
+
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+    boolean showCalendar = sp.getBoolean(getString(R.string.pref_key_editor_calendar), false);
+    _dueDate.setSpinnersShown(!showCalendar);
+    _dueDate.setCalendarViewShown(showCalendar);
   }
 
   @Override
@@ -56,17 +63,11 @@ public class DeadlineEditor extends Activity
       group.setText(model.Group());
       group.setAdapter(new GroupAdapter(this, _db.groups(DataHelper.TYPE_ALL)));
 
-      DatePicker dueDate = (DatePicker)findViewById(R.id.due_date);
       Calendar dateValue = Calendar.getInstance();
       dateValue.setTime(model.DueDate());
-      dueDate.updateDate(dateValue.get(Calendar.YEAR),
+      _dueDate.updateDate(dateValue.get(Calendar.YEAR),
 			 dateValue.get(Calendar.MONTH),
 			 dateValue.get(Calendar.DAY_OF_MONTH));
-
-      SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-      boolean showCalendar = sp.getBoolean(getString(R.string.pref_key_editor_calendar), false);
-      dueDate.setSpinnersShown(!showCalendar);
-      dueDate.setCalendarViewShown(showCalendar);
     }
   }
 
@@ -122,7 +123,9 @@ public class DeadlineEditor extends Activity
     model.setDone(false);
     model.setLabel(label.getText().toString());
     model.setGroup(group.getText().toString());
-    Date dueDateValue = new GregorianCalendar(dueDate.getYear(), dueDate.getMonth(), dueDate.getDayOfMonth()).getTime();
+    Date dueDateValue = new GregorianCalendar(dueDate.getYear(),
+					      dueDate.getMonth(),
+					      dueDate.getDayOfMonth()).getTime();
     model.setDueDate(dueDateValue);
 
     return model;
