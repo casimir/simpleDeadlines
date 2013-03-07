@@ -1,7 +1,9 @@
 package com.casimirlab.simpleDeadlines;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -60,6 +62,11 @@ public class DeadlineEditor extends Activity
       dueDate.updateDate(dateValue.get(Calendar.YEAR),
 			 dateValue.get(Calendar.MONTH),
 			 dateValue.get(Calendar.DAY_OF_MONTH));
+
+      SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+      boolean showCalendar = sp.getBoolean(getString(R.string.pref_key_editor_calendar), false);
+      dueDate.setSpinnersShown(!showCalendar);
+      dueDate.setCalendarViewShown(showCalendar);
     }
   }
 

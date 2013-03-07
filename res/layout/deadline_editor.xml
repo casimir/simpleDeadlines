@@ -19,5 +19,6 @@
   <DatePicker android:id="@+id/due_date"
 	      android:layout_width="match_parent"
 	      android:layout_height="wrap_content"
-	      android:padding="2dp" />
+	      android:padding="2dp"
+	      android:calendarViewShown="false"  />
 </LinearLayout>

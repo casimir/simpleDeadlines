@@ -20,6 +20,13 @@
 		android:summary="@string/pref_sum_notif_toggle"
 		android:dependency="@string/pref_key_notif_persist" />
   </PreferenceCategory>
+  <PreferenceCategory android:title="@string/pref_title_editor">
+    <CheckBoxPreference android:title="@string/pref_title_editor_calendar"
+			android:key="@string/pref_key_editor_calendar"
+			android:summaryOff="@string/pref_sum_editor_calendar_off"
+			android:summaryOn="@string/pref_sum_editor_calendar_on"
+			android:persistent="true" />
+  </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_title_about">
     <Preference android:title="@string/pref_title_about_version"
 		android:key="@string/pref_key_about_version"

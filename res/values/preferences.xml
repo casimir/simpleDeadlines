@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="pref_title_notif">Notifications</string>
+  <string name="pref_title_notif">Notification</string>
   <string name="pref_key_notif">notif</string>
 
   <string name="pref_title_notif_persist">Notification persistante</string>
@@ -16,7 +16,14 @@
   <string name="pref_key_notif_toggle">notif_toggle</string>
   <string name="pref_sum_notif_toggle">Afficher ou cacher la notification</string>
 
-  <string name="pref_title_about">À propos de Simple Deadlines</string>
+  <string name="pref_title_editor">Éditeur</string>
+
+  <string name="pref_title_editor_calendar">Vue calendrier</string>
+  <string name="pref_key_editor_calendar">notif_persist</string>
+  <string name="pref_sum_editor_calendar_off">Choix par roues</string>
+  <string name="pref_sum_editor_calendar_on">Choix par calendrier</string>
+
+  <string name="pref_title_about">À propos</string>
 
   <string name="pref_title_about_version">Numéro de version</string>
   <string name="pref_key_about_version">about_version</string>
