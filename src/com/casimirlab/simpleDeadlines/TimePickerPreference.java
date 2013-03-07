@@ -28,7 +28,8 @@ public class TimePickerPreference extends DialogPreference
     super.onSetInitialValue(restorePersistedValue, defaultValue);
 
     String value = restorePersistedValue
-	    ? getPersistedString(DEFAULT_VALUE) : String.valueOf(defaultValue);
+	    ? getPersistedString(DEFAULT_VALUE)
+	    : String.valueOf(defaultValue);
     String[] timetab = value.split(":");
     setSummary(Integer.valueOf(timetab[0]), Integer.valueOf(timetab[1]));
   }
