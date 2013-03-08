@@ -93,7 +93,7 @@ public class NotificationCenter extends BroadcastReceiver
       action = _notificationShown ? ACTION_HIDE : ACTION_SHOW;
 
     if (action.equals(ACTION_SHOW)
-	|| action.equals(DataHelper.ACTION_UPDATE))
+	|| (action.equals(DataHelper.ACTION_UPDATE) && persist))
     {
       NotificationAdapter adapter = new NotificationAdapter(_context, _db, R.layout.notif);
       if (!adapter.isEmpty())
