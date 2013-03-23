@@ -1,0 +1,10 @@
+<resources>
+  <string name="app_name">"Simple Deadlines"</string>
+  <string name="drawer_group_pick">Gruppe wählen</string>
+  <string name="drawer_group_clean">Auswahl aufheben</string>
+  <string name="empty_list">"Knopf drücken, um zu beginnen"</string>
+  <string name="empty_label">"Es wird mindestens ein Name benötigt"</string>
+  <string name="hint_label">"Name"</string>
+  <string name="hint_group">"Gruppe"</string>
+  <string name="hint_due_date">"Datum"</string>
+</resources>
