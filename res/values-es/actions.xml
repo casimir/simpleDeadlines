@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="act_nav_list">
+    <item>"En curso"</item>
+    <item>"Archivado"</item>
+  </string-array>
+  <string name="act_delete">"Borrar"</string>
+  <string name="act_edit">"Editar"</string>
+  <string name="act_new">"Nuevo"</string>
+  <string name="act_settings">"Ajustes"</string>
+</resources>
