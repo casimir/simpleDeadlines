@@ -199,7 +199,7 @@ public class Deadlines extends ListActivity
   @Override
   public void onBackPressed()
   {
-    if (!_drawer.isOpen())
+    if (!_drawer.isOpened())
       super.onBackPressed();
     else
       _drawer.close();

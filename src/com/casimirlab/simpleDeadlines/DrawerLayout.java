@@ -24,18 +24,16 @@ public class DrawerLayout extends FrameLayout
   private static final float BEVEL_WIDTH = 25.0f;
   private static final int SCROLL_DURATION = 400;
   private static final int SHADOW_WIDTH = 8;
-  private boolean _isDrawerAdded;
   private boolean _isInGesture;
   private boolean _isMoving;
-  private boolean _isOpen;
+  private boolean _isOpened;
   /* Graphics */
-  private ViewGroup _contentGroup;
-  private ViewGroup _decorContentGroup;
-  private ViewGroup _decorRootGroup;
-  private ViewGroup _drawerContent;
-  private ViewGroup _rootGroup;
+  private ViewGroup _contentView;
+  private ViewGroup _rootView;
+  private ViewGroup _drawerContentView;
   private Drawable _shadow;
   /* Moves */
+  private Callback _callback;
   private int _currentX;
   private int _currentY;
   private int _drawerWidth;
@@ -47,26 +45,38 @@ public class DrawerLayout extends FrameLayout
   private ViewConfiguration _vc;
   private VelocityTracker _vt;
   /* Threads */
-  private Callback _callback;
-  private Handler _scrollerHandler;
   private Runnable _closeRunnable;
   private Runnable _openRunnable;
+  private Handler _scrollerHandler;
 
   public DrawerLayout(Activity act, int drawerLayout)
   {
     super(act);
 
-    _rootGroup = (ViewGroup)act.getWindow().getDecorView();
-    _contentGroup = (ViewGroup)_rootGroup.findViewById(android.R.id.content);
-    _drawerContent = (ViewGroup)LayoutInflater.from(act).inflate(drawerLayout, null);
-    _drawerContent.setVisibility(INVISIBLE);
+    ViewGroup decorView = (ViewGroup)act.getWindow().getDecorView();
+    ViewGroup contentView = (ViewGroup)decorView.findViewById(android.R.id.content);
+    _rootView = (ViewGroup)contentView.getParent();
+    _contentView = contentView;
+    _contentView.setBackgroundDrawable(decorView.getBackground());
+    _contentView.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View view)
+      {
+      }
+    });
+    _drawerContentView = (ViewGroup)LayoutInflater.from(act).inflate(drawerLayout, null);
+    _drawerContentView.setVisibility(INVISIBLE);
+    int contentIdx = _rootView.indexOfChild(contentView);
+
     int[] colors = new int[]
     {
       Color.parseColor("#00000000"), Color.parseColor("#FF000000")
     };
+    final DisplayMetrics dm = act.getResources().getDisplayMetrics();
     _shadow = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+    _shadow.setBounds(-SHADOW_WIDTH, 0, 0, dm.heightPixels);
 
-    DisplayMetrics dm = act.getResources().getDisplayMetrics();
     float wBevel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, BEVEL_WIDTH, dm);
     _minWidth = Math.round(wBevel);
     _vc = ViewConfiguration.get(getContext());
@@ -83,7 +93,12 @@ public class DrawerLayout extends FrameLayout
       }
     });
 
-    updateHierarchy();
+    _rootView.removeViewAt(contentIdx);
+    addView(_drawerContentView,
+	    new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
+    addView(_contentView,
+	    new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+    _rootView.addView(this, contentIdx);
   }
 
   @Override
@@ -91,7 +106,7 @@ public class DrawerLayout extends FrameLayout
   {
     super.dispatchDraw(canvas);
 
-    if (_isOpen || _isMoving)
+    if (_isOpened || _isMoving)
     {
       canvas.save();
       canvas.translate(_offset, 0);
@@ -110,13 +125,13 @@ public class DrawerLayout extends FrameLayout
 	_startY = (int)ev.getY();
 	_currentX = _startX;
 	_currentY = _startY;
-	_isInGesture = (_startX < _minWidth && !_isOpen)
-		       || (_startX > _drawerWidth && _isOpen);
+	_isInGesture = (_startX < _minWidth && !_isOpened)
+		       || (_startX > _drawerWidth && _isOpened);
 	return false;
       case MotionEvent.ACTION_MOVE:
 	if (!_isInGesture)
 	  return false;
-	if (!_isOpen && (ev.getX() < _currentX || ev.getX() < _startX))
+	if (!_isOpened && (ev.getX() < _currentX || ev.getX() < _startX))
 	{
 	  _isInGesture = false;
 	  return false;
@@ -128,7 +143,7 @@ public class DrawerLayout extends FrameLayout
 	double abs = Math.hypot(_currentX - _startX, _currentY - _startY);
 	return abs >= _vc.getScaledTouchSlop();
       case MotionEvent.ACTION_UP:
-	if (_startX > _drawerWidth && _isOpen)
+	if (_startX > _drawerWidth && _isOpened)
 	  close();
 
 	_isInGesture = false;
@@ -145,17 +160,16 @@ public class DrawerLayout extends FrameLayout
   protected void onLayout(boolean changed, int left, int top, int right, int bottom)
   {
     Rect window = new Rect();
-    _rootGroup.getWindowVisibleDisplayFrame(window);
+    _rootView.getWindowVisibleDisplayFrame(window);
 
-    _drawerContent.layout(left, 0,
-			  right, bottom);
-    _decorContentGroup.layout(_decorContentGroup.getLeft(), 0,
-			      _decorContentGroup.getLeft() + right, bottom);
+    _drawerContentView.layout(left, top + window.top, right, bottom);
+    _contentView.layout(_contentView.getLeft(), _contentView.getTop(),
+			_contentView.getLeft() + right, bottom);
 
-    _drawerWidth = _drawerContent.getMeasuredWidth();
+    _drawerWidth = _drawerContentView.getMeasuredWidth();
     if (_drawerWidth > right - _minWidth)
     {
-      _drawerContent.setPadding(0, 0, _minWidth, 0);
+      _drawerContentView.setPadding(0, 0, _minWidth, 0);
       _drawerWidth -= _minWidth;
     }
   }
@@ -163,7 +177,6 @@ public class DrawerLayout extends FrameLayout
   @Override
   public boolean onTouchEvent(MotionEvent event)
   {
-    int widthPixels = getResources().getDisplayMetrics().widthPixels;
     int step = (int)(event.getX()) - _currentX;
     _currentX = (int)event.getX();
     _currentY = (int)event.getY();
@@ -172,23 +185,23 @@ public class DrawerLayout extends FrameLayout
     switch (event.getAction())
     {
       case MotionEvent.ACTION_MOVE:
-	_drawerContent.setVisibility(VISIBLE);
+	_drawerContentView.setVisibility(VISIBLE);
 	_isMoving = true;
 	if (_offset + step > _drawerWidth)
 	{
-	  _isOpen = true;
-	  _decorContentGroup.offsetLeftAndRight(_drawerWidth - _offset);
+	  _isOpened = true;
+	  _contentView.offsetLeftAndRight(_drawerWidth - _offset);
 	  _offset = _drawerWidth;
 	}
 	else if (_offset + step < 0 && _offset != 0)
 	{
-	  _isOpen = false;
-	  _decorContentGroup.offsetLeftAndRight(0 - _decorContentGroup.getLeft());
+	  _isOpened = false;
+	  _contentView.offsetLeftAndRight(0 - _contentView.getLeft());
 	  _offset = 0;
 	}
 	else
 	{
-	  _decorContentGroup.offsetLeftAndRight(step);
+	  _contentView.offsetLeftAndRight(step);
 	  _offset += step;
 	}
 	invalidate();
@@ -199,12 +212,12 @@ public class DrawerLayout extends FrameLayout
 	_vt.computeCurrentVelocity(1000);
 	if (Math.abs(_vt.getXVelocity()) > _vc.getScaledMinimumFlingVelocity())
 	{
-	  _isOpen = _vt.getXVelocity() <= 0;
+	  _isOpened = _vt.getXVelocity() <= 0;
 	  toggle();
 	}
 	else
 	{
-	  _isOpen = _offset < (_drawerWidth / 2);
+	  _isOpened = _offset < (_drawerWidth / 2);
 	  toggle();
 	}
 	return true;
@@ -217,7 +230,7 @@ public class DrawerLayout extends FrameLayout
    */
   public void close()
   {
-    if (!_isOpen)
+    if (!_isOpened)
       return;
 
     if (_isMoving)
@@ -234,16 +247,18 @@ public class DrawerLayout extends FrameLayout
       public void run()
       {
 	final boolean scrolling = _scroller.computeScrollOffset();
-	_decorContentGroup.offsetLeftAndRight(_scroller.getCurrX() - _offset);
+	_contentView.offsetLeftAndRight(_scroller.getCurrX() - _offset);
 	_offset = _scroller.getCurrX();
 	postInvalidate();
 
 	if (!scrolling)
 	{
-	  _drawerContent.setVisibility(INVISIBLE);
+	  _drawerContentView.setVisibility(INVISIBLE);
 	  _isMoving = false;
-	  _isOpen = false;
-	  _callback.close();
+	  _isOpened = false;
+
+	  if (_callback != null)
+	    _callback.close();
 	}
 	else
 	  _scrollerHandler.post(this);
@@ -259,17 +274,17 @@ public class DrawerLayout extends FrameLayout
    */
   public ViewGroup getContent()
   {
-    return _drawerContent;
+    return _drawerContentView;
   }
 
   /**
-   * True if the drawer is open false if it is closed.
+   * True if the drawer is opened false if it is closed.
    *
-   * @return
+   * @return The drawer state.
    */
-  public boolean isOpen()
+  public boolean isOpened()
   {
-    return _isOpen;
+    return _isOpened;
   }
 
   /**
@@ -277,7 +292,7 @@ public class DrawerLayout extends FrameLayout
    */
   public void open()
   {
-    if (_isOpen)
+    if (_isOpened)
       return;
 
     if (_isMoving)
@@ -285,7 +300,7 @@ public class DrawerLayout extends FrameLayout
       _scrollerHandler.removeCallbacks(_openRunnable);
       _scrollerHandler.removeCallbacks(_closeRunnable);
     }
-    _drawerContent.setVisibility(VISIBLE);
+    _drawerContentView.setVisibility(VISIBLE);
     _isMoving = true;
 
     final int widthPixels = getResources().getDisplayMetrics().widthPixels;
@@ -300,59 +315,23 @@ public class DrawerLayout extends FrameLayout
       public void run()
       {
 	final boolean scrolling = _scroller.computeScrollOffset();
-	_decorContentGroup.offsetLeftAndRight(_scroller.getCurrX() - _offset);
+	_contentView.offsetLeftAndRight(_scroller.getCurrX() - _offset);
 	_offset = _scroller.getCurrX();
 	postInvalidate();
 
 	if (!scrolling)
 	{
 	  _isMoving = false;
-	  _isOpen = true;
-	  _callback.open();
+	  _isOpened = true;
+
+	  if (_callback != null)
+	    _callback.open();
 	}
 	else
 	  _scrollerHandler.post(this);
       }
     };
     _scrollerHandler.post(_openRunnable);
-  }
-
-  /**
-   * Updates the window hierarchy. Add or delete the view of the drawer in the
-   * window root.
-   */
-  public void updateHierarchy()
-  {
-    final DisplayMetrics dm = getResources().getDisplayMetrics();
-
-    if (_drawerContent != null)
-      removeView(_drawerContent);
-    if (_decorContentGroup != null)
-    {
-      removeView(_decorContentGroup);
-      _decorRootGroup.addView(_decorContentGroup);
-      _decorContentGroup.setOnClickListener(null);
-      _decorContentGroup.setBackgroundColor(Color.TRANSPARENT);
-    }
-    if (_isDrawerAdded)
-      _decorRootGroup.removeView(this);
-
-    _decorContentGroup = _contentGroup;
-    _decorRootGroup = (ViewGroup)_contentGroup.getParent();
-    _decorRootGroup.removeView(_decorContentGroup);
-    addView(_drawerContent, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-    addView(_decorContentGroup, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-    _decorRootGroup.addView(this);
-    _isDrawerAdded = true;
-
-    _shadow.setBounds(-SHADOW_WIDTH, 0, 0, dm.heightPixels);
-    _decorContentGroup.setOnClickListener(new OnClickListener()
-    {
-      @Override
-      public void onClick(View view)
-      {
-      }
-    });
   }
 
   public void setCallback(Callback callback)
@@ -362,7 +341,7 @@ public class DrawerLayout extends FrameLayout
 
   public void setMaxWidth(int width)
   {
-    _drawerContent.setLayoutParams(new LayoutParams(width, LayoutParams.MATCH_PARENT));
+    _drawerContentView.setLayoutParams(new LayoutParams(width, LayoutParams.MATCH_PARENT));
   }
 
   /**
@@ -370,12 +349,13 @@ public class DrawerLayout extends FrameLayout
    */
   public void toggle()
   {
-    if (!_isOpen)
+    if (!_isOpened)
       open();
     else
       close();
 
-    _callback.toggle(_isOpen);
+    if (_callback != null)
+      _callback.toggle(_isOpened);
   }
 
   public static class Callback
