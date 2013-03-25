@@ -106,11 +106,6 @@ public class DataHelper extends SQLiteOpenHelper
     _context.sendBroadcast(new Intent(ACTION_UPDATE));
   }
 
-  public int count()
-  {
-    return (int)DatabaseUtils.queryNumEntries(getReadableDatabase(), TABLE_NAME);
-  }
-
   public Map<Integer, Integer> counts()
   {
     Map<Integer, Integer> ret = new HashMap<Integer, Integer>();
