@@ -61,7 +61,7 @@ public class Deadlines extends ListActivity
       public void onItemClick(AdapterView<?> parent, View view, int position, long id)
       {
 	Intent i = new Intent(Deadlines.this, DeadlineEditor.class);
-	i.putExtra(DeadlineEditor.MODEL_ID, (int)id);
+	i.putExtra(EditorDialogFragment.EXTRA_ID, (int)id);
 	startActivityForResult(i, MAGIC);
       }
     };
@@ -208,7 +208,7 @@ public class Deadlines extends ListActivity
   public void actionNew(View v)
   {
     Intent i = new Intent(this, DeadlineEditor.class);
-    i.putExtra(DeadlineEditor.TYPE_NEW, true);
+    i.putExtra(EditorDialogFragment.EXTRA_ISNEW, true);
     startActivityForResult(i, MAGIC);
   }
 
