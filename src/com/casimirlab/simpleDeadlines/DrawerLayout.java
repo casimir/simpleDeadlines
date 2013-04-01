@@ -162,7 +162,7 @@ public class DrawerLayout extends FrameLayout
     Rect window = new Rect();
     _rootView.getWindowVisibleDisplayFrame(window);
 
-    _drawerContentView.layout(left, top + window.top, right, bottom);
+    _drawerContentView.layout(left, 0, right, bottom);
     _contentView.layout(_contentView.getLeft(), _contentView.getTop(),
 			_contentView.getLeft() + right, bottom);
 
