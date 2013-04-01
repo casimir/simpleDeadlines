@@ -2,9 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	     android:layout_width="match_parent"
 	     android:layout_height="match_parent"
-	     style="@style/SimpleTheme.Drawer.ListView.Item">
+	     android:background="@drawable/list_selector_background">
   <TextView android:id="@+id/group"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    style="@style/SimpleTheme.Drawer.GroupLabel" />
+	    android:padding="8dp"
+	    android:textSize="18sp" />
 </FrameLayout>
