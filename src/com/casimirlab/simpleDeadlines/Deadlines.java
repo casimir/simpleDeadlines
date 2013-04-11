@@ -1,33 +1,30 @@
 package com.casimirlab.simpleDeadlines;
 
 import android.app.ActionBar;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ActionMode;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import com.casimirlab.simpleDeadlines.data.DataHelper;
-import com.casimirlab.simpleDeadlines.data.DeadlineAdapter;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Deadlines extends ListActivity
+public class Deadlines extends FragmentActivity
 {
   private static final int MAGIC = 0x4242;
   private ActionBar _actionBar;
   private DrawerLayout _drawer;
   private ListView _grouplist;
   private View _filterReset;
+  private ViewPager _pager;
   private DataHelper _db;
   private int _currentType;
   private String _currentGroup;
@@ -50,6 +47,7 @@ public class Deadlines extends ListActivity
       {
 	_currentType = position;
 	resetAdapters();
+	_pager.setCurrentItem(position);
 	return true;
       }
     };
@@ -73,13 +71,13 @@ public class Deadlines extends ListActivity
 	// TODO optimize
 	TextView drawerTitle = (TextView)_drawer.findViewById(R.id.title);
 	_drawer.setMaxWidth(drawerTitle.getMeasuredWidth());
-	getListView().setOnItemClickListener(null);
+//	getListView().setOnItemClickListener(null);
       }
 
       @Override
       public void close()
       {
-	getListView().setOnItemClickListener(listener);
+//	getListView().setOnItemClickListener(listener);
       }
     });
     _grouplist = (ListView)_drawer.findViewById(R.id.grouplist);
@@ -95,55 +93,69 @@ public class Deadlines extends ListActivity
 	_grouplist.setItemChecked(position, true);
       }
     });
-    getListView().setOnItemClickListener(listener);
-    getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-    getListView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener()
+    /*
+     getListView().setOnItemClickListener(listener);
+     getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+     getListView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener()
+     {
+     private List<Integer> _selected;
+
+     public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
+     {
+     if (checked)
+     _selected.add(Integer.valueOf((int)id));
+     else
+     _selected.remove(Integer.valueOf((int)id));
+     mode.setTitle(_selected.size() + " selected items");
+     }
+
+     public boolean onCreateActionMode(ActionMode mode, Menu menu)
+     {
+     MenuInflater inflater = mode.getMenuInflater();
+     inflater.inflate(R.menu.cab, menu);
+     return true;
+     }
+
+     public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+     {
+     _selected = new ArrayList<Integer>();
+     return true;
+     }
+
+     public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+     {
+     if (item.getItemId() == R.id.act_delete)
+     {
+     for (int id : _selected)
+     _db.delete(id);
+     resetAdapters();
+     mode.finish();
+     return true;
+     }
+     return false;
+     }
+
+     public void onDestroyActionMode(ActionMode arg0)
+     {
+     _selected = null;
+     }
+     }
+     );
+     */
+
+    _pager = (ViewPager)findViewById(R.id.pager);
+    _pager.setAdapter(new DeadlinePagerAdapter(getSupportFragmentManager()));
+    _pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
     {
-      private List<Integer> _selected;
-
-      public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
+      @Override
+      public void onPageSelected(int position)
       {
-	if (checked)
-	  _selected.add(Integer.valueOf((int)id));
-	else
-	  _selected.remove(Integer.valueOf((int)id));
-	mode.setTitle(_selected.size() + " selected items");
-      }
-
-      public boolean onCreateActionMode(ActionMode mode, Menu menu)
-      {
-	MenuInflater inflater = mode.getMenuInflater();
-	inflater.inflate(R.menu.cab, menu);
-	return true;
-      }
-
-      public boolean onPrepareActionMode(ActionMode mode, Menu menu)
-      {
-	_selected = new ArrayList<Integer>();
-	return true;
-      }
-
-      public boolean onActionItemClicked(ActionMode mode, MenuItem item)
-      {
-	if (item.getItemId() == R.id.act_delete)
-	{
-	  for (int id : _selected)
-	    _db.delete(id);
-	  resetAdapters();
-	  mode.finish();
-	  return true;
-	}
-	return false;
-      }
-
-      public void onDestroyActionMode(ActionMode arg0)
-      {
-	_selected = null;
+	getActionBar().setSelectedNavigationItem(position);
       }
     });
 
     _db = new DataHelper(this);
-    _currentType = DataHelper.TYPE_PENDING;
+    _currentType = DataHelper.TYPE_IN_PROGRESS;
     updateFilter(null);
   }
 
@@ -175,10 +187,34 @@ public class Deadlines extends ListActivity
     {
       actionNew(null);
       return true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     else if (item.getItemId() == R.id.act_settings)
     {
       startActivity(new Intent(this, Settings.class));
+
+
+
+
+
+
+
+
       return true;
     }
     return super.onOptionsItemSelected(item);
@@ -191,7 +227,7 @@ public class Deadlines extends ListActivity
 
     if (requestCode == MAGIC && resultCode == RESULT_OK)
     {
-      _currentType = DataHelper.TYPE_PENDING;
+      _currentType = DataHelper.TYPE_IN_PROGRESS;
       resetAdapters();
     }
   }
@@ -208,7 +244,8 @@ public class Deadlines extends ListActivity
   public void actionNew(View v)
   {
     Intent i = new Intent(this, DeadlineEditor.class);
-    i.putExtra(EditorDialogFragment.EXTRA_ISNEW, true);
+    i.putExtra(EditorDialogFragment.EXTRA_ISNEW,
+	       true);
     startActivityForResult(i, MAGIC);
   }
 
@@ -218,7 +255,7 @@ public class Deadlines extends ListActivity
     _actionBar.setIcon(groups.getCount() > 0 ? R.drawable.ic_act_filter : R.drawable.app_icon);
     _actionBar.setDisplayHomeAsUpEnabled(groups.getCount() > 0);
     _grouplist.setAdapter(groups);
-    setListAdapter(new DeadlineAdapter(this, _db.deadlines(_currentType, _currentGroup)));
+//    setListAdapter(new DeadlineAdapter(this, _db.deadlines(_currentType, _currentGroup)));
   }
 
   public void resetFilter(View v)

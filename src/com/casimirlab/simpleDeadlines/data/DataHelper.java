@@ -15,7 +15,7 @@ import java.util.Map;
 public class DataHelper extends SQLiteOpenHelper
 {
   public static final String ACTION_UPDATE = "DataHelper.ACTION_UPDATE";
-  public static final int TYPE_PENDING = 0;
+  public static final int TYPE_IN_PROGRESS = 0;
   public static final int TYPE_ARCHIVED = 1;
   public static final int TYPE_ALL = 2;
   public static final String TABLE_NAME = "deadlines";
@@ -147,7 +147,7 @@ public class DataHelper extends SQLiteOpenHelper
 
     switch (type)
     {
-      case TYPE_PENDING:
+      case TYPE_IN_PROGRESS:
 	return getReadableDatabase().query(TABLE_NAME, null,
 					   "NOT(" + selection + ")" + groupSelection, selectionArgs,
 					   null, null, KEY_DUE_DATE);
@@ -178,7 +178,7 @@ public class DataHelper extends SQLiteOpenHelper
     String having = KEY_GROUP + " != ''";
     switch (type)
     {
-      case TYPE_PENDING:
+      case TYPE_IN_PROGRESS:
 	c = getReadableDatabase().query(TABLE_NAME, cols,
 					"NOT(" + selection + ")", selectionArgs,
 					KEY_GROUP, having, KEY_GROUP);
