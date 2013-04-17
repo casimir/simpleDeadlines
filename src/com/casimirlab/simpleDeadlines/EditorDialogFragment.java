@@ -58,6 +58,7 @@ public class EditorDialogFragment extends DialogFragment
     _dueDateView = (DatePicker)v.findViewById(R.id.due_date);
     _dueDateView.setSpinnersShown(!showCalendar);
     _dueDateView.setCalendarViewShown(showCalendar);
+    _dueDateView.getCalendarView().setFirstDayOfWeek(Calendar.getInstance().getFirstDayOfWeek());
 
     DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener()
     {
