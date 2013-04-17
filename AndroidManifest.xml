@@ -27,6 +27,11 @@
 	      android:label="@string/act_settings">
     </activity>
 
+    <provider android:authorities="com.casimirlab.simpleDeadlines.provider"
+	      android:name=".data.DeadlineProvider"
+	      android:exported="false">
+    </provider> 
+
     <receiver android:name="NotificationCenter">
       <intent-filter>
 	<action android:name="DataHelper.ACTION_UPDATE" />

@@ -6,7 +6,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import com.casimirlab.simpleDeadlines.data.DeadlineAdapter;
-import com.casimirlab.simpleDeadlines.data.DeadlineListLoader;
 
 public class DeadlineListFragment extends ListFragment implements LoaderCallbacks<DeadlineAdapter>
 {
@@ -35,7 +34,8 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
   public Loader<DeadlineAdapter> onCreateLoader(int id, Bundle args)
   {
     String group = args.getString(EXTRA_GROUP);
-    return new DeadlineListLoader(getActivity(), _type, group);
+//    return new DeadlineListLoader(getActivity(), _type, group);
+    return null;
   }
 
   public void onLoadFinished(Loader<DeadlineAdapter> loader, DeadlineAdapter data)
