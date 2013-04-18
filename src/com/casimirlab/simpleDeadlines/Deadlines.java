@@ -45,8 +45,10 @@ public class Deadlines extends FragmentActivity
     {
       public boolean onNavigationItemSelected(int position, long itemId)
       {
-	_currentType = position;
-	resetAdapters();
+	_currentType = position == 0
+		? DeadlineListFragment.TYPE_IN_PROGRESS
+		: DeadlineListFragment.TYPE_ARCHIVED;
+//	resetAdapters(); // FIXME muuuhuhm
 	_pager.setCurrentItem(position);
 	return true;
       }
@@ -155,7 +157,7 @@ public class Deadlines extends FragmentActivity
     });
 
     _db = new DataHelper(this);
-    _currentType = DataHelper.TYPE_IN_PROGRESS;
+    _currentType = DeadlineListFragment.TYPE_IN_PROGRESS;
     updateFilter(null);
   }
 
@@ -187,34 +189,10 @@ public class Deadlines extends FragmentActivity
     {
       actionNew(null);
       return true;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
     else if (item.getItemId() == R.id.act_settings)
     {
       startActivity(new Intent(this, Settings.class));
-
-
-
-
-
-
-
-
       return true;
     }
     return super.onOptionsItemSelected(item);
@@ -227,7 +205,7 @@ public class Deadlines extends FragmentActivity
 
     if (requestCode == MAGIC && resultCode == RESULT_OK)
     {
-      _currentType = DataHelper.TYPE_IN_PROGRESS;
+      _currentType = DeadlineListFragment.TYPE_IN_PROGRESS;
       resetAdapters();
     }
   }

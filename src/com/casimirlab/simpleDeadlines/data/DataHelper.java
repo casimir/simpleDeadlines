@@ -15,8 +15,6 @@ import java.util.Map;
 public class DataHelper extends SQLiteOpenHelper
 {
   public static final String ACTION_UPDATE = "DataHelper.ACTION_UPDATE";
-  public static final int TYPE_IN_PROGRESS = 0;
-  public static final int TYPE_ARCHIVED = 1;
   public static final int TYPE_ALL = 2;
   public static final String TABLE_NAME = "deadlines";
   public static final String KEY_ID = "_id";
@@ -147,11 +145,11 @@ public class DataHelper extends SQLiteOpenHelper
 
     switch (type)
     {
-      case TYPE_IN_PROGRESS:
+      case DeadlinesContract.Deadlines.TYPE_IN_PROGRESS:
 	return getReadableDatabase().query(TABLE_NAME, null,
 					   "NOT(" + selection + ")" + groupSelection, selectionArgs,
 					   null, null, KEY_DUE_DATE);
-      case TYPE_ARCHIVED:
+      case DeadlinesContract.Deadlines.TYPE_ARCHIVED:
 	return getReadableDatabase().query(TABLE_NAME, null,
 					   selection + groupSelection, selectionArgs,
 					   null, null, KEY_DUE_DATE);
@@ -178,12 +176,12 @@ public class DataHelper extends SQLiteOpenHelper
     String having = KEY_GROUP + " != ''";
     switch (type)
     {
-      case TYPE_IN_PROGRESS:
+      case DeadlinesContract.Deadlines.TYPE_IN_PROGRESS:
 	c = getReadableDatabase().query(TABLE_NAME, cols,
 					"NOT(" + selection + ")", selectionArgs,
 					KEY_GROUP, having, KEY_GROUP);
 	break;
-      case TYPE_ARCHIVED:
+      case DeadlinesContract.Deadlines.TYPE_ARCHIVED:
 	c = getReadableDatabase().query(TABLE_NAME, cols,
 					selection, selectionArgs,
 					KEY_GROUP, having, KEY_GROUP);

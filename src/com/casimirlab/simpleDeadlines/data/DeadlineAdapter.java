@@ -17,13 +17,9 @@ import java.util.Calendar;
 
 public class DeadlineAdapter extends CursorAdapter
 {
-  private DataHelper _db;
-
   public DeadlineAdapter(Context context, Cursor c)
   {
-    super(context, c, true);
-
-    _db = new DataHelper(context);
+    super(context, c);
   }
 
   @Override
@@ -66,7 +62,7 @@ public class DeadlineAdapter extends CursorAdapter
       {
 	model.setDone(isChecked);
 	setStrikeText(label, isChecked);
-	_db.update(model);
+//	_db.update(model);
 	// FIXME autorefresh
       }
     });

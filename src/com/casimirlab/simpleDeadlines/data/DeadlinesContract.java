@@ -12,6 +12,10 @@ public final class DeadlinesContract
     public static final String CONTENT_TYPE = "vnd.android.cursor.dir/simpledeadlines.deadline";
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/simpledeadlines.deadline";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + DEADLINES_PATH);
+    public static final String FILTER_ARCHIVED = "archived";
+    public static final String FILTER_GROUP = "group";
+    public static final int TYPE_ARCHIVED = 0;
+    public static final int TYPE_IN_PROGRESS = 1;
   }
 
   public static final class DeadlinesColumns

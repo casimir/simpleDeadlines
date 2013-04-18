@@ -3,33 +3,31 @@ package com.casimirlab.simpleDeadlines;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DeadlinePagerAdapter extends FragmentStatePagerAdapter
 {
-  private DeadlineListFragment _inProgressFragment;
-  private DeadlineListFragment _archivedFragment;
+  private List<DeadlineListFragment> _frags;
 
   public DeadlinePagerAdapter(FragmentManager fm)
   {
     super(fm);
 
-    _inProgressFragment = DeadlineListFragment.newInstance(DeadlineListFragment.TYPE_IN_PROGRESS);
-    _archivedFragment = DeadlineListFragment.newInstance(DeadlineListFragment.TYPE_ARCHIVED);
+    _frags = new LinkedList<DeadlineListFragment>();
+    _frags.add(DeadlineListFragment.newInstance(DeadlineListFragment.TYPE_IN_PROGRESS));
+    _frags.add(DeadlineListFragment.newInstance(DeadlineListFragment.TYPE_ARCHIVED));
   }
 
   @Override
   public Fragment getItem(int i)
   {
-    if (i == DeadlineListFragment.TYPE_IN_PROGRESS)
-      return _inProgressFragment;
-    else if (i == DeadlineListFragment.TYPE_ARCHIVED)
-      return _archivedFragment;
-    return null;
+    return _frags.get(i);
   }
 
   @Override
   public int getCount()
   {
-    return 2;
+    return _frags.size();
   }
 }

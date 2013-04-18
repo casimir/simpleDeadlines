@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DeadlineProvider extends ContentProvider
 {
@@ -181,19 +183,20 @@ public class DeadlineProvider extends ContentProvider
     if (!archived)
       selection = "NOT(" + selection + ")";
     String groupSelection = "";
+    List<String> selectionArgs = new LinkedList<String>();
+    selectionArgs.add(String.valueOf(new Date().getTime()));
+    selectionArgs.add("1");
+
     if (!TextUtils.isEmpty(group))
+    {
       groupSelection = " AND " + DeadlinesContract.DeadlinesColumns.GROUP
 		       + " = " + DatabaseUtils.sqlEscapeString(group);
-    String[] selectionArgs = new String[]
-    {
-      String.valueOf(new Date().getTime()),
-      "1",
-      group
-    };
-
+      selectionArgs.add(group);
+    }
     SQLiteDatabase db = _dbHelper.getReadableDatabase();
+
     return db.query(DeadlinesContract.DEADLINES_PATH, null,
-		    selection + groupSelection, selectionArgs,
+		    selection + groupSelection, selectionArgs.toArray(new String[2]),
 		    null, null, DeadlinesContract.DeadlinesColumns.DUE_DATE);
   }
 
