@@ -1,13 +1,18 @@
 package com.casimirlab.simpleDeadlines;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +21,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.casimirlab.simpleDeadlines.data.DataHelper;
 import com.casimirlab.simpleDeadlines.data.DeadlineModel;
+import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +34,8 @@ public class EditorDialogFragment extends DialogFragment
   public static final String EXTRA_ISNEW = "editorfragment.typenew";
   private int _modelId;
   private boolean _isNew;
-  private DataHelper _db;
+  private ContentResolver _cr;
+  private Uri _currentUri;
   private TextView _labelView;
   private AutoCompleteTextView _groupView;
   private DatePicker _dueDateView;
@@ -40,9 +46,11 @@ public class EditorDialogFragment extends DialogFragment
     super.onCreate(savedInstanceState);
 
     Bundle args = getArguments();
-    _modelId = args.getInt(EXTRA_ID, -1);
+    _modelId = args.getInt(EXTRA_ID);
     _isNew = args.getBoolean(EXTRA_ISNEW);
-    _db = new DataHelper(getActivity());
+
+    _cr = getActivity().getContentResolver();
+    _currentUri = ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, _modelId);
   }
 
   @Override
@@ -67,32 +75,28 @@ public class EditorDialogFragment extends DialogFragment
 	if (which == Dialog.BUTTON_NEGATIVE)
 	{
 	  dialog.cancel();
-	  getActivity().setResult(Activity.RESULT_CANCELED);
 	  getActivity().finish();
 	  return;
 	}
 
-	DeadlineModel model = makeModel();
-	if (model.Label().length() == 0)
+	if (TextUtils.isEmpty(_labelView.getText().toString()))
 	{
 	  Toast.makeText(getActivity(), R.string.empty_label, Toast.LENGTH_SHORT).show();
-	  getActivity().setResult(Activity.RESULT_CANCELED);
 	  getActivity().finish();
 	  return;
 	}
 
 	if (which == Dialog.BUTTON_POSITIVE)
 	{
-	  if (model.Id() != -1)
-	    _db.update(model);
+	  if (_isNew)
+	    _cr.insert(DeadlinesContract.Deadlines.CONTENT_URI, getValues());
 	  else
-	    _db.create(model);
+	    _cr.update(_currentUri, getValues(), null, null);
 	}
 	else if (which == Dialog.BUTTON_NEUTRAL)
-	  _db.delete(_modelId);
+	  _cr.delete(_currentUri, null, null);
 
 	dialog.dismiss();
-	getActivity().setResult(Activity.RESULT_OK);
 	getActivity().finish();
       }
     };
@@ -109,10 +113,7 @@ public class EditorDialogFragment extends DialogFragment
       public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event)
       {
 	if (keyCode == KeyEvent.KEYCODE_BACK)
-	{
-	  getActivity().setResult(Activity.RESULT_CANCELED);
 	  getActivity().finish();
-	}
 	return false;
       }
     });
@@ -129,14 +130,17 @@ public class EditorDialogFragment extends DialogFragment
   {
     super.onStart();
 
-    if (_modelId >= 0)
+    if (!_isNew)
     {
-      DeadlineModel model = _db.read(_modelId);
+      Cursor c = _cr.query(_currentUri, null, null, null, null);
+      c.moveToFirst();
+      DeadlineModel model = DeadlineModel.fromCursor(c);
 
       _labelView.setText(model.Label());
 
       _groupView.setText(model.Group());
-      _groupView.setAdapter(new GroupAdapter(getActivity(), _db.groups(DataHelper.TYPE_ALL)));
+      Cursor cGroups = _cr.query(DeadlinesContract.Groups.CONTENT_URI, null, null, null, null);
+      _groupView.setAdapter(new GroupAdapter(getActivity(), cGroups));
 
       Calendar dateValue = Calendar.getInstance();
       dateValue.setTime(model.DueDate());
@@ -146,19 +150,22 @@ public class EditorDialogFragment extends DialogFragment
     }
   }
 
-  private DeadlineModel makeModel()
+  private ContentValues getValues()
   {
-    DeadlineModel model = new DeadlineModel();
-    model.setId(_modelId);
-    model.setDone(false);
-    model.setLabel(_labelView.getText().toString());
-    model.setGroup(_groupView.getText().toString());
+    ContentValues values = new ContentValues();
     Date dueDateValue = new GregorianCalendar(_dueDateView.getYear(),
 					      _dueDateView.getMonth(),
 					      _dueDateView.getDayOfMonth()).getTime();
-    model.setDueDate(dueDateValue);
 
-    return model;
+    if (!_isNew)
+      values.put(DeadlinesContract.DeadlinesColumns.ID, _modelId);
+
+    values.put(DeadlinesContract.DeadlinesColumns.DONE, 0);
+    values.put(DeadlinesContract.DeadlinesColumns.DUE_DATE, dueDateValue.getTime());
+    values.put(DeadlinesContract.DeadlinesColumns.GROUP, _groupView.getText().toString());
+    values.put(DeadlinesContract.DeadlinesColumns.LABEL, _labelView.getText().toString());
+
+    return values;
   }
 
   public static EditorDialogFragment newInstance(int id, boolean isNew)

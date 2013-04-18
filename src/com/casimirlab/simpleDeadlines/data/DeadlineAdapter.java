@@ -1,9 +1,13 @@
 package com.casimirlab.simpleDeadlines.data;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +21,13 @@ import java.util.Calendar;
 
 public class DeadlineAdapter extends CursorAdapter
 {
+  private Context _context;
+
   public DeadlineAdapter(Context context, Cursor c)
   {
     super(context, c);
+
+    _context = context;
   }
 
   @Override
@@ -56,14 +64,19 @@ public class DeadlineAdapter extends CursorAdapter
 
     holder.Done.setChecked(model.Done());
     final TextView label = holder.Label;
+    final int id = cursor.getInt(cursor.getColumnIndex(DeadlinesContract.DeadlinesColumns.ID));
     holder.Done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
     {
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
       {
 	model.setDone(isChecked);
 	setStrikeText(label, isChecked);
-//	_db.update(model);
-	// FIXME autorefresh
+
+	ContentResolver cr = _context.getContentResolver();
+	Uri uri = ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id);
+	ContentValues values = new ContentValues();
+	values.put(DeadlinesContract.DeadlinesColumns.DONE, isChecked ? 1 : 0);
+	cr.update(uri, values, null, null);
       }
     });
   }

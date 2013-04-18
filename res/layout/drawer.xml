@@ -10,17 +10,6 @@
 	    android:padding="10dp"
 	    android:textSize="22sp"
 	    android:textStyle="bold" />
-  <TextView android:id="@+id/filter_reset"
-	    android:text="@string/drawer_group_clean"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:gravity="center"
-	    android:shadowColor="#FFFFFF"
-	    android:shadowDx="2"
-	    android:shadowDy="2"
-	    android:shadowRadius="4"
-	    android:onClick="resetFilter"
-	    style="@style/SimpleTheme.Drawer.ActionTextView" />
   <ListView android:id="@+id/grouplist"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent" />

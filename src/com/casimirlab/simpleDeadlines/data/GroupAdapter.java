@@ -1,42 +1,29 @@
 package com.casimirlab.simpleDeadlines.data;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CursorAdapter;
-import android.widget.TextView;
+import android.database.DatabaseUtils;
+import android.widget.SimpleCursorAdapter;
 import com.casimirlab.simpleDeadlines.R;
 
-public class GroupAdapter extends CursorAdapter
+public class GroupAdapter extends SimpleCursorAdapter
 {
-  private DataHelper _db;
+  private static final String[] FromCols =
+  {
+    DeadlinesContract.DeadlinesColumns.GROUP
+  };
+  private static final int[] ToIDs =
+  {
+    R.id.group
+  };
+  private final ContentResolver _cr;
 
   public GroupAdapter(Context context, Cursor c)
   {
-    super(context, c, true);
+    super(context, R.layout.group_entry, c, FromCols, ToIDs, 0);
 
-    _db = new DataHelper(context);
-  }
-
-  @Override
-  public void bindView(View view, Context context, Cursor cursor)
-  {
-    Holder h = (Holder)view.getTag();
-    TextView label = h.Label;
-    final int idx = cursor.getColumnIndex(DataHelper.KEY_GROUP);
-    label.setText(cursor.getString(idx));
-  }
-
-  @Override
-  public View newView(Context context, Cursor cursor, ViewGroup parent)
-  {
-    View v = LayoutInflater.from(context).inflate(R.layout.group_entry, parent, false);
-    Holder h = new Holder();
-    h.Label = (TextView)v.findViewById(R.id.group);
-    v.setTag(h);
-    return v;
+    _cr = context.getContentResolver();
   }
 
   @Override
@@ -44,18 +31,17 @@ public class GroupAdapter extends CursorAdapter
   {
     if (constraint == null)
       return super.runQueryOnBackgroundThread(constraint);
-    return _db.filteredGroups(constraint);
+
+    String filter = DatabaseUtils.sqlEscapeString(constraint + "%");
+    String selection = DeadlinesContract.DeadlinesColumns.GROUP + " LIKE " + filter;
+    return _cr.query(DeadlinesContract.Groups.CONTENT_URI, null,
+		     selection, null, null);
   }
 
   @Override
   public CharSequence convertToString(Cursor cursor)
   {
-    int idx = cursor.getColumnIndex(DataHelper.KEY_GROUP);
+    int idx = cursor.getColumnIndex(DeadlinesContract.DeadlinesColumns.GROUP);
     return cursor.getString(idx);
-  }
-
-  private static class Holder
-  {
-    public TextView Label;
   }
 }

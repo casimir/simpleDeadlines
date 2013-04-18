@@ -23,6 +23,7 @@ public class DeadlineProvider extends ContentProvider
   private static final int DEADLINES_GROUP_LABEL = 2;
   private static final int DEADLINES_ARCHIVED_GROUP_LABEL = 12;
   private static final int DEADLINE_ID = 3;
+  private static final int GROUPS = 4;
   private static final String TAG = "DeadlineProvider";
   private static final UriMatcher Matcher = new UriMatcher(UriMatcher.NO_MATCH);
   private DataHelper _dbHelper;
@@ -50,6 +51,9 @@ public class DeadlineProvider extends ContentProvider
     Matcher.addURI(DeadlinesContract.AUTHORITY,
 		   DeadlinesContract.DEADLINES_PATH + "/#",
 		   DEADLINE_ID);
+    Matcher.addURI(DeadlinesContract.AUTHORITY,
+		   DeadlinesContract.GROUPS_PATH,
+		   GROUPS);
   }
 
   @Override
@@ -104,6 +108,8 @@ public class DeadlineProvider extends ContentProvider
 	return DeadlinesContract.Groups.CONTENT_ITEM_TYPE;
       case DEADLINE_ID:
 	return DeadlinesContract.Deadlines.CONTENT_ITEM_TYPE;
+      case GROUPS:
+	return DeadlinesContract.Groups.CONTENT_TYPE;
       default:
 	return null;
     }
@@ -112,7 +118,7 @@ public class DeadlineProvider extends ContentProvider
   @Override
   public Uri insert(Uri uri, ContentValues values)
   {
-    if (Matcher.match(uri) != DEADLINE_ID)
+    if (Matcher.match(uri) != DEADLINES)
     {
       Log.e(TAG, "INSERT - Unsupported path:" + uri.getPath());
       throw new IllegalArgumentException("INSERT - Unsupported path: " + uri.getPath());
@@ -128,6 +134,7 @@ public class DeadlineProvider extends ContentProvider
   @Override
   public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
   {
+    SQLiteDatabase db = _dbHelper.getReadableDatabase();
     Cursor ret = null;
 
     switch (Matcher.match(uri))
@@ -156,10 +163,21 @@ public class DeadlineProvider extends ContentProvider
 	{
 	  uri.getLastPathSegment()
 	};
-	SQLiteDatabase db = _dbHelper.getReadableDatabase();
 	ret = db.query(DeadlinesContract.DEADLINES_PATH, null,
 		       where, whereArgs,
 		       null, null, null);
+	break;
+      case GROUPS:
+	String groupCol = DeadlinesContract.DeadlinesColumns.GROUP;
+	String having = groupCol + " != ''";
+	String[] cols =
+	{
+	  DeadlinesContract.DeadlinesColumns.ID,
+	  groupCol
+	};
+	ret = db.query(DeadlinesContract.DEADLINES_PATH, cols,
+		       selection, selectionArgs,
+		       groupCol, having, groupCol);
 	break;
       default:
 	Log.e(TAG, "QUERY - Unsupported path:" + uri.getPath());
@@ -189,14 +207,13 @@ public class DeadlineProvider extends ContentProvider
 
     if (!TextUtils.isEmpty(group))
     {
-      groupSelection = " AND " + DeadlinesContract.DeadlinesColumns.GROUP
-		       + " = " + DatabaseUtils.sqlEscapeString(group);
+      groupSelection = " AND " + DeadlinesContract.DeadlinesColumns.GROUP + " = ?";
       selectionArgs.add(group);
     }
     SQLiteDatabase db = _dbHelper.getReadableDatabase();
 
     return db.query(DeadlinesContract.DEADLINES_PATH, null,
-		    selection + groupSelection, selectionArgs.toArray(new String[2]),
+		    selection + groupSelection, selectionArgs.toArray(new String[selectionArgs.size()]),
 		    null, null, DeadlinesContract.DeadlinesColumns.DUE_DATE);
   }
 

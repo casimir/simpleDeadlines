@@ -63,19 +63,6 @@ public class DataHelper extends SQLiteOpenHelper
     _context.sendBroadcast(new Intent(ACTION_UPDATE));
   }
 
-  public DeadlineModel read(int id)
-  {
-    String where = KEY_ID + " = ?";
-    String[] whereArgs = new String[]
-    {
-      String.valueOf(id)
-    };
-
-    Cursor c = getReadableDatabase().query(TABLE_NAME, null, where, whereArgs, null, null, null);
-    c.moveToFirst();
-    return DeadlineModel.fromCursor(c);
-  }
-
   public void update(DeadlineModel model)
   {
     String where = KEY_ID + " = ?";
@@ -85,20 +72,6 @@ public class DataHelper extends SQLiteOpenHelper
     };
     SQLiteDatabase db = getWritableDatabase();
     db.update(TABLE_NAME, DeadlineModel.toValues(model), where, whereArgs);
-    db.close();
-
-    _context.sendBroadcast(new Intent(ACTION_UPDATE));
-  }
-
-  public void delete(int id)
-  {
-    String where = KEY_ID + " = ?";
-    String[] whereArgs = new String[]
-    {
-      String.valueOf(id)
-    };
-    SQLiteDatabase db = getWritableDatabase();
-    db.delete(TABLE_NAME, where, whereArgs);
     db.close();
 
     _context.sendBroadcast(new Intent(ACTION_UPDATE));

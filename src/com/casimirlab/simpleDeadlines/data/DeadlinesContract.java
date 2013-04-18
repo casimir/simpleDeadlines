@@ -6,6 +6,7 @@ public final class DeadlinesContract
 {
   public static final String AUTHORITY = "com.casimirlab.simpleDeadlines.provider";
   public static final String DEADLINES_PATH = "deadlines";
+  public static final String GROUPS_PATH = "groups";
 
   public static final class Deadlines
   {
@@ -31,5 +32,6 @@ public final class DeadlinesContract
   {
     public static final String CONTENT_TYPE = "vnd.android.cursor.dir/simpledeadlines.group";
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/simpledeadlines.group";
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + GROUPS_PATH);
   }
 }
