@@ -1,7 +1,6 @@
 package com.casimirlab.simpleDeadlines.data;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.widget.RemoteViews;
 import com.casimirlab.simpleDeadlines.R;
 import java.util.Map;
@@ -12,7 +11,7 @@ public class NotificationAdapter
   private Map<Integer, Integer> _counts;
   private int _resLayout;
 
-  public NotificationAdapter(Context context, DataHelper db, int layout)
+  public NotificationAdapter(Context context, DBHelper db, int layout)
   {
     _context = context;
     _counts = db.counts();

@@ -5,7 +5,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -26,7 +25,7 @@ public class DeadlineProvider extends ContentProvider
   private static final int GROUPS = 4;
   private static final String TAG = "DeadlineProvider";
   private static final UriMatcher Matcher = new UriMatcher(UriMatcher.NO_MATCH);
-  private DataHelper _dbHelper;
+  private DBHelper _dbHelper;
 
   static
   {
@@ -59,7 +58,7 @@ public class DeadlineProvider extends ContentProvider
   @Override
   public boolean onCreate()
   {
-    _dbHelper = new DataHelper(getContext());
+    _dbHelper = new DBHelper(getContext());
 
     return true;
   }

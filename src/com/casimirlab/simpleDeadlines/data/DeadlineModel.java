@@ -73,21 +73,11 @@ public class DeadlineModel
     ContentValues values = new ContentValues();
     DatabaseUtils.cursorRowToContentValues(cursor, values);
     DeadlineModel model = new DeadlineModel();
-    model.setId(values.getAsInteger(DataHelper.KEY_ID));
-    model.setLabel(values.getAsString(DataHelper.KEY_LABEL));
-    model.setGroup(values.getAsString(DataHelper.KEY_GROUP));
-    model.setDueDate(new Date(values.getAsLong(DataHelper.KEY_DUE_DATE)));
-    model.setDone(values.getAsInteger(DataHelper.KEY_DONE) == 1);
+    model.setDone(values.getAsInteger(DeadlinesContract.DeadlinesColumns.DONE) == 1);
+    model.setDueDate(new Date(values.getAsLong(DeadlinesContract.DeadlinesColumns.DUE_DATE)));
+    model.setGroup(values.getAsString(DeadlinesContract.DeadlinesColumns.GROUP));
+    model.setId(values.getAsInteger(DeadlinesContract.DeadlinesColumns.ID));
+    model.setLabel(values.getAsString(DeadlinesContract.DeadlinesColumns.LABEL));
     return model;
-  }
-
-  public static ContentValues toValues(DeadlineModel model)
-  {
-    ContentValues values = new ContentValues();
-    values.put(DataHelper.KEY_LABEL, model.Label());
-    values.put(DataHelper.KEY_GROUP, model.Group());
-    values.put(DataHelper.KEY_DUE_DATE, model.DueDate().getTime());
-    values.put(DataHelper.KEY_DONE, model.Done() ? 1 : 0);
-    return values;
   }
 }

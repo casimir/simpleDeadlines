@@ -1,7 +1,7 @@
 package com.casimirlab.simpleDeadlines;
 
 import com.casimirlab.simpleDeadlines.data.NotificationAdapter;
-import com.casimirlab.simpleDeadlines.data.DataHelper;
+import com.casimirlab.simpleDeadlines.data.DBHelper;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -28,13 +28,13 @@ public class NotificationCenter extends BroadcastReceiver
   private static final int NOTIFICATION_ID = 0x1234;
   private static boolean _notificationShown = false;
   private Context _context;
-  private DataHelper _db;
+  private DBHelper _db;
 
   @Override
   public void onReceive(Context context, Intent intent)
   {
     _context = context;
-    _db = new DataHelper(_context);
+    _db = new DBHelper(_context);
 
     String action = intent.getAction();
     if (action.equals(ACTION_SET)
@@ -43,7 +43,7 @@ public class NotificationCenter extends BroadcastReceiver
     else if (action.equals(ACTION_SHOW)
 	     || action.equals(ACTION_HIDE)
 	     || action.equals(ACTION_TOGGLE)
-	     || action.equals(DataHelper.ACTION_UPDATE))
+	     || action.equals(DBHelper.ACTION_UPDATE))
     {
       SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
       boolean persist = sp.getBoolean(_context.getString(R.string.pref_key_notif_persist),
@@ -93,7 +93,7 @@ public class NotificationCenter extends BroadcastReceiver
       action = _notificationShown ? ACTION_HIDE : ACTION_SHOW;
 
     if (action.equals(ACTION_SHOW)
-	|| (action.equals(DataHelper.ACTION_UPDATE) && persist))
+	|| (action.equals(DBHelper.ACTION_UPDATE) && persist))
     {
       NotificationAdapter adapter = new NotificationAdapter(_context, _db, R.layout.notif);
       if (!adapter.isEmpty())
