@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +39,8 @@ public class DeadlineAdapter extends CursorAdapter
 
     Calendar today = Calendar.getInstance();
     today.set(Calendar.HOUR_OF_DAY, 0);
-    long todayMs = today.getTimeInMillis() / DeadlineModel.DAY_LEN;
-    long deadlineMs = model.DueDate().getTime() / DeadlineModel.DAY_LEN;
+    long todayMs = today.getTimeInMillis() / DateUtils.DAY_IN_MILLIS;
+    long deadlineMs = model.DueDate().getTime() / DateUtils.DAY_IN_MILLIS;
     long days = deadlineMs - todayMs;
     holder.Remaining.setText(String.valueOf(days));
 

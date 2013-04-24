@@ -28,13 +28,11 @@ public class NotificationCenter extends BroadcastReceiver
   private static final int NOTIFICATION_ID = 0x1234;
   private static boolean _notificationShown = false;
   private Context _context;
-  private DBHelper _db;
 
   @Override
   public void onReceive(Context context, Intent intent)
   {
     _context = context;
-    _db = new DBHelper(_context);
 
     String action = intent.getAction();
     if (action.equals(ACTION_SET)
@@ -95,7 +93,7 @@ public class NotificationCenter extends BroadcastReceiver
     if (action.equals(ACTION_SHOW)
 	|| (action.equals(DBHelper.ACTION_UPDATE) && persist))
     {
-      NotificationAdapter adapter = new NotificationAdapter(_context, _db, R.layout.notif);
+      NotificationAdapter adapter = new NotificationAdapter(_context, R.layout.notif);
       if (!adapter.isEmpty())
       {
 	nm.notify(NOTIFICATION_ID, makeNotification(adapter, persist));

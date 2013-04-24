@@ -84,7 +84,6 @@ public class Deadlines extends FragmentActivity
       }
     });
     _grouplist.setAdapter(_groupAdapter);
-    updateDrawer();
 
     _pager = (ViewPager)findViewById(R.id.pager);
     _pagerAdapter = new DeadlinePagerAdapter(getSupportFragmentManager());
@@ -100,6 +99,14 @@ public class Deadlines extends FragmentActivity
     });
 
     _currentGroupIdx = ListView.INVALID_POSITION;
+  }
+
+  @Override
+  protected void onStart()
+  {
+    super.onStart();
+
+    updateDrawer();
   }
 
   @Override

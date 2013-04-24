@@ -1,44 +1,48 @@
 package com.casimirlab.simpleDeadlines.data;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.widget.RemoteViews;
 import com.casimirlab.simpleDeadlines.R;
-import java.util.Map;
 
 public class NotificationAdapter
 {
   private Context _context;
-  private Map<Integer, Integer> _counts;
+  private ContentResolver _cr;
+  private Cursor _cursor;
   private int _resLayout;
 
-  public NotificationAdapter(Context context, DBHelper db, int layout)
+  public NotificationAdapter(Context context, int layout)
   {
     _context = context;
-    _counts = db.counts();
     _resLayout = layout;
+
+    _cr = context.getContentResolver();
+    _cursor = _cr.query(DeadlinesContract.Count.CONTENT_URI, null, null, null, null);
   }
 
   public boolean isEmpty()
   {
-    int sum = 0;
-    for (int count : _counts.values())
-      sum += count;
-    return sum == 0;
+    return _cursor.getCount() <= 0;
   }
 
   public RemoteViews getView()
   {
+    if (!_cursor.moveToFirst())
+      throw new UnsupportedOperationException("Empty count data");
+
     RemoteViews view = new RemoteViews(_context.getPackageName(), _resLayout);
-    view.setTextViewText(R.id.count_today, _counts.get(DeadlineModel.LVL_TODAY).toString());
+    view.setTextViewText(R.id.count_today, String.valueOf(_cursor.getInt(0)));
     view.setTextColor(R.id.count_today,
 		      _context.getResources().getColor(R.color.simple_lvl_today));
-    view.setTextViewText(R.id.count_urgent, _counts.get(DeadlineModel.LVL_URGENT).toString());
+    view.setTextViewText(R.id.count_urgent, String.valueOf(_cursor.getInt(1)));
     view.setTextColor(R.id.count_urgent,
 		      _context.getResources().getColor(R.color.simple_lvl_urgent));
-    view.setTextViewText(R.id.count_worrying, _counts.get(DeadlineModel.LVL_WORRYING).toString());
+    view.setTextViewText(R.id.count_worrying, String.valueOf(_cursor.getInt(2)));
     view.setTextColor(R.id.count_worrying,
 		      _context.getResources().getColor(R.color.simple_lvl_worrying));
-    view.setTextViewText(R.id.count_nice, _counts.get(DeadlineModel.LVL_NICE).toString());
+    view.setTextViewText(R.id.count_nice, String.valueOf(_cursor.getInt(3)));
     view.setTextColor(R.id.count_nice,
 		      _context.getResources().getColor(R.color.simple_lvl_nice));
     return view;

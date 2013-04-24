@@ -5,30 +5,39 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 public class DeadlineProvider extends ContentProvider
 {
+  private static final int COUNT = 1;
   private static final int DEADLINES = 0;
-  private static final int DEADLINES_ARCHIVED = 10;
-  private static final int DEADLINES_GROUPS = 1;
-  private static final int DEADLINES_ARCHIVED_GROUPS = 11;
-  private static final int DEADLINES_GROUP_LABEL = 2;
-  private static final int DEADLINES_ARCHIVED_GROUP_LABEL = 12;
-  private static final int DEADLINE_ID = 3;
-  private static final int GROUPS = 4;
+  private static final int DEADLINES_ARCHIVED = 11;
+  private static final int DEADLINES_GROUPS = 2;
+  private static final int DEADLINES_ARCHIVED_GROUPS = 12;
+  private static final int DEADLINES_GROUP_LABEL = 3;
+  private static final int DEADLINES_ARCHIVED_GROUP_LABEL = 13;
+  private static final int DEADLINE_ID = 4;
+  private static final int GROUPS = 5;
   private static final String TAG = "DeadlineProvider";
   private static final UriMatcher Matcher = new UriMatcher(UriMatcher.NO_MATCH);
   private DBHelper _dbHelper;
 
   static
   {
+    Matcher.addURI(DeadlinesContract.AUTHORITY,
+		   DeadlinesContract.COUNT_PATH,
+		   COUNT);
     Matcher.addURI(DeadlinesContract.AUTHORITY,
 		   DeadlinesContract.DEADLINES_PATH,
 		   DEADLINES);
@@ -88,6 +97,7 @@ public class DeadlineProvider extends ContentProvider
     }
 
     getContext().getContentResolver().notifyChange(uri, null);
+    getContext().getContentResolver().notifyChange(DeadlinesContract.Groups.CONTENT_URI, null);
     return ret;
   }
 
@@ -96,6 +106,8 @@ public class DeadlineProvider extends ContentProvider
   {
     switch (Matcher.match(uri))
     {
+      case COUNT:
+	return DeadlinesContract.Count.CONTENT_TYPE;
       case DEADLINES:
       case DEADLINES_ARCHIVED:
 	return DeadlinesContract.Deadlines.CONTENT_TYPE;
@@ -127,6 +139,7 @@ public class DeadlineProvider extends ContentProvider
     long id = db.insert(DeadlinesContract.DEADLINES_PATH, null, values);
 
     getContext().getContentResolver().notifyChange(uri, null);
+    getContext().getContentResolver().notifyChange(DeadlinesContract.Groups.CONTENT_URI, null);
     return ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id);
   }
 
@@ -138,6 +151,9 @@ public class DeadlineProvider extends ContentProvider
 
     switch (Matcher.match(uri))
     {
+      case COUNT:
+	ret = queryCount();
+	break;
       case DEADLINES:
 	ret = queryDeadlines(false);
 	break;
@@ -186,6 +202,39 @@ public class DeadlineProvider extends ContentProvider
     if (ret != null)
       ret.setNotificationUri(getContext().getContentResolver(), uri);
     return ret;
+  }
+
+  public Cursor queryCount()
+  {
+    MatrixCursor c = new MatrixCursor(DeadlinesContract.CountColumns.ALL, 1);
+    // FIXME avoidable SQL ?
+    String sql = "SELECT COUNT(*) FROM " + DeadlinesContract.DEADLINES_PATH
+		 + " WHERE " + DeadlinesContract.DeadlinesColumns.DUE_DATE
+		 + " <= ? AND " + DeadlinesContract.DeadlinesColumns.DONE + " = 0;";
+    SQLiteStatement req = _dbHelper.getReadableDatabase().compileStatement(sql);
+    String[] param = new String[1];
+    int[] levels = new int[]
+    {
+      DeadlineModel.LVL_TODAY,
+      DeadlineModel.LVL_URGENT,
+      DeadlineModel.LVL_WORRYING,
+      DeadlineModel.LVL_NICE
+    };
+    Calendar today = Calendar.getInstance();
+    today.set(Calendar.HOUR_OF_DAY, 0);
+
+    int count = 0;
+    MatrixCursor.RowBuilder builder = c.newRow();
+    for (int lvl : levels)
+    {
+      long diff = today.getTimeInMillis() + lvl * DateUtils.DAY_IN_MILLIS;
+      param[0] = String.valueOf(diff);
+      int value = (int)DatabaseUtils.longForQuery(req, param) - count;
+      builder.add(value);
+      count += value;
+    }
+
+    return c;
   }
 
   private Cursor queryDeadlines(boolean archived)
@@ -265,6 +314,7 @@ public class DeadlineProvider extends ContentProvider
     }
 
     getContext().getContentResolver().notifyChange(uri, null);
+    getContext().getContentResolver().notifyChange(DeadlinesContract.Groups.CONTENT_URI, null);
     return ret;
   }
 }

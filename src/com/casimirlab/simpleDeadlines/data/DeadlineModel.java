@@ -7,7 +7,6 @@ import java.util.Date;
 
 public class DeadlineModel
 {
-  public static final long DAY_LEN = 1000 * 60 * 60 * 24;
   public static final int LVL_TODAY = 1;
   public static final int LVL_URGENT = 3;
   public static final int LVL_WORRYING = 7;
