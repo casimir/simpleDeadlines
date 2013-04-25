@@ -1,7 +1,10 @@
 package com.casimirlab.simpleDeadlines;
 
 import android.app.ActionBar;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +22,7 @@ import android.widget.TextView;
 import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 
-public class Deadlines extends FragmentActivity
+public class Deadlines extends FragmentActivity implements LoaderCallbacks<Cursor>
 {
   private ActionBar _actionBar;
   private DrawerLayout _drawer;
@@ -94,11 +97,13 @@ public class Deadlines extends FragmentActivity
       public void onPageSelected(int position)
       {
 	_actionBar.setSelectedNavigationItem(position);
-	updateDrawer();
+	getLoaderManager().restartLoader(0, null, Deadlines.this);
       }
     });
 
     _currentGroupIdx = ListView.INVALID_POSITION;
+
+    getLoaderManager().initLoader(0, null, this);
   }
 
   @Override
@@ -106,7 +111,31 @@ public class Deadlines extends FragmentActivity
   {
     super.onStart();
 
-    updateDrawer();
+//    updateDrawer();
+  }
+
+  public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
+  {
+    Uri.Builder builder = DeadlinesContract.Deadlines.CONTENT_URI.buildUpon();
+    if (_actionBar.getSelectedNavigationIndex() == 1)
+      builder.appendPath(DeadlinesContract.Deadlines.FILTER_ARCHIVED);
+    builder.appendPath(DeadlinesContract.GROUPS_PATH);
+
+    return new CursorLoader(this, builder.build(), null,
+			    null, null, null);
+  }
+
+  public void onLoadFinished(Loader<Cursor> loader, Cursor c)
+  {
+    _groupAdapter.swapCursor(c);
+
+    _actionBar.setIcon(_groupAdapter.getCount() > 0 ? R.drawable.ic_act_filter : R.drawable.app_icon);
+    _actionBar.setDisplayHomeAsUpEnabled(_groupAdapter.getCount() > 0);
+  }
+
+  public void onLoaderReset(Loader<Cursor> loader)
+  {
+    _groupAdapter.swapCursor(null);
   }
 
   @Override
@@ -152,18 +181,5 @@ public class Deadlines extends FragmentActivity
     Intent i = new Intent(this, DeadlineEditor.class);
     i.putExtra(EditorDialogFragment.EXTRA_ISNEW, true);
     startActivity(i);
-  }
-
-  private void updateDrawer()
-  {
-    Uri.Builder builder = DeadlinesContract.Deadlines.CONTENT_URI.buildUpon();
-    if (_actionBar.getSelectedNavigationIndex() == 1)
-      builder.appendPath(DeadlinesContract.Deadlines.FILTER_ARCHIVED);
-    Cursor cGroups = getContentResolver().query(DeadlinesContract.Groups.CONTENT_URI, null,
-						null, null, null);
-    _groupAdapter.swapCursor(cGroups);
-
-    _actionBar.setIcon(_groupAdapter.getCount() > 0 ? R.drawable.ic_act_filter : R.drawable.app_icon);
-    _actionBar.setDisplayHomeAsUpEnabled(_groupAdapter.getCount() > 0);
   }
 }
