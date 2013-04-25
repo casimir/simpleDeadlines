@@ -96,8 +96,7 @@ public class DeadlineProvider extends ContentProvider
 	throw new IllegalArgumentException("DELETE - Unsupported path: " + uri.getPath());
     }
 
-    getContext().getContentResolver().notifyChange(uri, null);
-    getContext().getContentResolver().notifyChange(DeadlinesContract.Groups.CONTENT_URI, null);
+    getContext().getContentResolver().notifyChange(DeadlinesContract.BASE_URI, null);
     return ret;
   }
 
@@ -138,8 +137,7 @@ public class DeadlineProvider extends ContentProvider
     SQLiteDatabase db = _dbHelper.getWritableDatabase();
     long id = db.insert(DeadlinesContract.DEADLINES_PATH, null, values);
 
-    getContext().getContentResolver().notifyChange(uri, null);
-    getContext().getContentResolver().notifyChange(DeadlinesContract.Groups.CONTENT_URI, null);
+    getContext().getContentResolver().notifyChange(DeadlinesContract.BASE_URI, null);
     return ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id);
   }
 
@@ -258,8 +256,8 @@ public class DeadlineProvider extends ContentProvider
       groupSelection = " AND " + DeadlinesContract.DeadlinesColumns.GROUP + " = ?";
       selectionArgs.add(group);
     }
-    SQLiteDatabase db = _dbHelper.getReadableDatabase();
 
+    SQLiteDatabase db = _dbHelper.getReadableDatabase();
     return db.query(DeadlinesContract.DEADLINES_PATH, null,
 		    selection + groupSelection, selectionArgs.toArray(new String[selectionArgs.size()]),
 		    null, null, DeadlinesContract.DeadlinesColumns.DUE_DATE);
@@ -313,8 +311,7 @@ public class DeadlineProvider extends ContentProvider
 	throw new IllegalArgumentException("UPDATE - Unsupported path: " + uri.getPath());
     }
 
-    getContext().getContentResolver().notifyChange(uri, null);
-    getContext().getContentResolver().notifyChange(DeadlinesContract.Groups.CONTENT_URI, null);
+    getContext().getContentResolver().notifyChange(DeadlinesContract.BASE_URI, null);
     return ret;
   }
 }

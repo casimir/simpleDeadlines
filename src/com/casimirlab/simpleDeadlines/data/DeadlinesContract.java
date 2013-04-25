@@ -5,6 +5,7 @@ import android.net.Uri;
 public final class DeadlinesContract
 {
   public static final String AUTHORITY = "com.casimirlab.simpleDeadlines.provider";
+  public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
   public static final String COUNT_PATH = "count";
   public static final String DEADLINES_PATH = "deadlines";
   public static final String GROUPS_PATH = "groups";
@@ -12,7 +13,7 @@ public final class DeadlinesContract
   public static final class Count
   {
     public static final String CONTENT_TYPE = "vnd.android.cursor.dir/simpledeadlines.count";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + COUNT_PATH);
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, COUNT_PATH);
   }
 
   public static final class CountColumns
@@ -31,7 +32,7 @@ public final class DeadlinesContract
   {
     public static final String CONTENT_TYPE = "vnd.android.cursor.dir/simpledeadlines.deadline";
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/simpledeadlines.deadline";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + DEADLINES_PATH);
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, DEADLINES_PATH);
     public static final String FILTER_ARCHIVED = "archived";
     public static final String FILTER_GROUP = "group";
     public static final int TYPE_ARCHIVED = 0;
@@ -55,6 +56,6 @@ public final class DeadlinesContract
   {
     public static final String CONTENT_TYPE = "vnd.android.cursor.dir/simpledeadlines.group";
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/simpledeadlines.group";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + GROUPS_PATH);
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, GROUPS_PATH);
   }
 }

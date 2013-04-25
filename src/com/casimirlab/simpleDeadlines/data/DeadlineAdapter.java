@@ -22,13 +22,9 @@ import java.util.Calendar;
 
 public class DeadlineAdapter extends CursorAdapter
 {
-  private Context _context;
-
   public DeadlineAdapter(Context context, Cursor c)
   {
     super(context, c);
-
-    _context = context;
   }
 
   @Override
@@ -63,7 +59,9 @@ public class DeadlineAdapter extends CursorAdapter
     DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
     holder.DueDate.setText(df.format(model.DueDate()));
 
+    holder.Done.setOnCheckedChangeListener(null);
     holder.Done.setChecked(model.Done());
+    final Context ctxt = context;
     final TextView label = holder.Label;
     final int id = cursor.getInt(cursor.getColumnIndex(DeadlinesContract.DeadlinesColumns.ID));
     holder.Done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -73,7 +71,7 @@ public class DeadlineAdapter extends CursorAdapter
 	model.setDone(isChecked);
 	setStrikeText(label, isChecked);
 
-	ContentResolver cr = _context.getContentResolver();
+	ContentResolver cr = ctxt.getContentResolver();
 	Uri uri = ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id);
 	ContentValues values = new ContentValues();
 	values.put(DeadlinesContract.DeadlinesColumns.DONE, isChecked ? 1 : 0);

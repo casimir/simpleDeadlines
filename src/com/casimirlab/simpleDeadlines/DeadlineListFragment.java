@@ -29,8 +29,6 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
 {
   public static final String EXTRA_GROUP = "deadlinelistfragment.group";
   public static final String EXTRA_TYPE = "deadlinelistfragment.type";
-  public static final int TYPE_ARCHIVED = DeadlinesContract.Deadlines.TYPE_ARCHIVED;
-  public static final int TYPE_IN_PROGRESS = DeadlinesContract.Deadlines.TYPE_IN_PROGRESS;
   private int _type;
   private CursorAdapter _adapter;
 
@@ -39,7 +37,7 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
   {
     super.onCreate(savedInstanceState);
 
-    _type = getArguments().getInt(EXTRA_TYPE, TYPE_IN_PROGRESS);
+    _type = getArguments().getInt(EXTRA_TYPE, DeadlinesContract.Deadlines.TYPE_IN_PROGRESS);
     _adapter = new DeadlineAdapter(getActivity(), null);
     setListAdapter(_adapter);
 
@@ -113,7 +111,7 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
   public Loader<Cursor> onCreateLoader(int id, Bundle args)
   {
     Uri.Builder builder = DeadlinesContract.Deadlines.CONTENT_URI.buildUpon();
-    if (_type == TYPE_ARCHIVED)
+    if (_type == DeadlinesContract.Deadlines.TYPE_ARCHIVED)
       builder.appendPath(DeadlinesContract.Deadlines.FILTER_ARCHIVED);
 
     String group = args.getString(EXTRA_GROUP);
