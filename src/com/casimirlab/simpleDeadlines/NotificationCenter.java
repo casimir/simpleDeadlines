@@ -1,18 +1,22 @@
 package com.casimirlab.simpleDeadlines;
 
-import com.casimirlab.simpleDeadlines.data.NotificationAdapter;
-import com.casimirlab.simpleDeadlines.data.DBHelper;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.ContentObserver;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.widget.RemoteViews;
+import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
 import java.util.Calendar;
 
 public class NotificationCenter extends BroadcastReceiver
@@ -28,26 +32,84 @@ public class NotificationCenter extends BroadcastReceiver
   private static final int NOTIFICATION_ID = 0x1234;
   private static boolean _notificationShown = false;
   private Context _context;
+  private NotificationManager _nm;
+  private ContentResolver _cr;
+  private ContentObserver _co;
+  private Notification.Builder _builder;
 
   @Override
   public void onReceive(Context context, Intent intent)
   {
     _context = context;
+    _nm = (NotificationManager)context.getSystemService(Service.NOTIFICATION_SERVICE);
+    _cr = _context.getContentResolver();
+
+    _co = new ContentObserver(new Handler())
+    {
+      @Override
+      public void onChange(boolean selfChange)
+      {
+	SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
+	boolean persist = sp.getBoolean(_context.getString(R.string.pref_key_notif_persist), false);
+
+	if (persist)
+	  displayNotification(ACTION_SHOW);
+      }
+    };
+    _cr.registerContentObserver(DeadlinesContract.Count.CONTENT_URI, false, _co);
+
+    Intent i = new Intent(context, Deadlines.class);
+    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+    _builder = new Notification.Builder(context);
+    _builder.setSmallIcon(R.drawable.ic_status);
+    _builder.setContentTitle(TAG);
+    _builder.setContentIntent(pi);
 
     String action = intent.getAction();
-    if (action.equals(ACTION_SET)
-	|| action.equals(Intent.ACTION_BOOT_COMPLETED))
+    if (action.equals(ACTION_SET) || action.equals(Intent.ACTION_BOOT_COMPLETED))
       setAlarm(intent);
-    else if (action.equals(ACTION_SHOW)
-	     || action.equals(ACTION_HIDE)
-	     || action.equals(ACTION_TOGGLE)
-	     || action.equals(DBHelper.ACTION_UPDATE))
+    else
+      displayNotification(action);
+  }
+
+  private void displayNotification(String action)
+  {
+    if (action.equals(ACTION_TOGGLE))
+      action = _notificationShown ? ACTION_HIDE : ACTION_SHOW;
+
+    if (action.equals(ACTION_HIDE))
     {
-      SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
-      boolean persist = sp.getBoolean(_context.getString(R.string.pref_key_notif_persist),
-				      false);
-      displayNotification(intent, persist);
+      _nm.cancel(NOTIFICATION_ID);
+      _notificationShown = false;
+      return;
     }
+
+    Cursor c = _cr.query(DeadlinesContract.Count.CONTENT_URI, null, null, null, null);
+    if (!c.moveToFirst())
+      return;
+
+    RemoteViews view = new RemoteViews(_context.getPackageName(), R.layout.notif);
+    view.setTextViewText(R.id.count_today, String.valueOf(c.getInt(0)));
+    view.setTextColor(R.id.count_today, _context.getResources().getColor(R.color.simple_lvl_today));
+    view.setTextViewText(R.id.count_urgent, String.valueOf(c.getInt(1)));
+    view.setTextColor(R.id.count_urgent, _context.getResources().getColor(R.color.simple_lvl_urgent));
+    view.setTextViewText(R.id.count_worrying, String.valueOf(c.getInt(2)));
+    view.setTextColor(R.id.count_worrying, _context.getResources().getColor(R.color.simple_lvl_worrying));
+    view.setTextViewText(R.id.count_nice, String.valueOf(c.getInt(3)));
+    view.setTextColor(R.id.count_nice, _context.getResources().getColor(R.color.simple_lvl_nice));
+
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
+    boolean persist = sp.getBoolean(_context.getString(R.string.pref_key_notif_persist), false);
+
+    _builder.setContent(view);
+    _builder.setAutoCancel(!persist);
+    _builder.setOngoing(persist);
+    _builder.setOnlyAlertOnce(persist);
+
+    _nm.notify(NOTIFICATION_ID, _builder.getNotification());
+    _notificationShown = true;
   }
 
   private void setAlarm(Intent intent)
@@ -80,49 +142,5 @@ public class NotificationCenter extends BroadcastReceiver
 						  PendingIntent.FLAG_CANCEL_CURRENT);
     am.cancel(pi);
     am.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pi);
-  }
-
-  private void displayNotification(Intent intent, boolean persist)
-  {
-    NotificationManager nm = (NotificationManager)_context.getSystemService(Service.NOTIFICATION_SERVICE);
-    String action = intent.getAction();
-
-    if (action.equals(ACTION_TOGGLE))
-      action = _notificationShown ? ACTION_HIDE : ACTION_SHOW;
-
-    if (action.equals(ACTION_SHOW)
-	|| (action.equals(DBHelper.ACTION_UPDATE) && persist))
-    {
-      NotificationAdapter adapter = new NotificationAdapter(_context, R.layout.notif);
-      if (!adapter.isEmpty())
-      {
-	nm.notify(NOTIFICATION_ID, makeNotification(adapter, persist));
-	_notificationShown = true;
-      }
-    }
-    else if (action.equals(ACTION_HIDE))
-    {
-      nm.cancel(NOTIFICATION_ID);
-      _notificationShown = false;
-    }
-  }
-
-  private Notification makeNotification(NotificationAdapter adapter, boolean persist)
-  {
-    Intent i = new Intent(_context, Deadlines.class);
-    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    PendingIntent pi = PendingIntent.getActivity(_context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-
-    Notification.Builder builder = new Notification.Builder(_context);
-    builder.setSmallIcon(R.drawable.ic_status);
-    builder.setContentTitle(TAG);
-    builder.setContent(adapter.getView());
-    builder.setContentIntent(pi);
-    builder.setAutoCancel(!persist);
-    builder.setOngoing(persist);
-    builder.setOnlyAlertOnce(persist);
-
-    Notification notif = builder.getNotification();
-    return notif;
   }
 }

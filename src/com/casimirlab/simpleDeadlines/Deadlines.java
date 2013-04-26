@@ -114,7 +114,7 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
 //    updateDrawer();
   }
 
-  public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
+  public Loader<Cursor> onCreateLoader(int id, Bundle args)
   {
     Uri.Builder builder = DeadlinesContract.Deadlines.CONTENT_URI.buildUpon();
     if (_actionBar.getSelectedNavigationIndex() == 1)

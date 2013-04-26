@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper
 {
-  public static final String ACTION_UPDATE = "DataHelper.ACTION_UPDATE";
   private static final String DB_NAME = "deadlines.db";
   private static final int DB_VERSION = 1;
 
