@@ -39,6 +39,7 @@ public class EditorDialogFragment extends DialogFragment
   private TextView _labelView;
   private AutoCompleteTextView _groupView;
   private DatePicker _dueDateView;
+  private boolean _isDone;
 
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -51,6 +52,8 @@ public class EditorDialogFragment extends DialogFragment
 
     _cr = getActivity().getContentResolver();
     _currentUri = ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, _modelId);
+
+    _isDone = !_isNew;
   }
 
   @Override
@@ -147,6 +150,8 @@ public class EditorDialogFragment extends DialogFragment
       _dueDateView.updateDate(dateValue.get(Calendar.YEAR),
 			      dateValue.get(Calendar.MONTH),
 			      dateValue.get(Calendar.DAY_OF_MONTH));
+
+      _isDone = model.Done();
     }
   }
 
@@ -160,7 +165,7 @@ public class EditorDialogFragment extends DialogFragment
     if (!_isNew)
       values.put(DeadlinesContract.DeadlinesColumns.ID, _modelId);
 
-    values.put(DeadlinesContract.DeadlinesColumns.DONE, 0);
+    values.put(DeadlinesContract.DeadlinesColumns.DONE, _isDone ? 1 : 0);
     values.put(DeadlinesContract.DeadlinesColumns.DUE_DATE, dueDateValue.getTime());
     values.put(DeadlinesContract.DeadlinesColumns.GROUP, _groupView.getText().toString());
     values.put(DeadlinesContract.DeadlinesColumns.LABEL, _labelView.getText().toString());
