@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Simple Deadlines</string>
+  <string name="app_name" translatable="false">Simple Deadlines</string>
   <string name="drawer_group_pick">Pick a group</string>
   <string name="empty_list">To start press the button</string>
   <string name="empty_label">At least a label is required</string>
