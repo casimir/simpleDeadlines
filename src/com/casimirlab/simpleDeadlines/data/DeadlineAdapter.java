@@ -41,15 +41,15 @@ public class DeadlineAdapter extends CursorAdapter
     holder.Remaining.setText(String.valueOf(days));
 
     if (days <= DeadlineModel.LVL_TODAY)
-      holder.setColor(context, R.color.simple_lvl_today);
+      holder.setColor(context, R.color.lvl_today);
     else if (days <= DeadlineModel.LVL_URGENT)
-      holder.setColor(context, R.color.simple_lvl_urgent);
+      holder.setColor(context, R.color.lvl_urgent);
     else if (days <= DeadlineModel.LVL_WORRYING)
-      holder.setColor(context, R.color.simple_lvl_worrying);
+      holder.setColor(context, R.color.lvl_worrying);
     else if (days <= DeadlineModel.LVL_NICE)
-      holder.setColor(context, R.color.simple_lvl_nice);
+      holder.setColor(context, R.color.lvl_nice);
     else
-      holder.setColor(context, R.color.simple_lvl_other);
+      holder.setColor(context, R.color.lvl_other);
 
     holder.Label.setText(model.Label());
     setStrikeText(holder.Label, model.Done());

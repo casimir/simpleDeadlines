@@ -8,12 +8,12 @@
 	     android:layout_width="64dp"
 	     android:layout_height="64dp"
 	     android:scaleType="center" />
-  <FrameLayout android:background="@color/simple_lvl_today"
+  <FrameLayout android:background="@color/lvl_today"
 	       android:layout_width="match_parent"
 	       android:layout_height="match_parent"
 	       android:layout_weight="1"
 	       android:layout_margin="1dp">
-    <FrameLayout android:background="@color/simple_remaining_bg"
+    <FrameLayout android:background="@color/remaining_bg"
 		 android:layout_width="match_parent"
 		 android:layout_height="match_parent"
 		 android:layout_marginTop="8dp" />
@@ -24,14 +24,14 @@
 	      android:layout_gravity="center"
 	      android:textSize="22sp"
 	      android:textStyle="bold"
-	      android:textColor="@color/simple_lvl_today" />
+	      android:textColor="@color/lvl_today" />
   </FrameLayout>
-  <FrameLayout android:background="@color/simple_lvl_urgent"
+  <FrameLayout android:background="@color/lvl_urgent"
 	       android:layout_width="match_parent"
 	       android:layout_height="match_parent"
 	       android:layout_weight="1"
 	       android:layout_margin="1dp">
-    <FrameLayout android:background="@color/simple_remaining_bg"
+    <FrameLayout android:background="@color/remaining_bg"
 		 android:layout_width="match_parent"
 		 android:layout_height="match_parent"
 		 android:layout_marginTop="8dp" />
@@ -42,14 +42,14 @@
 	      android:layout_gravity="center"
 	      android:textSize="22sp"
 	      android:textStyle="bold"
-	      android:textColor="@color/simple_lvl_urgent" />
+	      android:textColor="@color/lvl_urgent" />
   </FrameLayout>
-  <FrameLayout android:background="@color/simple_lvl_worrying"
+  <FrameLayout android:background="@color/lvl_worrying"
 	       android:layout_width="match_parent"
 	       android:layout_height="match_parent"
 	       android:layout_weight="1"
 	       android:layout_margin="1dp">
-    <FrameLayout android:background="@color/simple_remaining_bg"
+    <FrameLayout android:background="@color/remaining_bg"
 		 android:layout_width="match_parent"
 		 android:layout_height="match_parent"
 		 android:layout_marginTop="8dp" />
@@ -60,14 +60,14 @@
 	      android:layout_gravity="center"
 	      android:textSize="22sp"
 	      android:textStyle="bold"
-	      android:textColor="@color/simple_lvl_worrying" />
+	      android:textColor="@color/lvl_worrying" />
   </FrameLayout>
-  <FrameLayout android:background="@color/simple_lvl_nice"
+  <FrameLayout android:background="@color/lvl_nice"
 	       android:layout_width="match_parent"
 	       android:layout_height="match_parent"
 	       android:layout_weight="1"
 	       android:layout_margin="1dp">
-    <FrameLayout android:background="@color/simple_remaining_bg"
+    <FrameLayout android:background="@color/remaining_bg"
 		 android:layout_width="match_parent"
 		 android:layout_height="match_parent"
 		 android:layout_marginTop="8dp" />
@@ -78,6 +78,6 @@
 	      android:layout_gravity="center"
 	      android:textSize="22sp"
 	      android:textStyle="bold"
-	      android:textColor="@color/simple_lvl_nice" />
+	      android:textColor="@color/lvl_nice" />
   </FrameLayout>
 </LinearLayout>

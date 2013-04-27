@@ -1,24 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <color name="simple_background">#000000</color>
-  <color name="simple_foreground">#303030</color>
-  <color name="simple_remaining_bg">#2B2B2B</color>
+  <color name="remaining_bg">#2B2B2B</color>
 
-  <color name="simple_background_light">#303030</color>
-  <color name="simple_foreground_light">#C8C8C8</color>
-
-  <color name="simple_lvl_today">#CC0000</color>
-  <color name="simple_lvl_urgent">#FF8800</color>
-  <color name="simple_lvl_worrying">#CCCC00</color>
-  <color name="simple_lvl_nice">#00CC00</color>
-  <color name="simple_lvl_other">#0000CC</color>
-
-  <style name="SimpleTheme.Drawer.ActionTextView">
-    <item name="android:background">@color/simple_foreground_light</item>
-    <item name="android:textColor">@color/simple_background_light</item>
-    <item name="android:clickable">true</item>
-    <item name="android:layout_margin">8dp</item>
-    <item name="android:padding">8dp</item>
-    <item name="android:textStyle">bold</item>
-  </style>
+  <color name="lvl_today">#CC0000</color>
+  <color name="lvl_urgent">#FF8800</color>
+  <color name="lvl_worrying">#CCCC00</color>
+  <color name="lvl_nice">#00CC00</color>
+  <color name="lvl_other">#0000CC</color>
 </resources>
