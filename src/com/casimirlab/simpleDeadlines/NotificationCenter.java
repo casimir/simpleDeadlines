@@ -42,7 +42,7 @@ public class NotificationCenter extends BroadcastReceiver
   {
     _context = context;
     _nm = (NotificationManager)context.getSystemService(Service.NOTIFICATION_SERVICE);
-    _cr = _context.getContentResolver();
+    _cr = context.getContentResolver();
 
     _co = new ContentObserver(new Handler())
     {

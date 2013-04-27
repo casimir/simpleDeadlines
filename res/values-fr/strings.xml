@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="drawer_group_pick">Choisir un groupe</string>
+  <string name="empty_list">Pour commencer appuyer sur le bouton</string>
+  <string name="empty_label">Au moins un label est nécessaire</string>
+  <string name="hint_label">Libellé</string>
+  <string name="hint_group">Groupe</string>
+  <string name="hint_due_date">Date</string>
+</resources>

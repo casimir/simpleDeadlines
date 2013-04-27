@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">Simple Deadlines</string>
-  <string name="drawer_group_pick">Choisir un groupe</string>
-  <string name="drawer_group_clean">Annuler la selection</string>
-  <string name="empty_list">Pour commencer appuyer sur le bouton</string>
-  <string name="empty_label">Au moins un label est nécessaire</string>
-  <string name="hint_label">Libellé</string>
-  <string name="hint_group">Groupe</string>
+  <string name="drawer_group_pick">Pick a group</string>
+  <string name="empty_list">To start press the button</string>
+  <string name="empty_label">At least a label is required</string>
+  <string name="hint_label">Label</string>
+  <string name="hint_group">Group</string>
   <string name="hint_due_date">Date</string>
 </resources>
