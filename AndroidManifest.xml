@@ -35,9 +35,9 @@
     <receiver android:name="NotificationCenter">
       <intent-filter>
 	<action android:name="NotificationCenter.ACTION_HIDE" />
-	<action android:name="NotificationCenter.ACTION_TOGGLE" />
 	<action android:name="NotificationCenter.ACTION_SET" />
 	<action android:name="NotificationCenter.ACTION_SHOW" />
+	<action android:name="NotificationCenter.ACTION_TOGGLE" />
 	<action android:name="android.intent.action.BOOT_COMPLETED" />
 	<category android:name="android.intent.category.DEFAULT" />
       </intent-filter>

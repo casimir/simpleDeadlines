@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.text.format.DateUtils;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.casimirlab.simpleDeadlines.R;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DeadlineAdapter extends CursorAdapter
 {
@@ -31,50 +33,56 @@ public class DeadlineAdapter extends CursorAdapter
   public void bindView(View view, Context context, Cursor cursor)
   {
     Holder holder = (Holder)view.getTag();
-    final DeadlineModel model = DeadlineModel.fromCursor(cursor);
+    ContentValues values = new ContentValues();
+    DatabaseUtils.cursorRowToContentValues(cursor, values);
 
     Calendar today = Calendar.getInstance();
     today.set(Calendar.HOUR_OF_DAY, 0);
-    long todayMs = today.getTimeInMillis() / DateUtils.DAY_IN_MILLIS;
-    long deadlineMs = model.DueDate().getTime() / DateUtils.DAY_IN_MILLIS;
-    long days = deadlineMs - todayMs;
+    long todayDays = today.getTimeInMillis() / DateUtils.DAY_IN_MILLIS;
+    long deadlineMs = values.getAsLong(DeadlinesContract.DeadlinesColumns.DUE_DATE);
+    long deadlineDays = deadlineMs / DateUtils.DAY_IN_MILLIS;
+    long days = deadlineDays - todayDays;
     holder.Remaining.setText(String.valueOf(days));
 
-    if (days <= DeadlineModel.LVL_TODAY)
+    if (days <= DeadlineUtils.LVL_TODAY)
       holder.setColor(context, R.color.lvl_today);
-    else if (days <= DeadlineModel.LVL_URGENT)
+    else if (days <= DeadlineUtils.LVL_URGENT)
       holder.setColor(context, R.color.lvl_urgent);
-    else if (days <= DeadlineModel.LVL_WORRYING)
+    else if (days <= DeadlineUtils.LVL_WORRYING)
       holder.setColor(context, R.color.lvl_worrying);
-    else if (days <= DeadlineModel.LVL_NICE)
+    else if (days <= DeadlineUtils.LVL_NICE)
       holder.setColor(context, R.color.lvl_nice);
     else
       holder.setColor(context, R.color.lvl_other);
 
-    holder.Label.setText(model.Label());
-    setStrikeText(holder.Label, model.Done());
+    holder.Label.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.LABEL));
+    setStrikeText(holder.Label, values.getAsInteger(DeadlinesContract.DeadlinesColumns.DONE));
 
-    holder.Group.setText(model.Group());
+    holder.Group.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.GROUP));
 
     DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-    holder.DueDate.setText(df.format(model.DueDate()));
+    holder.DueDate.setText(df.format(new Date(deadlineMs)));
 
     holder.Done.setOnCheckedChangeListener(null);
-    holder.Done.setChecked(model.Done());
+    holder.Done.setChecked(
+	    values.getAsInteger(DeadlinesContract.DeadlinesColumns.DONE)
+	    == DeadlinesContract.Deadlines.STATE_DONE);
     final Context ctxt = context;
     final TextView label = holder.Label;
-    final int id = cursor.getInt(cursor.getColumnIndex(DeadlinesContract.DeadlinesColumns.ID));
+    final int id = values.getAsInteger(DeadlinesContract.DeadlinesColumns.ID);
     holder.Done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
     {
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
       {
-	model.setDone(isChecked);
 	setStrikeText(label, isChecked);
 
 	ContentResolver cr = ctxt.getContentResolver();
 	Uri uri = ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id);
 	ContentValues values = new ContentValues();
-	values.put(DeadlinesContract.DeadlinesColumns.DONE, isChecked ? 1 : 0);
+	int state = isChecked
+		? DeadlinesContract.Deadlines.STATE_DONE
+		: DeadlinesContract.Deadlines.STATE_NOT_DONE;
+	values.put(DeadlinesContract.DeadlinesColumns.DONE, state);
 	cr.update(uri, values, null, null);
       }
     });
@@ -93,6 +101,11 @@ public class DeadlineAdapter extends CursorAdapter
     h.Done = (CheckBox)v.findViewById(R.id.done);
     v.setTag(h);
     return v;
+  }
+
+  private static void setStrikeText(TextView text, int state)
+  {
+    setStrikeText(text, state == DeadlinesContract.Deadlines.STATE_DONE);
   }
 
   private static void setStrikeText(TextView text, boolean strike)

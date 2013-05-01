@@ -35,6 +35,8 @@ public final class DeadlinesContract
     public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, DEADLINES_PATH);
     public static final String FILTER_ARCHIVED = "archived";
     public static final String FILTER_GROUP = "group";
+    public static final int STATE_NOT_DONE = 0;
+    public static final int STATE_DONE = 1;
     public static final int TYPE_ARCHIVED = 0;
     public static final int TYPE_IN_PROGRESS = 1;
   }

@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,7 +22,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.casimirlab.simpleDeadlines.data.DeadlineModel;
 import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 import java.util.Calendar;
@@ -39,7 +39,7 @@ public class EditorDialogFragment extends DialogFragment
   private TextView _labelView;
   private AutoCompleteTextView _groupView;
   private DatePicker _dueDateView;
-  private boolean _isDone;
+  private int _state;
 
   @Override
   public void onCreate(Bundle savedInstanceState)
@@ -53,7 +53,9 @@ public class EditorDialogFragment extends DialogFragment
     _cr = getActivity().getContentResolver();
     _currentUri = ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, _modelId);
 
-    _isDone = !_isNew;
+    _state = _isNew
+	    ? DeadlinesContract.Deadlines.STATE_NOT_DONE
+	    : DeadlinesContract.Deadlines.STATE_DONE;
   }
 
   @Override
@@ -137,21 +139,22 @@ public class EditorDialogFragment extends DialogFragment
     {
       Cursor c = _cr.query(_currentUri, null, null, null, null);
       c.moveToFirst();
-      DeadlineModel model = DeadlineModel.fromCursor(c);
+      ContentValues values = new ContentValues();
+      DatabaseUtils.cursorRowToContentValues(c, values);
 
-      _labelView.setText(model.Label());
+      _labelView.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.LABEL));
 
-      _groupView.setText(model.Group());
+      _groupView.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.GROUP));
       Cursor cGroups = _cr.query(DeadlinesContract.Groups.CONTENT_URI, null, null, null, null);
       _groupView.setAdapter(new GroupAdapter(getActivity(), cGroups));
 
       Calendar dateValue = Calendar.getInstance();
-      dateValue.setTime(model.DueDate());
+      dateValue.setTimeInMillis(values.getAsLong(DeadlinesContract.DeadlinesColumns.DUE_DATE));
       _dueDateView.updateDate(dateValue.get(Calendar.YEAR),
 			      dateValue.get(Calendar.MONTH),
 			      dateValue.get(Calendar.DAY_OF_MONTH));
 
-      _isDone = model.Done();
+      _state = values.getAsInteger(DeadlinesContract.DeadlinesColumns.DONE);
     }
   }
 
@@ -165,7 +168,7 @@ public class EditorDialogFragment extends DialogFragment
     if (!_isNew)
       values.put(DeadlinesContract.DeadlinesColumns.ID, _modelId);
 
-    values.put(DeadlinesContract.DeadlinesColumns.DONE, _isDone ? 1 : 0);
+    values.put(DeadlinesContract.DeadlinesColumns.DONE, _state);
     values.put(DeadlinesContract.DeadlinesColumns.DUE_DATE, dueDateValue.getTime());
     values.put(DeadlinesContract.DeadlinesColumns.GROUP, _groupView.getText().toString());
     values.put(DeadlinesContract.DeadlinesColumns.LABEL, _labelView.getText().toString());

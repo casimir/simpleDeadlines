@@ -213,10 +213,10 @@ public class DeadlineProvider extends ContentProvider
     String[] param = new String[1];
     int[] levels = new int[]
     {
-      DeadlineModel.LVL_TODAY,
-      DeadlineModel.LVL_URGENT,
-      DeadlineModel.LVL_WORRYING,
-      DeadlineModel.LVL_NICE
+      DeadlineUtils.LVL_TODAY,
+      DeadlineUtils.LVL_URGENT,
+      DeadlineUtils.LVL_WORRYING,
+      DeadlineUtils.LVL_NICE
     };
     Calendar today = Calendar.getInstance();
     today.set(Calendar.HOUR_OF_DAY, 0);
