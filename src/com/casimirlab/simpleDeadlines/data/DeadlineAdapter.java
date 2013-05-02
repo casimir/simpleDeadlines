@@ -44,16 +44,18 @@ public class DeadlineAdapter extends CursorAdapter
     long days = deadlineDays - todayDays;
     holder.Remaining.setText(String.valueOf(days));
 
-    if (days <= DeadlineUtils.LVL_TODAY)
-      holder.setColor(context, R.color.lvl_today);
-    else if (days <= DeadlineUtils.LVL_URGENT)
-      holder.setColor(context, R.color.lvl_urgent);
-    else if (days <= DeadlineUtils.LVL_WORRYING)
-      holder.setColor(context, R.color.lvl_worrying);
-    else if (days <= DeadlineUtils.LVL_NICE)
-      holder.setColor(context, R.color.lvl_nice);
-    else
-      holder.setColor(context, R.color.lvl_other);
+    Resources res = context.getResources();
+    holder.RemainingBg.setBackgroundResource(DeadlineUtils.resColorFromLevel(DeadlineUtils.LVL_NEVERMIND));
+    holder.Remaining.setTextColor(res.getColor(DeadlineUtils.resColorFromLevel(DeadlineUtils.LVL_NEVERMIND)));
+    for (int lvl : DeadlineUtils.LVL_ALL)
+    {
+      if (days <= lvl)
+      {
+	holder.RemainingBg.setBackgroundResource(DeadlineUtils.resColorFromLevel(lvl));
+	holder.Remaining.setTextColor(res.getColor(DeadlineUtils.resColorFromLevel(lvl)));
+	break;
+      }
+    }
 
     holder.Label.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.LABEL));
     setStrikeText(holder.Label, values.getAsInteger(DeadlinesContract.DeadlinesColumns.DONE));
@@ -68,14 +70,11 @@ public class DeadlineAdapter extends CursorAdapter
 	    values.getAsInteger(DeadlinesContract.DeadlinesColumns.DONE)
 	    == DeadlinesContract.Deadlines.STATE_DONE);
     final Context ctxt = context;
-    final TextView label = holder.Label;
     final int id = values.getAsInteger(DeadlinesContract.DeadlinesColumns.ID);
     holder.Done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
     {
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
       {
-	setStrikeText(label, isChecked);
-
 	ContentResolver cr = ctxt.getContentResolver();
 	Uri uri = ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id);
 	ContentValues values = new ContentValues();
@@ -105,12 +104,7 @@ public class DeadlineAdapter extends CursorAdapter
 
   private static void setStrikeText(TextView text, int state)
   {
-    setStrikeText(text, state == DeadlinesContract.Deadlines.STATE_DONE);
-  }
-
-  private static void setStrikeText(TextView text, boolean strike)
-  {
-    if (strike)
+    if (state == DeadlinesContract.Deadlines.STATE_DONE)
       text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     else
       text.setPaintFlags(text.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
@@ -124,12 +118,5 @@ public class DeadlineAdapter extends CursorAdapter
     public TextView Group;
     public TextView DueDate;
     public CheckBox Done;
-
-    public void setColor(Context context, int resColor)
-    {
-      RemainingBg.setBackgroundResource(resColor);
-      Resources res = context.getResources();
-      Remaining.setTextColor(res.getColor(resColor));
-    }
   }
 }

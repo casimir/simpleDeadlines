@@ -3,6 +3,7 @@ package com.casimirlab.simpleDeadlines.data;
 import android.content.ContentValues;
 import android.net.Uri;
 import android.text.TextUtils;
+import com.casimirlab.simpleDeadlines.R;
 import java.util.List;
 
 public final class DeadlineUtils
@@ -11,6 +12,11 @@ public final class DeadlineUtils
   public static final int LVL_URGENT = 3;
   public static final int LVL_WORRYING = 7;
   public static final int LVL_NICE = 15;
+  public static final int LVL_NEVERMIND = -1;
+  public static final int[] LVL_ALL =
+  {
+    LVL_TODAY, LVL_URGENT, LVL_WORRYING, LVL_NICE, LVL_NEVERMIND
+  };
   public static final Uri SHARE_BASE_URI = Uri.parse("sd.casimir-lab.net");
 
   public static Uri contentValuesToShareUri(ContentValues values)
@@ -27,6 +33,23 @@ public final class DeadlineUtils
     builder.appendPath(values.getAsString(DeadlinesContract.DeadlinesColumns.DONE));
 
     return builder.build();
+  }
+
+  public static int resColorFromLevel(int level)
+  {
+    switch (level)
+    {
+      case LVL_TODAY:
+	return R.color.lvl_today;
+      case LVL_URGENT:
+	return R.color.lvl_urgent;
+      case LVL_WORRYING:
+	return R.color.lvl_worrying;
+      case LVL_NICE:
+	return R.color.lvl_nice;
+      default:
+	return R.color.lvl_other;
+    }
   }
 
   public static ContentValues shareUriToContentValues(Uri uri)
