@@ -6,6 +6,8 @@
   </string-array>
   <string name="act_delete">Delete</string>
   <string name="act_edit">Edit</string>
+  <string name="act_group">Edit group</string>
   <string name="act_new">New</string>
   <string name="act_settings">Settings</string>
+  <string name="act_share">Share</string>
 </resources>

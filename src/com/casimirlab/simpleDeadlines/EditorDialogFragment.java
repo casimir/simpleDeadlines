@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
 import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 import java.util.Calendar;
@@ -32,8 +33,10 @@ public class EditorDialogFragment extends DialogFragment
 {
   public static final String EXTRA_ID = "editorfragment.id";
   public static final String EXTRA_ISNEW = "editorfragment.typenew";
+  public static final String EXTRA_URI = "editorfragment.uri";
   private int _modelId;
   private boolean _isNew;
+  private Uri _sourceUri;
   private ContentResolver _cr;
   private Uri _currentUri;
   private TextView _labelView;
@@ -49,6 +52,7 @@ public class EditorDialogFragment extends DialogFragment
     Bundle args = getArguments();
     _modelId = args.getInt(EXTRA_ID);
     _isNew = args.getBoolean(EXTRA_ISNEW);
+    _sourceUri = args.getParcelable(EXTRA_URI);
 
     _cr = getActivity().getContentResolver();
     _currentUri = ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, _modelId);
@@ -94,7 +98,14 @@ public class EditorDialogFragment extends DialogFragment
 	if (which == Dialog.BUTTON_POSITIVE)
 	{
 	  if (_isNew)
+	  {
 	    _cr.insert(DeadlinesContract.Deadlines.CONTENT_URI, getValues());
+	    if (_sourceUri != null)
+	    {
+	      String msg = getString(R.string.msg_added, _labelView.getText());
+	      Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+	    }
+	  }
 	  else
 	    _cr.update(_currentUri, getValues(), null, null);
 	}
@@ -135,12 +146,18 @@ public class EditorDialogFragment extends DialogFragment
   {
     super.onStart();
 
-    if (!_isNew)
+    if (_sourceUri != null || !_isNew)
     {
-      Cursor c = _cr.query(_currentUri, null, null, null, null);
-      c.moveToFirst();
-      ContentValues values = new ContentValues();
-      DatabaseUtils.cursorRowToContentValues(c, values);
+      ContentValues values;
+      if (_sourceUri != null)
+	values = DeadlineUtils.shareUriToContentValues(_sourceUri);
+      else
+      {
+	values = new ContentValues();
+	Cursor c = _cr.query(_currentUri, null, null, null, null);
+	c.moveToFirst();
+	DatabaseUtils.cursorRowToContentValues(c, values);
+      }
 
       _labelView.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.LABEL));
 
@@ -181,6 +198,17 @@ public class EditorDialogFragment extends DialogFragment
     Bundle args = new Bundle();
     args.putInt(EXTRA_ID, id);
     args.putBoolean(EXTRA_ISNEW, isNew);
+
+    EditorDialogFragment f = new EditorDialogFragment();
+    f.setArguments(args);
+    return f;
+  }
+
+  public static EditorDialogFragment newInstance(Uri uri)
+  {
+    Bundle args = new Bundle();
+    args.putBoolean(EXTRA_ISNEW, true);
+    args.putParcelable(EXTRA_URI, uri);
 
     EditorDialogFragment f = new EditorDialogFragment();
     f.setArguments(args);

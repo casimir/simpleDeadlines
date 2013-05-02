@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -25,6 +26,7 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.casimirlab.simpleDeadlines.data.DeadlineAdapter;
+import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
 import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,31 +76,47 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
 	  _selected.add(Integer.valueOf((int)id));
 	else
 	  _selected.remove(Integer.valueOf((int)id));
-	mode.setTitle(_selected.size() + " items"); // TODO res
+	mode.setTitle(getString(R.string.cab_count, _selected.size()));
       }
 
       public boolean onCreateActionMode(ActionMode mode, Menu menu)
       {
+	_selected = new ArrayList<Integer>();
+
 	MenuInflater inflater = mode.getMenuInflater();
 	inflater.inflate(R.menu.cab, menu);
+
 	return true;
       }
 
       public boolean onPrepareActionMode(ActionMode mode, Menu menu)
       {
-	_selected = new ArrayList<Integer>();
-	return true;
+	return false;
       }
 
       public boolean onActionItemClicked(ActionMode mode, MenuItem item)
       {
 	final ContentResolver cr = getActivity().getContentResolver();
 
-	if (item.getItemId() == R.id.act_delete)
+	if (item.getItemId() == R.id.act_share)
 	{
+	  String text = "";
 	  for (int id : _selected)
-	    cr.delete(ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id),
-		      null, null);
+	  {
+	    Cursor c = cr.query(ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id), null,
+				null, null, null);
+	    c.moveToFirst();
+	    ContentValues values = new ContentValues();
+	    DatabaseUtils.cursorRowToContentValues(c, values);
+	    text += DeadlineUtils.contentValuesToShareUri(values).toString() + "\n";
+	  }
+
+	  Intent sendIntent = new Intent();
+	  sendIntent.setAction(Intent.ACTION_SEND);
+	  sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+	  sendIntent.setType("text/plain");
+	  startActivity(sendIntent);
+
 	  mode.finish();
 	  return true;
 	}
@@ -106,6 +124,7 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
 	{
 	  final ActionMode actMode = mode;
 	  final EditText tInput = new EditText(getActivity());
+	  tInput.setSingleLine();
 	  DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener()
 	  {
 	    public void onClick(DialogInterface dialog, int which)
@@ -131,6 +150,14 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
 	  builder.setNegativeButton(android.R.string.cancel, listener);
 	  builder.show();
 
+	  return true;
+	}
+	else if (item.getItemId() == R.id.act_delete)
+	{
+	  for (int id : _selected)
+	    cr.delete(ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id),
+		      null, null);
+	  mode.finish();
 	  return true;
 	}
 

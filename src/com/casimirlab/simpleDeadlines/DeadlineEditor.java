@@ -1,6 +1,7 @@
 package com.casimirlab.simpleDeadlines;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 
 public class DeadlineEditor extends Activity
@@ -10,11 +11,19 @@ public class DeadlineEditor extends Activity
   {
     super.onCreate(savedInstanceState);
 
-    Bundle extras = getIntent().getExtras();
-    int id = extras.getInt(EditorDialogFragment.EXTRA_ID, -1);
-    boolean isNew = extras.getBoolean(EditorDialogFragment.EXTRA_ISNEW, false);
+    EditorDialogFragment dialog;
 
-    EditorDialogFragment dialog = EditorDialogFragment.newInstance(id, isNew);
+    Uri uri = getIntent().getData();
+    if (uri != null)
+      dialog = EditorDialogFragment.newInstance(uri);
+    else
+    {
+      Bundle extras = getIntent().getExtras();
+      int id = extras.getInt(EditorDialogFragment.EXTRA_ID, -1);
+      boolean isNew = extras.getBoolean(EditorDialogFragment.EXTRA_ISNEW, false);
+      dialog = EditorDialogFragment.newInstance(id, isNew);
+    }
+
     dialog.show(getFragmentManager(), "EditorDialog");
   }
 }

@@ -26,7 +26,7 @@ public class DeadlineAdapter extends CursorAdapter
 {
   public DeadlineAdapter(Context context, Cursor c)
   {
-    super(context, c);
+    super(context, c, false);
   }
 
   @Override
