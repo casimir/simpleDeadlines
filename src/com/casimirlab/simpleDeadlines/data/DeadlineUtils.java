@@ -64,7 +64,10 @@ public final class DeadlineUtils
       throw new IllegalArgumentException(String.format("Empty label: %s", uri));
     values.put(DeadlinesContract.DeadlinesColumns.LABEL, segments.get(0));
 
-    values.put(DeadlinesContract.DeadlinesColumns.GROUP, segments.get(1));
+    if (segments.get(1).getBytes()[0] == 0)
+      values.put(DeadlinesContract.DeadlinesColumns.GROUP, (String)null);
+    else
+      values.put(DeadlinesContract.DeadlinesColumns.GROUP, segments.get(1));
 
     if (TextUtils.isEmpty(segments.get(2)) || !TextUtils.isDigitsOnly(segments.get(2)))
       throw new IllegalArgumentException(String.format("Malformed date: %s", uri));
