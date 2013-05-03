@@ -27,6 +27,11 @@
 			android:summaryOn="@string/pref_sum_editor_calendar_on"
 			android:persistent="true" />
   </PreferenceCategory>
+  <PreferenceCategory android:title="@string/pref_title_backup">
+    <Preference android:title="@string/pref_title_backup_do"
+		android:key="@string/pref_key_backup_do"
+		android:summary="@string/pref_sum_backup_do" />
+  </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_title_about">
     <Preference android:title="@string/pref_title_about_version"
 		android:key="@string/pref_key_about_version"

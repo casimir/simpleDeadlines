@@ -1,8 +1,10 @@
 package com.casimirlab.simpleDeadlines;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -19,6 +21,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
 import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 
@@ -55,20 +59,6 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
     _actionBar.setListNavigationCallbacks(navAdapter, navListener);
 
     _drawer = new DrawerLayout(this, R.layout.drawer);
-    _drawer.setCallback(new DrawerLayout.Callback()
-    {
-      @Override
-      public void open()
-      {
-	TextView drawerTitle = (TextView)_drawer.findViewById(R.id.title);
-	_drawer.setMaxWidth(drawerTitle.getMeasuredWidth());
-      }
-
-      @Override
-      public void close()
-      {
-      }
-    });
     _groupAdapter = new GroupAdapter(this, null);
     _grouplist = (ListView)_drawer.findViewById(R.id.grouplist);
     _grouplist.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -104,14 +94,24 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
     _currentGroupIdx = ListView.INVALID_POSITION;
 
     getLoaderManager().initLoader(0, null, this);
-  }
 
-  @Override
-  protected void onStart()
-  {
-    super.onStart();
-
-//    updateDrawer();
+    final Uri backupUri = getIntent().getData();
+    if (backupUri != null)
+    {
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      builder.setMessage(R.string.msg_confirm_recover);
+      builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+      {
+	public void onClick(DialogInterface dialog, int which)
+	{
+	  int count = DeadlineUtils.performRecover(getApplicationContext(), backupUri);
+	  String msg = getString(R.string.msg_recover, count);
+	  Toast.makeText(Deadlines.this, msg, Toast.LENGTH_SHORT).show();
+	}
+      });
+      builder.setNegativeButton(android.R.string.no, null);
+      builder.show();
+    }
   }
 
   public Loader<Cursor> onCreateLoader(int id, Bundle args)
@@ -158,10 +158,13 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
     {
       actionNew(null);
       return true;
+
+
     }
     else if (item.getItemId() == R.id.act_settings)
     {
       startActivity(new Intent(this, Settings.class));
+
       return true;
     }
     return super.onOptionsItemSelected(item);
@@ -179,7 +182,8 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
   public void actionNew(View v)
   {
     Intent i = new Intent(this, DeadlineEditor.class);
-    i.putExtra(EditorDialogFragment.EXTRA_ISNEW, true);
+    i.putExtra(EditorDialogFragment.EXTRA_ISNEW,
+	       true);
     startActivity(i);
   }
 }

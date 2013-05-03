@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.util.Log;
+import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
 
 public class Settings extends PreferenceActivity
 {
+  private static final String TAG = "Settings";
+
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
@@ -46,6 +50,20 @@ public class Settings extends PreferenceActivity
 	  }
 	});
 
+	Preference prefBackup = findPreference(getString(R.string.pref_key_backup_do));
+	prefBackup.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+	{
+	  public boolean onPreferenceClick(Preference preference)
+	  {
+	    Intent i = new Intent();
+	    i.setAction(Intent.ACTION_SEND);
+	    i.setType("text/plain");
+	    i.putExtra(Intent.EXTRA_STREAM, DeadlineUtils.performBackup(getApplicationContext()));
+	    startActivity(i);
+	    return true;
+	  }
+	});
+
 	Preference prefVersion = findPreference(getString(R.string.pref_key_about_version));
 	try
 	{
@@ -54,7 +72,7 @@ public class Settings extends PreferenceActivity
 	}
 	catch (PackageManager.NameNotFoundException ex)
 	{
-	  prefVersion.setSummary("Unknown version");
+	  Log.e(TAG, "Failed to retrieve version number", ex);
 	}
       }
     };

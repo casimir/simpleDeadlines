@@ -23,6 +23,7 @@ public class DrawerLayout extends FrameLayout
 {
   private static final float BEVEL_WIDTH = 25.0f;
   private static final int SCROLL_DURATION = 400;
+  private static final int SHADOW_COLOR = Color.DKGRAY;
   private static final int SHADOW_WIDTH = 8;
   private boolean _isInGesture;
   private boolean _isMoving;
@@ -71,10 +72,10 @@ public class DrawerLayout extends FrameLayout
 
     int[] colors = new int[]
     {
-      Color.parseColor("#00000000"), Color.parseColor("#FF000000")
+      SHADOW_COLOR, SHADOW_COLOR & 0x00FFFFFF
     };
     final DisplayMetrics dm = act.getResources().getDisplayMetrics();
-    _shadow = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+    _shadow = new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors);
     _shadow.setBounds(-SHADOW_WIDTH, 0, 0, dm.heightPixels);
 
     float wBevel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, BEVEL_WIDTH, dm);

@@ -3,8 +3,7 @@
 	      android:orientation="vertical"
 	      android:layout_width="match_parent"
 	      android:layout_height="match_parent">
-  <TextView android:id="@+id/title"
-	    android:text="@string/drawer_group_pick"
+  <TextView android:text="@string/drawer_group_pick"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:padding="10dp"

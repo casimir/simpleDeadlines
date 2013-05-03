@@ -108,7 +108,8 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
 	    c.moveToFirst();
 	    ContentValues values = new ContentValues();
 	    DatabaseUtils.cursorRowToContentValues(c, values);
-	    text += DeadlineUtils.contentValuesToShareUri(values).toString() + "\n";
+	    text += (text.equals("") ? "" : "\n");
+	    text += DeadlineUtils.contentValuesToShareUri(values);
 	  }
 
 	  Intent sendIntent = new Intent();

@@ -8,4 +8,6 @@
   <string name="hint_group">Groupe</string>
   <string name="hint_due_date">Date</string>
   <string name="msg_added">\'%s\' ajouté</string>
+  <string name="msg_confirm_recover">Récupérer ce fichier ?</string>
+  <string name="msg_recover">%d éléments ajoutés</string>
 </resources>
