@@ -6,6 +6,7 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -51,9 +52,8 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
 
     _drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
     _drawerToggle = new ActionBarDrawerToggle(this, _drawerLayout,
-					      R.drawable.ic_act_filter,
-					      android.R.string.unknownName, android.R.string.unknownName);
-    
+					      R.drawable.ic_drawer,
+					      android.R.string.unknownName, android.R.string.unknownName); // FIXME use real res
 
     _groupAdapter = new GroupAdapter(this, null);
     _grouplist = (ListView)findViewById(R.id.grouplist);
@@ -82,7 +82,9 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
       public void onPageSelected(int position)
       {
 	getActionBar().setTitle(_TITLES[position]);
-	getLoaderManager().restartLoader(0, null, Deadlines.this);
+	_currentGroupIdx = ListView.INVALID_POSITION;
+	((DeadlineListFragment)_pagerAdapter.getItem(position)).setGroupFilter(null);
+	getLoaderManager().restartLoader(position, null, Deadlines.this);
       }
     });
 
@@ -117,10 +119,18 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
     _drawerToggle.syncState();
   }
 
+  @Override
+  public void onConfigurationChanged(Configuration newConfig)
+  {
+    super.onConfigurationChanged(newConfig);
+
+    _drawerToggle.onConfigurationChanged(newConfig);
+  }
+
   public Loader<Cursor> onCreateLoader(int id, Bundle args)
   {
     Uri.Builder builder = DeadlinesContract.Deadlines.CONTENT_URI.buildUpon();
-    if (getActionBar().getSelectedNavigationIndex() == 1)
+    if (id == 1)
       builder.appendPath(DeadlinesContract.Deadlines.FILTER_ARCHIVED);
     builder.appendPath(DeadlinesContract.GROUPS_PATH);
 
@@ -149,25 +159,21 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {
-    if (item.getItemId() == android.R.id.home)
-    {
-      if (_drawerLayout.isDrawerOpen(_grouplist))
-	_drawerLayout.closeDrawers();
-      else
-	_drawerLayout.openDrawer(_grouplist);
-
+    if (_drawerToggle.onOptionsItemSelected(item))
       return true;
-    }
+
     if (item.getItemId() == R.id.act_new)
     {
       actionNew(null);
       return true;
     }
-    else if (item.getItemId() == R.id.act_settings)
+
+    if (item.getItemId() == R.id.act_settings)
     {
       startActivity(new Intent(this, Settings.class));
       return true;
     }
+
     return super.onOptionsItemSelected(item);
   }
 
