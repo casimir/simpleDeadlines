@@ -92,13 +92,9 @@ public class NotificationCenter extends BroadcastReceiver
 
     RemoteViews view = new RemoteViews(_context.getPackageName(), R.layout.notif);
     view.setTextViewText(R.id.count_today, String.valueOf(c.getInt(0)));
-    view.setTextColor(R.id.count_today, _context.getResources().getColor(R.color.lvl_today));
     view.setTextViewText(R.id.count_urgent, String.valueOf(c.getInt(1)));
-    view.setTextColor(R.id.count_urgent, _context.getResources().getColor(R.color.lvl_urgent));
     view.setTextViewText(R.id.count_worrying, String.valueOf(c.getInt(2)));
-    view.setTextColor(R.id.count_worrying, _context.getResources().getColor(R.color.lvl_worrying));
     view.setTextViewText(R.id.count_nice, String.valueOf(c.getInt(3)));
-    view.setTextColor(R.id.count_nice, _context.getResources().getColor(R.color.lvl_nice));
 
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
     boolean persist = sp.getBoolean(_context.getString(R.string.pref_key_notif_persist), false);

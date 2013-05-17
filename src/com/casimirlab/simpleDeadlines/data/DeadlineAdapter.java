@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Paint;
@@ -44,15 +43,12 @@ public class DeadlineAdapter extends CursorAdapter
     long days = deadlineDays - todayDays;
     holder.Remaining.setText(String.valueOf(days));
 
-    Resources res = context.getResources();
     holder.RemainingBg.setBackgroundResource(DeadlineUtils.resColorFromLevel(DeadlineUtils.LVL_NEVERMIND));
-    holder.Remaining.setTextColor(res.getColor(DeadlineUtils.resColorFromLevel(DeadlineUtils.LVL_NEVERMIND)));
     for (int lvl : DeadlineUtils.LVL_ALL)
     {
       if (days <= lvl)
       {
 	holder.RemainingBg.setBackgroundResource(DeadlineUtils.resColorFromLevel(lvl));
-	holder.Remaining.setTextColor(res.getColor(DeadlineUtils.resColorFromLevel(lvl)));
 	break;
       }
     }

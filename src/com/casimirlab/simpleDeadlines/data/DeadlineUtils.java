@@ -11,16 +11,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import com.casimirlab.simpleDeadlines.R;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public final class DeadlineUtils
 {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <color name="remaining_bg">#2B2B2B</color>
+  <color name="holo_bg">#F0F0F0</color>
+  <color name="count_light">#F0F0F0</color>
 
   <color name="lvl_today">#CC0000</color>
   <color name="lvl_urgent">#FF8800</color>

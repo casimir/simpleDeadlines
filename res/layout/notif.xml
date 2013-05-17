@@ -11,12 +11,7 @@
   <FrameLayout android:background="@color/lvl_today"
 	       android:layout_width="match_parent"
 	       android:layout_height="match_parent"
-	       android:layout_weight="1"
-	       android:layout_margin="1dp">
-    <FrameLayout android:background="@color/remaining_bg"
-		 android:layout_width="match_parent"
-		 android:layout_height="match_parent"
-		 android:layout_marginTop="8dp" />
+	       android:layout_weight="1">
     <TextView android:id="@+id/count_today"
 	      android:layout_width="wrap_content"
 	      android:layout_height="wrap_content"
@@ -24,17 +19,12 @@
 	      android:layout_gravity="center"
 	      android:textSize="22sp"
 	      android:textStyle="bold"
-	      android:textColor="@color/lvl_today" />
+	      android:textColor="@color/count_light" />
   </FrameLayout>
   <FrameLayout android:background="@color/lvl_urgent"
 	       android:layout_width="match_parent"
 	       android:layout_height="match_parent"
-	       android:layout_weight="1"
-	       android:layout_margin="1dp">
-    <FrameLayout android:background="@color/remaining_bg"
-		 android:layout_width="match_parent"
-		 android:layout_height="match_parent"
-		 android:layout_marginTop="8dp" />
+	       android:layout_weight="1">
     <TextView android:id="@+id/count_urgent"
 	      android:layout_width="wrap_content"
 	      android:layout_height="wrap_content"
@@ -42,17 +32,12 @@
 	      android:layout_gravity="center"
 	      android:textSize="22sp"
 	      android:textStyle="bold"
-	      android:textColor="@color/lvl_urgent" />
+	      android:textColor="@color/count_light" />
   </FrameLayout>
   <FrameLayout android:background="@color/lvl_worrying"
 	       android:layout_width="match_parent"
 	       android:layout_height="match_parent"
-	       android:layout_weight="1"
-	       android:layout_margin="1dp">
-    <FrameLayout android:background="@color/remaining_bg"
-		 android:layout_width="match_parent"
-		 android:layout_height="match_parent"
-		 android:layout_marginTop="8dp" />
+	       android:layout_weight="1">
     <TextView android:id="@+id/count_worrying"
 	      android:layout_width="wrap_content"
 	      android:layout_height="wrap_content"
@@ -60,17 +45,12 @@
 	      android:layout_gravity="center"
 	      android:textSize="22sp"
 	      android:textStyle="bold"
-	      android:textColor="@color/lvl_worrying" />
+	      android:textColor="@color/count_light" />
   </FrameLayout>
   <FrameLayout android:background="@color/lvl_nice"
 	       android:layout_width="match_parent"
 	       android:layout_height="match_parent"
-	       android:layout_weight="1"
-	       android:layout_margin="1dp">
-    <FrameLayout android:background="@color/remaining_bg"
-		 android:layout_width="match_parent"
-		 android:layout_height="match_parent"
-		 android:layout_marginTop="8dp" />
+	       android:layout_weight="1">
     <TextView android:id="@+id/count_nice"
 	      android:layout_width="wrap_content"
 	      android:layout_height="wrap_content"
@@ -78,6 +58,6 @@
 	      android:layout_gravity="center"
 	      android:textSize="22sp"
 	      android:textStyle="bold"
-	      android:textColor="@color/lvl_nice" />
+	      android:textColor="@color/count_light" />
   </FrameLayout>
 </LinearLayout>
