@@ -55,7 +55,7 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
     _drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
     _drawerToggle = new ActionBarDrawerToggle(this, _drawerLayout,
 					      R.drawable.ic_drawer,
-					      android.R.string.unknownName, android.R.string.unknownName); // FIXME use real res
+					      R.string.drawer_open, R.string.drawer_close);
 
     _groupAdapter = new GroupAdapter(this, null);
     _grouplist = (ListView)findViewById(R.id.grouplist);
