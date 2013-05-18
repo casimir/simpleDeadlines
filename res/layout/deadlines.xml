@@ -3,30 +3,9 @@
 					android:id="@+id/drawer_layout"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent">
-  <FrameLayout android:id="@+id/content_frame"
-	       android:layout_width="match_parent"
-	       android:layout_height="match_parent">
-    <android.support.v4.view.ViewPager android:id="@+id/pager"
-				       android:layout_width="match_parent"
-				       android:layout_height="match_parent" />
-    <LinearLayout android:id="@android:id/empty"
-		  android:layout_width="wrap_content"
-		  android:layout_height="wrap_content"
-		  android:layout_centerInParent="true"
-		  android:orientation="vertical"
-		  android:visibility="gone">
-      <TextView android:text="@string/empty_list"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:padding="2dp" />
-      <ImageButton android:src="@drawable/ic_act_new"
-		   android:layout_width="wrap_content"
-		   android:layout_height="wrap_content"
-		   android:padding="2dp"
-		   android:layout_gravity="center"
-		   android:onClick="actionNew" />
-    </LinearLayout>
-  </FrameLayout>
+  <android.support.v4.view.ViewPager android:id="@+id/pager"
+				     android:layout_width="match_parent"
+				     android:layout_height="match_parent" />
   <ListView android:id="@+id/grouplist"
 	    android:layout_width="240dp"
 	    android:layout_height="match_parent"

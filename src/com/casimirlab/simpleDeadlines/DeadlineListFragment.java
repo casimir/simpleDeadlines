@@ -170,6 +170,8 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
 	_selected = null;
       }
     });
+
+    setEmptyText("No deadline found");
   }
 
   public Loader<Cursor> onCreateLoader(int id, Bundle args)

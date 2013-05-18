@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -51,6 +52,7 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
     getActionBar().setTitle(_TITLES[0]);
 
     _drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+    _drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
     _drawerToggle = new ActionBarDrawerToggle(this, _drawerLayout,
 					      R.drawable.ic_drawer,
 					      android.R.string.unknownName, android.R.string.unknownName); // FIXME use real res
@@ -166,11 +168,14 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
     {
       actionNew(null);
       return true;
+
+
     }
 
     if (item.getItemId() == R.id.act_settings)
     {
       startActivity(new Intent(this, Settings.class));
+
       return true;
     }
 
@@ -180,7 +185,8 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
   public void actionNew(View v)
   {
     Intent i = new Intent(this, DeadlineEditor.class);
-    i.putExtra(EditorDialogFragment.EXTRA_ISNEW, true);
+    i.putExtra(EditorDialogFragment.EXTRA_ISNEW,
+	       true);
     startActivity(i);
   }
 }
