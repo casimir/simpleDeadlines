@@ -2,12 +2,12 @@
 <resources>
   <string name="drawer_group_pick">Choisir un groupe</string>
   <string name="cab_count">%s éléments</string>
-  <string name="empty_list">Pour commencer appuyer sur le bouton</string>
+  <string name="empty_list">Pour commencer appuyer sur le bouton \"+\"</string>
   <string name="empty_label">Au moins un label est nécessaire</string>
   <string name="hint_label">Libellé</string>
   <string name="hint_group">Groupe</string>
   <string name="hint_due_date">Date</string>
-  <string name="msg_added">\'%s\' ajouté</string>
+  <string name="msg_added">\"%s\" ajouté</string>
   <string name="msg_confirm_recover">Récupérer ce fichier ?</string>
   <string name="msg_recover">%d éléments ajoutés</string>
 </resources>

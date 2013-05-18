@@ -166,10 +166,11 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
 
     if (item.getItemId() == R.id.act_new)
     {
-      actionNew(null);
+      Intent i = new Intent(this, DeadlineEditor.class);
+      i.putExtra(EditorDialogFragment.EXTRA_ISNEW, true);
+      startActivity(i);
+
       return true;
-
-
     }
 
     if (item.getItemId() == R.id.act_settings)
@@ -180,13 +181,5 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
     }
 
     return super.onOptionsItemSelected(item);
-  }
-
-  public void actionNew(View v)
-  {
-    Intent i = new Intent(this, DeadlineEditor.class);
-    i.putExtra(EditorDialogFragment.EXTRA_ISNEW,
-	       true);
-    startActivity(i);
   }
 }

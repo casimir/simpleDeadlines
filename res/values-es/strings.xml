@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <string name="drawer_group_pick">Selecciona un grupo</string>
-  <string name="empty_list">Pulsa un botón para empezar</string>
+  <string name="empty_list">Pulsa un botón \"+\" para empezar</string>
   <string name="empty_label">Es necesario al menos una etiqueta</string>
   <string name="hint_label">Etiqueta</string>
   <string name="hint_group">Grupo</string>

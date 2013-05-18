@@ -3,12 +3,12 @@
   <string name="app_name" translatable="false">Simple Deadlines</string>
   <string name="cab_count">%s items</string>
   <string name="drawer_group_pick">Pick a group</string>
-  <string name="empty_list">To start press the button</string>
+  <string name="empty_list">To start press the \"+\" button</string>
   <string name="empty_label">At least a label is required</string>
   <string name="hint_label">Label</string>
   <string name="hint_group">Group</string>
   <string name="hint_due_date">Date</string>
-  <string name="msg_added">\'%s\' added</string>
+  <string name="msg_added">\"%s\" added</string>
   <string name="msg_confirm_recover">Recover this file?</string>
   <string name="msg_recover">%d items added</string>
 </resources>

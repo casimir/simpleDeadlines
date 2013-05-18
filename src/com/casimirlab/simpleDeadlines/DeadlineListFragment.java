@@ -171,7 +171,7 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
       }
     });
 
-    setEmptyText("No deadline found");
+    setEmptyText(getString(R.string.empty_list));
   }
 
   public Loader<Cursor> onCreateLoader(int id, Bundle args)
