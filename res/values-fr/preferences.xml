@@ -3,8 +3,8 @@
   <string name="pref_title_notif">Notification</string>
 
   <string name="pref_title_notif_persist">Notification persistante</string>
-  <string name="pref_sum_notif_persist_off">La notification est supprimable</string>
-  <string name="pref_sum_notif_persist_on">La notification est permanente</string>
+  <string name="pref_sum_notif_persist_off">Notification supprimable</string>
+  <string name="pref_sum_notif_persist_on">Notification permanente</string>
 
   <string name="pref_title_notif_hour">Heure de notification</string>
 
@@ -14,8 +14,8 @@
   <string name="pref_title_editor">Éditeur</string>
 
   <string name="pref_title_editor_calendar">Vue calendrier</string>
-  <string name="pref_sum_editor_calendar_off">Date par roues</string>
-  <string name="pref_sum_editor_calendar_on">Date par calendrier</string>
+  <string name="pref_sum_editor_calendar_off">Roues</string>
+  <string name="pref_sum_editor_calendar_on">Calendrier</string>
 
   <string name="pref_title_backup">Sauvegarde</string>
 

@@ -14,8 +14,8 @@
   <string name="pref_title_editor">Editor</string>
 
   <string name="pref_title_editor_calendar">Kalenderdarstellung</string>
-  <string name="pref_sum_editor_calendar_off">Datum mit Kreisel auswählen</string>
-  <string name="pref_sum_editor_calendar_on">Datum mit Kalender auswählen</string>
+  <string name="pref_sum_editor_calendar_off">Kreisel auswählen</string>
+  <string name="pref_sum_editor_calendar_on">Kalender auswählen</string>
 
   <string name="pref_title_about">About</string>
 
