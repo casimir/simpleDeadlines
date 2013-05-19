@@ -17,6 +17,12 @@
   <string name="pref_sum_editor_calendar_off">Kreisel auswählen</string>
   <string name="pref_sum_editor_calendar_on">Kalender auswählen</string>
 
+  <string name="pref_title_backup">Sicherungskopie</string>
+
+  <string name="pref_title_backup_do">Deadlines absichern</string>
+  <string name="pref_key_backup_do" translatable="false">backup_do</string>
+  <string name="pref_sum_backup_do">Durch Nutzung externer Apps</string>
+
   <string name="pref_title_about">About</string>
 
   <string name="pref_title_about_version">Versionsnummer</string>
