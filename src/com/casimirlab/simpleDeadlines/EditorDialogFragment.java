@@ -71,7 +71,11 @@ public class EditorDialogFragment extends DialogFragment
     boolean showCalendar = sp.getBoolean(getString(R.string.pref_key_editor_calendar), false);
 
     _labelView = (EditText)v.findViewById(R.id.label);
+
     _groupView = (AutoCompleteTextView)v.findViewById(R.id.group);
+    Cursor cGroups = _cr.query(DeadlinesContract.Groups.CONTENT_URI, null, null, null, null);
+    _groupView.setAdapter(new GroupAdapter(getActivity(), cGroups));
+
     _dueDateView = (DatePicker)v.findViewById(R.id.due_date);
     _dueDateView.setSpinnersShown(!showCalendar);
     _dueDateView.setCalendarViewShown(showCalendar);
@@ -162,8 +166,6 @@ public class EditorDialogFragment extends DialogFragment
       _labelView.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.LABEL));
 
       _groupView.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.GROUP));
-      Cursor cGroups = _cr.query(DeadlinesContract.Groups.CONTENT_URI, null, null, null, null);
-      _groupView.setAdapter(new GroupAdapter(getActivity(), cGroups));
 
       Calendar dateValue = Calendar.getInstance();
       dateValue.setTimeInMillis(values.getAsLong(DeadlinesContract.DeadlinesColumns.DUE_DATE));
