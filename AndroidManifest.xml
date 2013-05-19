@@ -38,6 +38,10 @@
 	      android:host="*"
 	      android:mimeType="*/*"
 	      android:pathPattern=".*\\.sd" />
+	<!--Handle filenames with a maximum of 4 dots-->
+	<data android:pathPattern=".*\\..*\\.sd" />
+	<data android:pathPattern=".*\\..*\\..*\\.sd" />
+	<data android:pathPattern=".*\\..*\\..*\\..*\\.sd" />
       </intent-filter>
     </activity>
     <activity android:name="Settings"
