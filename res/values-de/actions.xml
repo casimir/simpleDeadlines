@@ -1,10 +1,10 @@
 <resources>
   <string-array name="act_nav_list">
-    <item>"offene Aufgaben"</item>
-    <item>"abgeschlossene Aufgaben"</item>
+    <item>offene Aufgaben</item>
+    <item>abgeschlossene Aufgaben</item>
   </string-array>
-  <string name="act_delete">"Löschen"</string>
-  <string name="act_edit">"Bearbeiten"</string>
-  <string name="act_new">"Neu"</string>
-  <string name="act_settings">"Einstellungen"</string>
+  <string name="act_delete">Löschen</string>
+  <string name="act_edit">Bearbeiten</string>
+  <string name="act_new">Neu</string>
+  <string name="act_settings">Einstellungen</string>
 </resources>

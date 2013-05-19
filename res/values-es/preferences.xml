@@ -17,6 +17,11 @@
   <string name="pref_sum_editor_calendar_off">Ruedecillas</string>
   <string name="pref_sum_editor_calendar_on">Calendario</string>
 
+  <string name="pref_title_backup">Copia de seguridad</string>
+
+  <string name="pref_title_backup_do">Crear el archivo de seguridad</string>
+  <string name="pref_sum_backup_do">Utiliza una aplicación externa</string>
+
   <string name="pref_title_about">Acerca de</string>
 
   <string name="pref_title_about_version">Número de versión</string>

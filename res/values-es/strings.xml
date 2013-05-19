@@ -5,4 +5,7 @@
   <string name="empty_label">Es necesario al menos una etiqueta</string>
   <string name="hint_label">Etiqueta</string>
   <string name="hint_group">Grupo</string>
+  <string name="msg_added">\"%s\" añadido</string>
+  <string name="msg_confirm_recover">¿Recupere este archivo?</string>
+  <string name="msg_recover">%d artículos añadidos</string>
 </resources>

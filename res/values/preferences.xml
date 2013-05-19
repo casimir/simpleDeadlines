@@ -27,7 +27,7 @@
 
   <string name="pref_title_backup_do">Backup deadlines</string>
   <string name="pref_key_backup_do" translatable="false">backup_do</string>
-  <string name="pref_sum_backup_do">Use an external application</string>
+  <string name="pref_sum_backup_do">Using an external application</string>
 
   <string name="pref_title_about">About</string>
 
