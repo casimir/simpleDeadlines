@@ -10,11 +10,8 @@
 
 # generated files
 bin/
+build/
 gen/
 
-# Local configuration file (sdk path, etc)
-local.properties
-
-# netbeans specific
-nbandroid/
-private/
+# Android Studio
+.idea/workspace.xml

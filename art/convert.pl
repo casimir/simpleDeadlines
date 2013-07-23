@@ -4,7 +4,7 @@
 ## Author:	Martin Chaine (chaine.martin@gmail.com)
 ## Contrib:	Martin Chaine (chaine.martin@gmail.com)
 ## Created:	25 Nov 2012 15:45:47
-## Modified:	13 Jan 2013 23:06:44
+## Modified:	16 Jul 2013 15:12:42
 ## Description:	TODO Put the description here.
 ##
 
@@ -19,7 +19,7 @@ use File::Basename;
 my $EXEC_NAME = $0;
 my $DIR_SRC = './unscaled';
 
-my @DIRS = qw(../res/drawable-xhdpi ../res/drawable-hdpi ../res/drawable-mdpi ../res/drawable-ldpi);
+my @DIRS = qw(../src/main/res/drawable-xhdpi ../src/main/res/drawable-hdpi ../src/main/res/drawable-mdpi ../src/main/res/drawable-ldpi);
 # Dimensions from http://developer.android.com/guide/practices/ui_guidelines/icon_design_launcher.html#size
 my @SIZES = qw(96x96 72x72 48x48 36x36);
 # Dimensions from http://developer.android.com/guide/practices/ui_guidelines/icon_design_action_bar.html#size11
