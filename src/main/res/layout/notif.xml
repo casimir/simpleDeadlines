@@ -1,63 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	      android:orientation="horizontal"
-	      android:layout_width="match_parent"
-	      android:layout_height="64dp">
-  <ImageView android:src="@drawable/ic_status"
-	     android:contentDescription="Status icon"
-	     android:layout_width="64dp"
-	     android:layout_height="64dp"
-	     android:scaleType="center" />
-  <FrameLayout android:background="@color/lvl_today"
-	       android:layout_width="match_parent"
-	       android:layout_height="match_parent"
-	       android:layout_weight="1">
-    <TextView android:id="@+id/count_today"
-	      android:layout_width="wrap_content"
-	      android:layout_height="wrap_content"
-	      android:gravity="center"
-	      android:layout_gravity="center"
-	      android:textSize="22sp"
-	      android:textStyle="bold"
-	      android:textColor="@color/count_light" />
-  </FrameLayout>
-  <FrameLayout android:background="@color/lvl_urgent"
-	       android:layout_width="match_parent"
-	       android:layout_height="match_parent"
-	       android:layout_weight="1">
-    <TextView android:id="@+id/count_urgent"
-	      android:layout_width="wrap_content"
-	      android:layout_height="wrap_content"
-	      android:gravity="center"
-	      android:layout_gravity="center"
-	      android:textSize="22sp"
-	      android:textStyle="bold"
-	      android:textColor="@color/count_light" />
-  </FrameLayout>
-  <FrameLayout android:background="@color/lvl_worrying"
-	       android:layout_width="match_parent"
-	       android:layout_height="match_parent"
-	       android:layout_weight="1">
-    <TextView android:id="@+id/count_worrying"
-	      android:layout_width="wrap_content"
-	      android:layout_height="wrap_content"
-	      android:gravity="center"
-	      android:layout_gravity="center"
-	      android:textSize="22sp"
-	      android:textStyle="bold"
-	      android:textColor="@color/count_light" />
-  </FrameLayout>
-  <FrameLayout android:background="@color/lvl_nice"
-	       android:layout_width="match_parent"
-	       android:layout_height="match_parent"
-	       android:layout_weight="1">
-    <TextView android:id="@+id/count_nice"
-	      android:layout_width="wrap_content"
-	      android:layout_height="wrap_content"
-	      android:gravity="center"
-	      android:layout_gravity="center"
-	      android:textSize="22sp"
-	      android:textStyle="bold"
-	      android:textColor="@color/count_light" />
-  </FrameLayout>
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="64dp">
+
+    <ImageView
+            android:src="@drawable/ic_status"
+            android:contentDescription="Status icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="center"/>
+
+    <FrameLayout
+            android:background="@color/lvl_today"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        <TextView
+                android:id="@+id/count_today"
+                style="@style/notif_count"/>
+    </FrameLayout>
+
+    <FrameLayout
+            android:background="@color/lvl_urgent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        <TextView
+                android:id="@+id/count_urgent"
+                style="@style/notif_count"/>
+    </FrameLayout>
+
+    <FrameLayout
+            android:background="@color/lvl_worrying"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        <TextView
+                android:id="@+id/count_worrying"
+                style="@style/notif_count"/>
+    </FrameLayout>
+
+    <FrameLayout
+            android:background="@color/lvl_nice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        <TextView
+                android:id="@+id/count_nice"
+                style="@style/notif_count"/>
+    </FrameLayout>
 </LinearLayout>

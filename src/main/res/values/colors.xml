@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <color name="holo_bg">#F0F0F0</color>
-  <color name="count_light">#F0F0F0</color>
+    <color name="holo_bg">#F0F0F0</color>
 
-  <color name="lvl_today">#CC0000</color>
-  <color name="lvl_urgent">#FF8800</color>
-  <color name="lvl_worrying">#CCCC00</color>
-  <color name="lvl_nice">#00CC00</color>
-  <color name="lvl_other">#0000CC</color>
+    <color name="lvl_today">#CC0000</color>
+    <color name="lvl_urgent">#FF8800</color>
+    <color name="lvl_worrying">#CCCC00</color>
+    <color name="lvl_nice">#00CC00</color>
+    <color name="lvl_other">#0000CC</color>
 </resources>
