@@ -12,7 +12,7 @@
             android:scaleType="center"/>
 
     <FrameLayout
-            android:background="@color/lvl_today"
+            android:background="@color/today"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -23,7 +23,7 @@
     </FrameLayout>
 
     <FrameLayout
-            android:background="@color/lvl_urgent"
+            android:background="@color/urgent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -34,7 +34,7 @@
     </FrameLayout>
 
     <FrameLayout
-            android:background="@color/lvl_worrying"
+            android:background="@color/worrying"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -45,7 +45,7 @@
     </FrameLayout>
 
     <FrameLayout
-            android:background="@color/lvl_nice"
+            android:background="@color/nice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">

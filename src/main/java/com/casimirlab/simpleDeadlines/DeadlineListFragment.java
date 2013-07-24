@@ -31,8 +31,8 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        _type = getArguments().getInt(EXTRA_TYPE, DeadlinesContract.Deadlines.TYPE_IN_PROGRESS);
-        _adapter = new DeadlineAdapter(getActivity(), null);
+        _type = getArguments().getInt(EXTRA_TYPE);
+        _adapter = new DeadlineAdapter(getActivity(), null, _type == DeadlinesContract.Deadlines.TYPE_ARCHIVED);
         setListAdapter(_adapter);
 
         getLoaderManager().initLoader(0, getArguments(), this);
