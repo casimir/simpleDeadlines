@@ -106,7 +106,7 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
                         public void onClick(DialogInterface dialog, int which) {
                             if (which == DialogInterface.BUTTON_POSITIVE) {
                                 ContentValues values = new ContentValues(1);
-                                values.put(DeadlinesContract.DeadlinesColumns.GROUP, tInput.getText().toString());
+                                values.put(DeadlinesContract.Deadlines.GROUP, tInput.getText().toString());
 
                                 for (long id : _selected)
                                     cr.update(ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id),
@@ -146,8 +146,12 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Uri.Builder builder = DeadlinesContract.Deadlines.CONTENT_URI.buildUpon();
-        if (_type == DeadlinesContract.Deadlines.TYPE_ARCHIVED)
+        String order = "ASC";
+
+        if (_type == DeadlinesContract.Deadlines.TYPE_ARCHIVED){
             builder.appendPath(DeadlinesContract.Deadlines.FILTER_ARCHIVED);
+            order = "DESC";
+        }
 
         String group = args.getString(EXTRA_GROUP);
         if (!TextUtils.isEmpty(group)) {
@@ -155,7 +159,8 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
             builder.appendPath(group);
         }
 
-        return new CursorLoader(getActivity(), builder.build(), null, null, null, null);
+        String orderBy = DeadlinesContract.Deadlines.DUE_DATE + " " + order;
+        return new CursorLoader(getActivity(), builder.build(), null, null, null, orderBy);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor c) {

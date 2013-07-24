@@ -163,17 +163,17 @@ public class EditorDialogFragment extends DialogFragment
 	DatabaseUtils.cursorRowToContentValues(c, values);
       }
 
-      _labelView.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.LABEL));
+      _labelView.setText(values.getAsString(DeadlinesContract.Deadlines.LABEL));
 
-      _groupView.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.GROUP));
+      _groupView.setText(values.getAsString(DeadlinesContract.Deadlines.GROUP));
 
       Calendar dateValue = Calendar.getInstance();
-      dateValue.setTimeInMillis(values.getAsLong(DeadlinesContract.DeadlinesColumns.DUE_DATE));
+      dateValue.setTimeInMillis(values.getAsLong(DeadlinesContract.Deadlines.DUE_DATE));
       _dueDateView.updateDate(dateValue.get(Calendar.YEAR),
 			      dateValue.get(Calendar.MONTH),
 			      dateValue.get(Calendar.DAY_OF_MONTH));
 
-      _state = values.getAsInteger(DeadlinesContract.DeadlinesColumns.DONE);
+      _state = values.getAsInteger(DeadlinesContract.Deadlines.DONE);
     }
   }
 
@@ -185,12 +185,12 @@ public class EditorDialogFragment extends DialogFragment
 					      _dueDateView.getDayOfMonth()).getTime();
 
     if (!_isNew)
-      values.put(DeadlinesContract.DeadlinesColumns.ID, _modelId);
+      values.put(DeadlinesContract.Deadlines.ID, _modelId);
 
-    values.put(DeadlinesContract.DeadlinesColumns.DONE, _state);
-    values.put(DeadlinesContract.DeadlinesColumns.DUE_DATE, dueDateValue.getTime());
-    values.put(DeadlinesContract.DeadlinesColumns.GROUP, _groupView.getText().toString());
-    values.put(DeadlinesContract.DeadlinesColumns.LABEL, _labelView.getText().toString());
+    values.put(DeadlinesContract.Deadlines.DONE, _state);
+    values.put(DeadlinesContract.Deadlines.DUE_DATE, dueDateValue.getTime());
+    values.put(DeadlinesContract.Deadlines.GROUP, _groupView.getText().toString());
+    values.put(DeadlinesContract.Deadlines.LABEL, _labelView.getText().toString());
 
     return values;
   }
