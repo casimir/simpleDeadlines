@@ -38,15 +38,15 @@ public final class DeadlineUtils {
 
     public static Uri contentValuesToShareUri(ContentValues values) {
         Uri.Builder builder = SHARE_BASE_URI.buildUpon();
-        String group = values.getAsString(DeadlinesContract.DeadlinesColumns.GROUP);
+        String group = values.getAsString(DeadlinesContract.Deadlines.GROUP);
 
-        builder.appendPath(values.getAsString(DeadlinesContract.DeadlinesColumns.LABEL));
+        builder.appendPath(values.getAsString(DeadlinesContract.Deadlines.LABEL));
         if (TextUtils.isEmpty(group))
             builder.appendEncodedPath("%00");
         else
             builder.appendPath(group);
-        builder.appendPath(values.getAsString(DeadlinesContract.DeadlinesColumns.DUE_DATE));
-        builder.appendPath(values.getAsString(DeadlinesContract.DeadlinesColumns.DONE));
+        builder.appendPath(values.getAsString(DeadlinesContract.Deadlines.DUE_DATE));
+        builder.appendPath(values.getAsString(DeadlinesContract.Deadlines.DONE));
 
         return builder.build();
     }
@@ -125,20 +125,20 @@ public final class DeadlineUtils {
 
         if (TextUtils.isEmpty(segments.get(0)))
             throw new IllegalArgumentException(String.format("Empty label: %s", uri));
-        values.put(DeadlinesContract.DeadlinesColumns.LABEL, segments.get(0));
+        values.put(DeadlinesContract.Deadlines.LABEL, segments.get(0));
 
         if (segments.get(1).getBytes()[0] == 0)
-            values.put(DeadlinesContract.DeadlinesColumns.GROUP, (String) null);
+            values.put(DeadlinesContract.Deadlines.GROUP, (String) null);
         else
-            values.put(DeadlinesContract.DeadlinesColumns.GROUP, segments.get(1));
+            values.put(DeadlinesContract.Deadlines.GROUP, segments.get(1));
 
         if (TextUtils.isEmpty(segments.get(2)) || !TextUtils.isDigitsOnly(segments.get(2)))
             throw new IllegalArgumentException(String.format("Malformed date: %s", uri));
-        values.put(DeadlinesContract.DeadlinesColumns.DUE_DATE, Long.parseLong(segments.get(2)));
+        values.put(DeadlinesContract.Deadlines.DUE_DATE, Long.parseLong(segments.get(2)));
 
         if (TextUtils.isEmpty(segments.get(3)) || !TextUtils.isDigitsOnly(segments.get(3)))
             throw new IllegalArgumentException(String.format("Malformed done state: %s", uri));
-        values.put(DeadlinesContract.DeadlinesColumns.DONE, Integer.parseInt(segments.get(3)));
+        values.put(DeadlinesContract.Deadlines.DONE, Integer.parseInt(segments.get(3)));
 
         return values;
     }

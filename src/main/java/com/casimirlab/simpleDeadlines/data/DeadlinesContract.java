@@ -4,17 +4,23 @@ import android.net.Uri;
 
 public final class DeadlinesContract {
     public static final String AUTHORITY = "com.casimirlab.simpleDeadlines.provider";
-    public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
-    public static final String COUNT_PATH = "count";
-    public static final String DEADLINES_PATH = "deadlines";
+    public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
+    @Deprecated
     public static final String GROUPS_PATH = "groups";
 
     public static final class Count {
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/simpledeadlines.count";
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, COUNT_PATH);
+        /**
+         * Not instantiable.
+         */
+        private Count() {
+        }
+
+        protected static String TABLE_NAME = "count";
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, TABLE_NAME);
     }
 
-    public static final class CountColumns {
+    protected static interface CountColumns {
         public static final String TODAY = "today";
         public static final String URGENT = "urgent";
         public static final String WORRYING = "worrying";
@@ -23,21 +29,21 @@ public final class DeadlinesContract {
     }
 
     public static final class Deadlines implements DeadlinesColumns {
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/simpledeadlines.deadline";
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/simpledeadlines.deadline";
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, DEADLINES_PATH);
+        /**
+         * Not instantiable.
+         */
+        private Deadlines() {
+        }
+
+        protected static String TABLE_NAME = "deadlines";
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, TABLE_NAME);
         public static final String FILTER_ARCHIVED = "archived";
         public static final String FILTER_GROUP = "group";
         public static final int STATE_NOT_DONE = 0;
         public static final int STATE_DONE = 1;
         public static final int TYPE_ARCHIVED = 0;
         public static final int TYPE_IN_PROGRESS = 1;
-
-        /**
-         * Not instantiable.
-         */
-        private Deadlines() {
-        }
     }
 
     protected static interface DeadlinesColumns {
@@ -50,8 +56,14 @@ public final class DeadlinesContract {
     }
 
     public static final class Groups {
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/simpledeadlines.group";
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/simpledeadlines.group";
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, GROUPS_PATH);
+        /**
+         * Not instantiable.
+         */
+        private Groups() {
+        }
+
+        protected static String TABLE_NAME = "groups";
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, TABLE_NAME);
     }
 }

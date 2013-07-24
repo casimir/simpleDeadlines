@@ -11,7 +11,7 @@ public class GroupAdapter extends SimpleCursorAdapter
 {
   private static final String[] FromCols =
   {
-    DeadlinesContract.DeadlinesColumns.GROUP
+    DeadlinesContract.Deadlines.GROUP
   };
   private static final int[] ToIDs =
   {
@@ -33,7 +33,7 @@ public class GroupAdapter extends SimpleCursorAdapter
       return super.runQueryOnBackgroundThread(constraint);
 
     String filter = DatabaseUtils.sqlEscapeString(constraint + "%");
-    String selection = DeadlinesContract.DeadlinesColumns.GROUP + " LIKE " + filter;
+    String selection = DeadlinesContract.Deadlines.GROUP + " LIKE " + filter;
     return _cr.query(DeadlinesContract.Groups.CONTENT_URI, null,
 		     selection, null, null);
   }
@@ -41,7 +41,7 @@ public class GroupAdapter extends SimpleCursorAdapter
   @Override
   public CharSequence convertToString(Cursor cursor)
   {
-    int idx = cursor.getColumnIndex(DeadlinesContract.DeadlinesColumns.GROUP);
+    int idx = cursor.getColumnIndex(DeadlinesContract.Deadlines.GROUP);
     return cursor.getString(idx);
   }
 }

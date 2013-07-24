@@ -40,7 +40,7 @@ public class DeadlineAdapter extends CursorAdapter {
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
         long todayDays = today.getTimeInMillis() / DateUtils.DAY_IN_MILLIS;
-        long deadlineMs = values.getAsLong(DeadlinesContract.DeadlinesColumns.DUE_DATE);
+        long deadlineMs = values.getAsLong(DeadlinesContract.Deadlines.DUE_DATE);
         long deadlineDays = deadlineMs / DateUtils.DAY_IN_MILLIS;
         long days = deadlineDays - todayDays;
         holder.Remaining.setText(String.valueOf(days));
@@ -50,20 +50,20 @@ public class DeadlineAdapter extends CursorAdapter {
             holder.RemainingBg.setBackgroundResource(DeadlineUtils.LVL_ALL.get(lvl));
         }
 
-        holder.Label.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.LABEL));
-        setStrikeText(holder.Label, values.getAsInteger(DeadlinesContract.DeadlinesColumns.DONE));
+        holder.Label.setText(values.getAsString(DeadlinesContract.Deadlines.LABEL));
+        setStrikeText(holder.Label, values.getAsInteger(DeadlinesContract.Deadlines.DONE));
 
-        holder.Group.setText(values.getAsString(DeadlinesContract.DeadlinesColumns.GROUP));
+        holder.Group.setText(values.getAsString(DeadlinesContract.Deadlines.GROUP));
 
         DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
         holder.DueDate.setText(df.format(new Date(deadlineMs)));
 
         holder.Done.setOnCheckedChangeListener(null);
         holder.Done.setChecked(
-                values.getAsInteger(DeadlinesContract.DeadlinesColumns.DONE)
+                values.getAsInteger(DeadlinesContract.Deadlines.DONE)
                         == DeadlinesContract.Deadlines.STATE_DONE);
         final Context ctxt = context;
-        final int id = values.getAsInteger(DeadlinesContract.DeadlinesColumns.ID);
+        final int id = values.getAsInteger(DeadlinesContract.Deadlines.ID);
         holder.Done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ContentResolver cr = ctxt.getContentResolver();
@@ -72,7 +72,7 @@ public class DeadlineAdapter extends CursorAdapter {
                 int state = isChecked
                         ? DeadlinesContract.Deadlines.STATE_DONE
                         : DeadlinesContract.Deadlines.STATE_NOT_DONE;
-                values.put(DeadlinesContract.DeadlinesColumns.DONE, state);
+                values.put(DeadlinesContract.Deadlines.DONE, state);
                 cr.update(uri, values, null, null);
             }
         });
