@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="cab_count">%s Elemente</string>
   <string name="empty_list">Knopf \"+\" drücken, um zu beginnen</string>
   <string name="empty_label">Es wird mindestens ein Name benötigt</string>
   <string name="hint_label">Name</string>

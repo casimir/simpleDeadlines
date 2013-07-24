@@ -59,19 +59,17 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
 
     _groupAdapter = new GroupAdapter(this, null);
     _grouplist = (ListView)findViewById(R.id.grouplist);
-    _grouplist.setOnItemClickListener(new AdapterView.OnItemClickListener()
-    {
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-      {
-	boolean wasSelected = _currentGroupIdx == position;
-	TextView label = (TextView)view.findViewById(R.id.group);
-	DeadlineListFragment frag = (DeadlineListFragment)_pagerAdapter.getItem(_pager.getCurrentItem());
+    _grouplist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            boolean wasSelected = _currentGroupIdx == position;
+            TextView label = (TextView) view.findViewById(R.id.group);
+            DeadlineListFragment frag = (DeadlineListFragment) _pagerAdapter.getItem(_pager.getCurrentItem());
 
-	_grouplist.setItemChecked(position, !wasSelected);
-	_currentGroupIdx = _grouplist.getCheckedItemPosition();
-	frag.setGroupFilter(wasSelected ? null : label.getText().toString());
-	_drawerLayout.closeDrawers();
-      }
+            _grouplist.setItemChecked(position, !wasSelected);
+            _currentGroupIdx = _grouplist.getCheckedItemPosition();
+            frag.setGroupFilter(wasSelected ? null : label.getText().toString());
+            _drawerLayout.closeDrawers();
+        }
     });
     _grouplist.setAdapter(_groupAdapter);
 
@@ -117,7 +115,6 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
   protected void onPostCreate(Bundle savedInstanceState)
   {
     super.onPostCreate(savedInstanceState);
-
     _drawerToggle.syncState();
   }
 
@@ -125,7 +122,6 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
   public void onConfigurationChanged(Configuration newConfig)
   {
     super.onConfigurationChanged(newConfig);
-
     _drawerToggle.onConfigurationChanged(newConfig);
   }
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="cab_count">%s éléments</string>
   <string name="empty_list">Pour commencer appuyer sur le bouton \"+\"</string>
   <string name="empty_label">Au moins un label est nécessaire</string>
   <string name="hint_label">Libellé</string>

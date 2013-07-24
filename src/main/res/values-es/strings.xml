@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="cab_count">%s artículos</string>
   <string name="empty_list">Pulsa el botón \"+\" para empezar</string>
   <string name="empty_label">Es necesario al menos una etiqueta</string>
   <string name="hint_label">Etiqueta</string>
