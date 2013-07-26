@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	      android:orientation="vertical"
-	      android:layout_width="match_parent"
-	      android:layout_height="match_parent">
-  <EditText android:id="@+id/label"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:hint="@string/hint_label"
-	    android:inputType="textCapSentences"
-	    android:singleLine="true" />
-  <AutoCompleteTextView android:id="@+id/group"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:hint="@string/hint_group"
-			android:inputType="textCapSentences"
-			android:singleLine="true"
-			android:completionThreshold="1" />
-  <DatePicker android:id="@+id/due_date"
-	      android:layout_width="match_parent"
-	      android:layout_height="wrap_content"
-	      android:padding="2dp"
-	      android:calendarViewShown="false"  />
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <com.casimirlab.simpleDeadlines.DayCounterView
+            android:id="@+id/day_counter"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:padding="6dp"/>
+
+    <EditText
+            android:id="@+id/label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/day_counter"
+            android:hint="@string/hint_label"
+            android:inputType="textCapSentences"
+            android:singleLine="true"/>
+
+    <AutoCompleteTextView
+            android:id="@+id/group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label"
+            android:layout_toRightOf="@id/day_counter"
+            android:hint="@string/hint_group"
+            android:inputType="textCapSentences"
+            android:singleLine="true"
+            android:completionThreshold="1"/>
+
+    <DatePicker
+            android:id="@+id/due_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/day_counter"
+            android:padding="2dp"
+            android:calendarViewShown="false"/>
+</RelativeLayout>

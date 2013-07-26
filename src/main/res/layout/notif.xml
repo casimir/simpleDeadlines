@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:daycounter="http://schemas.android.com/apk/res-auto"
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="64dp">
@@ -19,7 +20,7 @@
 
         <TextView
                 android:id="@+id/count_today"
-                style="@style/notif_count"/>
+                style="@style/day_count"/>
     </FrameLayout>
 
     <FrameLayout
@@ -30,7 +31,7 @@
 
         <TextView
                 android:id="@+id/count_urgent"
-                style="@style/notif_count"/>
+                style="@style/day_count"/>
     </FrameLayout>
 
     <FrameLayout
@@ -41,7 +42,7 @@
 
         <TextView
                 android:id="@+id/count_worrying"
-                style="@style/notif_count"/>
+                style="@style/day_count"/>
     </FrameLayout>
 
     <FrameLayout
@@ -52,6 +53,6 @@
 
         <TextView
                 android:id="@+id/count_nice"
-                style="@style/notif_count"/>
+                style="@style/day_count"/>
     </FrameLayout>
 </LinearLayout>

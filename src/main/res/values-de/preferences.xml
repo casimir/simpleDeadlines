@@ -20,7 +20,6 @@
   <string name="pref_title_backup">Sicherungskopie</string>
 
   <string name="pref_title_backup_do">Deadlines absichern</string>
-  <string name="pref_key_backup_do" translatable="false">backup_do</string>
   <string name="pref_sum_backup_do">Durch Nutzung externer Apps</string>
 
   <string name="pref_title_about">About</string>

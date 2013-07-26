@@ -5,16 +5,10 @@
               android:layout_height="wrap_content"
               android:background="@drawable/list_selector_background">
 
-    <FrameLayout
-            android:id="@+id/remaining_bg"
+    <com.casimirlab.simpleDeadlines.DayCounterView
+            android:id="@+id/day_counter"
             android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@color/archived">
-
-        <TextView
-                android:id="@+id/remaining"
-                style="@style/notif_count"/>
-    </FrameLayout>
+            android:layout_height="64dp"/>
 
     <RelativeLayout
             android:padding="4dp"

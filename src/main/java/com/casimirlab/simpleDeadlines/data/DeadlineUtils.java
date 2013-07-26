@@ -8,10 +8,12 @@ import android.database.DatabaseUtils;
 import android.database.MergeCursor;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 import com.casimirlab.simpleDeadlines.R;
 
 import java.io.*;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +21,7 @@ import java.util.Map;
 public final class DeadlineUtils {
     public static final String BACKUP_FILENAME = "backup.sd";
     public static final Uri SHARE_BASE_URI = Uri.parse("http://sd.casimir-lab.net");
-    private static final String TAG = "DeadlineUtils";
+    private static final String TAG = DeadlineUtils.class.getSimpleName();
 
     public static final int LVL_TODAY = 1;
     public static final int LVL_URGENT = 3;
@@ -66,11 +68,10 @@ public final class DeadlineUtils {
         ContentResolver cr = context.getContentResolver();
         Uri.Builder uriBuilder = DeadlinesContract.Deadlines.CONTENT_URI.buildUpon();
         Uri archivedUri = uriBuilder.appendPath(DeadlinesContract.Deadlines.FILTER_ARCHIVED).build();
-        MergeCursor c = new MergeCursor(new Cursor[]
-                {
-                        cr.query(DeadlinesContract.Deadlines.CONTENT_URI, null, null, null, null),
-                        cr.query(archivedUri, null, null, null, null)
-                });
+        MergeCursor c = new MergeCursor(new Cursor[]{
+                cr.query(DeadlinesContract.Deadlines.CONTENT_URI, null, null, null, null),
+                cr.query(archivedUri, null, null, null, null)
+        });
 
         String buff = "";
         ContentValues values = new ContentValues();
@@ -141,5 +142,14 @@ public final class DeadlineUtils {
         values.put(DeadlinesContract.Deadlines.DONE, Integer.parseInt(segments.get(3)));
 
         return values;
+    }
+
+    public static int timeToDayCount(long time) {
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        long todayDays = today.getTimeInMillis() / DateUtils.DAY_IN_MILLIS;
+        long deadlineDays = time / DateUtils.DAY_IN_MILLIS;
+
+        return (int) (deadlineDays - todayDays);
     }
 }

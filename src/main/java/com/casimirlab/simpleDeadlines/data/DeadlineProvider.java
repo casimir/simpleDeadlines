@@ -180,7 +180,7 @@ public class DeadlineProvider extends ContentProvider {
         if (matchCode == MATCH_DEADLINES_GROUP_LABEL
                 || matchCode == MATCH_DEADLINES_ARCHIVED_GROUP_LABEL) {
             String group = DatabaseUtils.sqlEscapeString(uri.getLastPathSegment());
-            builder.appendWhere(DeadlinesContract.Deadlines.GROUP + " = '" + group + "'");
+            builder.appendWhere("AND " + DeadlinesContract.Deadlines.GROUP + " = " + group);
         }
 
         if (matchCode == MATCH_GROUP_ARCHIVED
