@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="dashclock_description">Affiche vos deadlines vos plus urgentes.</string>
+    <string name="dashclock_description">Affiche vos deadlines les plus urgentes.</string>
     <string name="dashclock_title">%d urgent</string>
 
     <string name="empty_list">Pour commencer appuyer sur le bouton \"+\"</string>
