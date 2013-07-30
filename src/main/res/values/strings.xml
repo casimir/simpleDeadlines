@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name" translatable="false">Simple Deadlines</string>
-  <string name="drawer_close" translatable="false">close drawer</string>
-  <string name="drawer_open" translatable="false">open drawer</string>
-  <string name="empty_list">To start press the \"+\" button</string>
-  <string name="empty_label">At least a label is required</string>
-  <string name="hint_label">Label</string>
-  <string name="hint_group">Group</string>
-  <string name="msg_added">\"%s\" added</string>
-  <string name="msg_confirm_recover">Recover this file?</string>
-  <string name="msg_recover">%d items added</string>
+    <string name="app_name" translatable="false">Simple Deadlines</string>
+    <string name="drawer_close" translatable="false">close drawer</string>
+    <string name="drawer_open" translatable="false">open drawer</string>
+
+    <string name="dashclock_description">Displays your most urgent deadlines.</string>
+    <string name="dashclock_status" translatable="false">%d</string>
+    <string name="dashclock_title">%d urgent</string>
+
+    <string name="empty_list">To start press the \"+\" button</string>
+    <string name="empty_label">At least a label is required</string>
+    <string name="hint_label">Label</string>
+    <string name="hint_group">Group</string>
+    <string name="msg_added">\"%s\" added</string>
+    <string name="msg_confirm_recover">Recover this file?</string>
+    <string name="msg_recover">%d items added</string>
 </resources>

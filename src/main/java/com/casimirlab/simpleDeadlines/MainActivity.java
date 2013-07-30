@@ -27,7 +27,7 @@ import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
 import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 
-public class Deadlines extends FragmentActivity implements LoaderCallbacks<Cursor>
+public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cursor>
 {
   private String[] _TITLES;
   private DrawerLayout _drawerLayout;
@@ -84,7 +84,7 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
 	getActionBar().setTitle(_TITLES[position]);
 	_currentGroupIdx = ListView.INVALID_POSITION;
 	((DeadlineListFragment)_pagerAdapter.getItem(position)).setGroupFilter(null);
-	getLoaderManager().restartLoader(position, null, Deadlines.this);
+	getLoaderManager().restartLoader(position, null, MainActivity.this);
       }
     });
 
@@ -103,7 +103,7 @@ public class Deadlines extends FragmentActivity implements LoaderCallbacks<Curso
 	{
 	  int count = DeadlineUtils.performRecover(getApplicationContext(), backupUri);
 	  String msg = getString(R.string.msg_recover, count);
-	  Toast.makeText(Deadlines.this, msg, Toast.LENGTH_SHORT).show();
+	  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 	}
       });
       builder.setNegativeButton(android.R.string.no, null);

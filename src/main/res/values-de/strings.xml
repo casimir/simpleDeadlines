@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="empty_list">Knopf \"+\" drücken, um zu beginnen</string>
-  <string name="empty_label">Es wird mindestens ein Name benötigt</string>
-  <string name="hint_label">Name</string>
-  <string name="hint_group">Gruppe</string>
-  <string name="msg_added">\"%s\" hinzugefügt</string>
-  <string name="msg_confirm_recover">Die Datei wiederherstellen?</string>
-  <string name="msg_recover">%d Elemente hinzugefügt</string>
+    <string name="dashclock_description">Zeigt Ihre dringendsten Deadlines.</string>
+    <string name="dashclock_title">%d Dringende</string>
+
+    <string name="empty_list">Knopf \"+\" drücken, um zu beginnen</string>
+    <string name="empty_label">Es wird mindestens ein Name benötigt</string>
+    <string name="hint_label">Name</string>
+    <string name="hint_group">Gruppe</string>
+    <string name="msg_added">\"%s\" hinzugefügt</string>
+    <string name="msg_confirm_recover">Die Datei wiederherstellen?</string>
+    <string name="msg_recover">%d Elemente hinzugefügt</string>
 </resources>

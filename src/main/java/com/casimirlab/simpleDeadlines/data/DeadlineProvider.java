@@ -20,9 +20,6 @@ import java.util.Date;
  * @see DeadlinesContract
  */
 public class DeadlineProvider extends ContentProvider {
-    private static final int DEADLINES_GROUPS = 112;
-    private static final int DEADLINES_ARCHIVED_GROUPS = 1112;
-
     /**
      * Matcher ID for the count pattern.
      */

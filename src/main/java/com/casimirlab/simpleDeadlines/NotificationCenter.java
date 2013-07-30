@@ -49,7 +49,7 @@ public class NotificationCenter extends BroadcastReceiver {
         };
         _cr.registerContentObserver(DeadlinesContract.Count.CONTENT_URI, false, _co);
 
-        Intent i = new Intent(context, Deadlines.class);
+        Intent i = new Intent(context, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 

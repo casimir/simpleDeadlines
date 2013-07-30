@@ -57,7 +57,7 @@ public final class DeadlineUtils {
         Integer[] keys = LVL_ALL.keySet().toArray(new Integer[]{});
 
         for (int i = 0; i < keys.length - 1; ++i) {
-            if (days < keys[i])
+            if (days <= keys[i])
                 return keys[i];
         }
 

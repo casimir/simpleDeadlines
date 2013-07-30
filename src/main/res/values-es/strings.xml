@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string name="empty_list">Pulsa el botón \"+\" para empezar</string>
-  <string name="empty_label">Es necesario al menos una etiqueta</string>
-  <string name="hint_label">Etiqueta</string>
-  <string name="hint_group">Grupo</string>
-  <string name="msg_added">\"%s\" añadido</string>
-  <string name="msg_confirm_recover">¿Recupere este archivo?</string>
-  <string name="msg_recover">%d artículos añadidos</string>
+    <string name="dashclock_description">Muestra los deadlines más urgentes.</string>
+    <string name="dashclock_title">%d urgente</string>
+
+    <string name="empty_list">Pulsa el botón \"+\" para empezar</string>
+    <string name="empty_label">Es necesario al menos una etiqueta</string>
+    <string name="hint_label">Etiqueta</string>
+    <string name="hint_group">Grupo</string>
+    <string name="msg_added">\"%s\" añadido</string>
+    <string name="msg_confirm_recover">¿Recupere este archivo?</string>
+    <string name="msg_recover">%d artículos añadidos</string>
 </resources>
