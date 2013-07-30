@@ -71,11 +71,13 @@ public class EditorDialogFragment extends DialogFragment implements DatePicker.O
         Cursor cGroups = _cr.query(DeadlinesContract.Groups.CONTENT_URI, null, null, null, null);
         _groupView.setAdapter(new GroupAdapter(getActivity(), cGroups));
 
+        Calendar now = Calendar.getInstance();
         _dueDateView = (DatePicker) v.findViewById(R.id.due_date);
         _dueDateView.setSpinnersShown(!showCalendar);
         _dueDateView.setCalendarViewShown(showCalendar);
         _dueDateView.getCalendarView().setFirstDayOfWeek(Calendar.getInstance().getFirstDayOfWeek());
         _dueDateView.init(0, 0, 0, this);
+        _dueDateView.updateDate(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
 
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
