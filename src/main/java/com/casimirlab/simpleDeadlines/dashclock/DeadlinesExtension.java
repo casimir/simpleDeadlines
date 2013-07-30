@@ -38,7 +38,8 @@ public class DeadlinesExtension extends DashClockExtension {
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR, 0);
         long diff = today.getTimeInMillis() + DeadlineUtils.LVL_TODAY * DateUtils.DAY_IN_MILLIS;
-        String selection = DeadlinesContract.Deadlines.DUE_DATE + " <= ?";
+        String selection = DeadlinesContract.Deadlines.DUE_DATE + " <= ?"
+                + " AND " + DeadlinesContract.Deadlines.DONE + " = 0";
         String[] selectionArgs = {String.valueOf(diff)};
 
         Cursor cursor = _cr.query(DeadlinesContract.Deadlines.CONTENT_URI, null,

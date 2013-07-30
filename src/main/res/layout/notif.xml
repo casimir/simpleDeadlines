@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:daycounter="http://schemas.android.com/apk/res-auto"
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="64dp">
 
     <ImageView
             android:src="@drawable/ic_status"
-            android:contentDescription="Status icon"
+            android:contentDescription="Simple Deadlines status icon"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:scaleType="center"/>
