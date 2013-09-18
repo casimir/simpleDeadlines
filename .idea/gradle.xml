@@ -4,7 +4,6 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="preferLocalInstallationToWrapper" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

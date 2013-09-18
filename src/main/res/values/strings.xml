@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Simple Deadlines</string>
+    <string name="app_trello_key" translatable="false">023dfce4fb20e2060eaf6594665d1fde</string>
+
     <string name="drawer_close" translatable="false">close drawer</string>
     <string name="drawer_open" translatable="false">open drawer</string>
 

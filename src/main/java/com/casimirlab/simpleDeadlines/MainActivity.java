@@ -151,7 +151,6 @@ public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cu
             Intent i = new Intent(this, DeadlineEditor.class);
             i.putExtra(EditorDialogFragment.EXTRA_ISNEW, true);
             startActivity(i);
-
             return true;
         }
 
