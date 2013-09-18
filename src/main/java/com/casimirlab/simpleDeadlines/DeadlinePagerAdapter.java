@@ -3,7 +3,7 @@ package com.casimirlab.simpleDeadlines;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
+import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 import java.util.LinkedList;
 import java.util.List;
 

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.widget.SimpleCursorAdapter;
 import com.casimirlab.simpleDeadlines.R;
+import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 
 public class GroupAdapter extends SimpleCursorAdapter
 {

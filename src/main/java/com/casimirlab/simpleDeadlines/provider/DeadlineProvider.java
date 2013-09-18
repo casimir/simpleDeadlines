@@ -1,4 +1,4 @@
-package com.casimirlab.simpleDeadlines.data;
+package com.casimirlab.simpleDeadlines.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
 import android.text.format.DateUtils;
+import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
-import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
+import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 
 import java.util.Calendar;

@@ -59,7 +59,7 @@
 
         <provider
                 android:authorities="com.casimirlab.simpleDeadlines.provider"
-                android:name=".data.DeadlineProvider"
+                android:name=".provider.DeadlineProvider"
                 android:exported="false">
         </provider>
 

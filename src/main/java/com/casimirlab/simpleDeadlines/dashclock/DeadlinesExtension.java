@@ -9,7 +9,7 @@ import android.text.format.DateUtils;
 import com.casimirlab.simpleDeadlines.MainActivity;
 import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
-import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
+import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
 

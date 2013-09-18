@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import com.casimirlab.simpleDeadlines.R;
+import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 
 import java.io.*;
 import java.util.Calendar;

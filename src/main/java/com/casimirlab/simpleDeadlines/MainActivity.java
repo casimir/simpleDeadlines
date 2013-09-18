@@ -24,7 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
-import com.casimirlab.simpleDeadlines.data.DeadlinesContract;
+import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 
 public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cursor> {

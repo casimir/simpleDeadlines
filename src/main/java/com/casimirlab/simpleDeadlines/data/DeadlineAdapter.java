@@ -17,6 +17,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 import com.casimirlab.simpleDeadlines.DayCounterView;
 import com.casimirlab.simpleDeadlines.R;
+import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 
 import java.text.DateFormat;
 import java.util.Date;
