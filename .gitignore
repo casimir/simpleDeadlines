@@ -13,6 +13,9 @@ bin/
 build/
 gen/
 
-# Android Studio
+# IntelliJ
 .gradle
+.idea/dictionaries
+.idea/tasks.xml
 .idea/workspace.xml
+local.properties
