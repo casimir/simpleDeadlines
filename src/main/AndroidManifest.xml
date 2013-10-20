@@ -17,7 +17,7 @@
             android:allowBackup="false">
 
         <activity
-                android:name="DeadlineEditor"
+                android:name=".ui.DeadlineEditor"
                 android:label="@string/app_name"
                 android:theme="@android:style/Theme.Holo.Light.Dialog">
             <intent-filter>
@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".MainActivity"
+                android:name=".ui.MainActivity"
                 android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -53,7 +53,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name="Settings"
+                android:name=".ui.Settings"
                 android:label="@string/act_settings">
         </activity>
 

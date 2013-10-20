@@ -1,4 +1,4 @@
-package com.casimirlab.simpleDeadlines;
+package com.casimirlab.simpleDeadlines.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
+import com.casimirlab.simpleDeadlines.NotificationCenter;
+import com.casimirlab.simpleDeadlines.R;
+
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 

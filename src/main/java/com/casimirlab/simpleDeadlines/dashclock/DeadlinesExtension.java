@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.text.format.DateUtils;
-import com.casimirlab.simpleDeadlines.MainActivity;
+import com.casimirlab.simpleDeadlines.ui.MainActivity;
 import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;

@@ -1,4 +1,4 @@
-package com.casimirlab.simpleDeadlines;
+package com.casimirlab.simpleDeadlines.ui;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -8,6 +8,8 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+import com.casimirlab.simpleDeadlines.NotificationCenter;
+import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
 
 public class Settings extends PreferenceActivity
@@ -27,18 +29,16 @@ public class Settings extends PreferenceActivity
 	super.onCreate(savedInstanceState);
 	addPreferencesFromResource(R.xml.preferences);
 
-	Preference prefPersit = findPreference(getString(R.string.pref_key_notif_persist));
-	prefPersit.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
-	{
-	  public boolean onPreferenceChange(Preference preference, Object newValue)
-	  {
-	    String act = (Boolean)newValue
-		    ? NotificationCenter.ACTION_SHOW
-		    : NotificationCenter.ACTION_HIDE;
-	    sendBroadcast(new Intent(act));
-	    return true;
-	  }
-	});
+	Preference prefPersist = findPreference(getString(R.string.pref_key_notif_persist));
+	prefPersist.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            String act = (Boolean) newValue
+                    ? NotificationCenter.ACTION_SHOW
+                    : NotificationCenter.ACTION_HIDE;
+            sendBroadcast(new Intent(act));
+            return true;
+        }
+    });
 
 	Preference prefToggle = findPreference(getString(R.string.pref_key_notif_toggle));
 	prefToggle.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()

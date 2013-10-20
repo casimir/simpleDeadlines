@@ -1,4 +1,4 @@
-package com.casimirlab.simpleDeadlines;
+package com.casimirlab.simpleDeadlines.ui;
 
 import android.app.Activity;
 import android.net.Uri;

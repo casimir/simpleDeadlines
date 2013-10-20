@@ -15,7 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-import com.casimirlab.simpleDeadlines.DayCounterView;
+import com.casimirlab.simpleDeadlines.ui.DayCounterView;
 import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 

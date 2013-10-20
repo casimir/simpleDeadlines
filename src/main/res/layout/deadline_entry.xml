@@ -5,7 +5,7 @@
               android:layout_height="wrap_content"
               android:background="@drawable/list_selector_background">
 
-    <com.casimirlab.simpleDeadlines.DayCounterView
+    <com.casimirlab.simpleDeadlines.ui.DayCounterView
             android:id="@+id/day_counter"
             android:layout_width="64dp"
             android:layout_height="64dp"/>

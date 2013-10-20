@@ -3,7 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <com.casimirlab.simpleDeadlines.DayCounterView
+    <com.casimirlab.simpleDeadlines.ui.DayCounterView
             android:id="@+id/day_counter"
             android:layout_width="64dp"
             android:layout_height="64dp"

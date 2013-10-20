@@ -1,4 +1,4 @@
-package com.casimirlab.simpleDeadlines;
+package com.casimirlab.simpleDeadlines.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
 
 /**

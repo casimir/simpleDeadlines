@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
+import com.casimirlab.simpleDeadlines.ui.MainActivity;
 
 import java.util.Calendar;
 

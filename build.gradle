@@ -9,10 +9,13 @@ buildscript {
 
 apply plugin: 'android'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile 'com.android.support:support-v4:13.0.0'
-//    compile 'com.google.android.apps.dashclock:dashclock-api:2.+'
-    compile fileTree(dir: 'libs', includes: ['*.jar'])
+    compile 'com.google.android.apps.dashclock:dashclock-api:2.+'
 }
 
 android {
