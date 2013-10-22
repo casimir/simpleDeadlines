@@ -5,7 +5,7 @@
           android:versionName="3.1.1">
 
     <uses-sdk
-            android:targetSdkVersion="17"
+            android:targetSdkVersion="18"
             android:minSdkVersion="14"/>
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -91,6 +91,5 @@
                     android:name="description"
                     android:value="@string/dashclock_description"/>
         </service>
-
     </application>
 </manifest>
