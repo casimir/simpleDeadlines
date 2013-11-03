@@ -19,17 +19,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class DeadlineUtils {
+public final class DeadlinesUtils {
     public static final String BACKUP_FILENAME = "backup.sd";
     public static final Uri SHARE_BASE_URI = Uri.parse("http://sd.casimir-lab.net");
-    private static final String TAG = DeadlineUtils.class.getSimpleName();
+    private static final String TAG = DeadlinesUtils.class.getSimpleName();
 
     public static final int LVL_TODAY = 1;
     public static final int LVL_URGENT = 3;
     public static final int LVL_WORRYING = 7;
     public static final int LVL_NICE = 15;
     public static final int LVL_NEVERMIND = -1;
-    public static final Map<Integer, Integer> LVL_ALL = new LinkedHashMap<Integer, Integer>();
+    public static final Map<Integer, Integer> LVL_ALL = new LinkedHashMap<>();
 
     static {
         LVL_ALL.put(LVL_TODAY, R.color.today);

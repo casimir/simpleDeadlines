@@ -14,16 +14,21 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:13.0.0'
+    compile 'com.android.support:support-v4:19.0.0'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.+'
 }
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "18.0.1"
+    buildToolsVersion "19.0.0"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 18
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }

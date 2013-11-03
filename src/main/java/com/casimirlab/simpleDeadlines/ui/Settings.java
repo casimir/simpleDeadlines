@@ -10,7 +10,7 @@ import android.preference.PreferenceFragment;
 import android.util.Log;
 import com.casimirlab.simpleDeadlines.NotificationCenter;
 import com.casimirlab.simpleDeadlines.R;
-import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
+import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 
 public class Settings extends PreferenceActivity
 {
@@ -58,7 +58,7 @@ public class Settings extends PreferenceActivity
 	    Intent i = new Intent();
 	    i.setAction(Intent.ACTION_SEND);
 	    i.setType("text/plain");
-	    i.putExtra(Intent.EXTRA_STREAM, DeadlineUtils.performBackup(getApplicationContext()));
+	    i.putExtra(Intent.EXTRA_STREAM, DeadlinesUtils.performBackup(getApplicationContext()));
 	    startActivity(i);
 	    return true;
 	  }

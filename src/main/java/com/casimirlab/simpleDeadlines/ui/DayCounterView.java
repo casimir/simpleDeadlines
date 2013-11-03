@@ -6,8 +6,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.casimirlab.simpleDeadlines.R;
-import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
+import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 
 /**
  * Provide a simple view to display a count of days.
@@ -36,6 +37,10 @@ public class DayCounterView extends FrameLayout {
             int bg = a.getInt(R.styleable.DayCounter_backgroundColor, -1);
             if (bg != -1)
                 _backgroundLayout.setBackgroundColor(bg);
+
+            int lvl = a.getInt(R.styleable.DayCounter_level, 0);
+            if (lvl != 0)
+                setLevel(lvl);
         } finally {
             a.recycle();
         }
@@ -58,6 +63,8 @@ public class DayCounterView extends FrameLayout {
      */
     public void setCount(int count) {
         _countView.setText(String.valueOf(count));
+        if (_automaticBackground)
+            setLevel(DeadlinesUtils.dayCountToLvl(count));
     }
 
     /**
@@ -66,12 +73,15 @@ public class DayCounterView extends FrameLayout {
      * @param time Date as long.
      */
     public void setDate(long time) {
-        int count = DeadlineUtils.timeToDayCount(time);
-        _countView.setText(String.valueOf(count));
+        setCount(DeadlinesUtils.timeToDayCount(time));
+    }
 
-        if (_automaticBackground) {
-            int lvl = DeadlineUtils.dayCountToLvl(count);
-            _backgroundLayout.setBackgroundResource(DeadlineUtils.LVL_ALL.get(lvl));
-        }
+    /**
+     * Set the background of the view. The color is defined from a level value.
+     *
+     * @param lvl The level to set.
+     */
+    public void setLevel(int lvl) {
+        _backgroundLayout.setBackgroundResource(DeadlinesUtils.LVL_ALL.get(lvl));
     }
 }

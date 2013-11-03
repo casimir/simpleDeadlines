@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="DayCounter">
-        <attr name="automaticBackground" format="boolean"/>
-        <attr name="backgroundColor" format="color"/>
+        <attr name="automaticBackground" format="boolean" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="level" format="enum">
+            <enum name="today" value="1"/>
+            <enum name="urgent" value="3"/>
+            <enum name="worrying" value="7"/>
+            <enum name="nice" value="15"/>
+            <enum name="nevermind" value="-1"/>
+        </attr>
     </declare-styleable>
 </resources>

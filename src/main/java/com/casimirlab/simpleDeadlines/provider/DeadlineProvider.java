@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
 import android.text.format.DateUtils;
-import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
+import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -204,10 +204,10 @@ public class DeadlineProvider extends ContentProvider {
         SQLiteStatement req = _dbHelper.getReadableDatabase().compileStatement(sql);
         String[] param = new String[1];
         int[] levels = new int[]{
-                DeadlineUtils.LVL_TODAY,
-                DeadlineUtils.LVL_URGENT,
-                DeadlineUtils.LVL_WORRYING,
-                DeadlineUtils.LVL_NICE
+                DeadlinesUtils.LVL_TODAY,
+                DeadlinesUtils.LVL_URGENT,
+                DeadlinesUtils.LVL_WORRYING,
+                DeadlinesUtils.LVL_NICE
         };
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);

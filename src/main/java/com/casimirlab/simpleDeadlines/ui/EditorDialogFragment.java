@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import com.casimirlab.simpleDeadlines.R;
-import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
+import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 
@@ -140,7 +140,7 @@ public class EditorDialogFragment extends DialogFragment implements DatePicker.O
         if (_sourceUri != null || !_isNew) {
             ContentValues values;
             if (_sourceUri != null)
-                values = DeadlineUtils.shareUriToContentValues(_sourceUri);
+                values = DeadlinesUtils.shareUriToContentValues(_sourceUri);
             else {
                 values = new ContentValues();
                 Cursor c = _cr.query(_currentUri, null, null, null, null);

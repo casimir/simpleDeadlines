@@ -24,7 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.casimirlab.simpleDeadlines.R;
-import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
+import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 
@@ -96,7 +96,7 @@ public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cu
             builder.setMessage(R.string.msg_confirm_recover);
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    int count = DeadlineUtils.performRecover(getApplicationContext(), backupUri);
+                    int count = DeadlinesUtils.performRecover(getApplicationContext(), backupUri);
                     String msg = getString(R.string.msg_recover, count);
                     Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                 }

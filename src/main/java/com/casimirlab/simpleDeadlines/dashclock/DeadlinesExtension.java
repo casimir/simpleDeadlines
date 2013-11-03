@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.text.format.DateUtils;
+
+import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 import com.casimirlab.simpleDeadlines.ui.MainActivity;
 import com.casimirlab.simpleDeadlines.R;
-import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
@@ -37,7 +38,7 @@ public class DeadlinesExtension extends DashClockExtension {
     protected void onUpdateData(int reason) {
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR, 0);
-        long diff = today.getTimeInMillis() + DeadlineUtils.LVL_TODAY * DateUtils.DAY_IN_MILLIS;
+        long diff = today.getTimeInMillis() + DeadlinesUtils.LVL_TODAY * DateUtils.DAY_IN_MILLIS;
         String selection = DeadlinesContract.Deadlines.DUE_DATE + " <= ?"
                 + " AND " + DeadlinesContract.Deadlines.DONE + " = 0";
         String[] selectionArgs = {String.valueOf(diff)};

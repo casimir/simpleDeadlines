@@ -15,7 +15,7 @@ import android.view.*;
 import android.widget.*;
 import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.data.DeadlineAdapter;
-import com.casimirlab.simpleDeadlines.data.DeadlineUtils;
+import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 
 import java.util.ArrayList;
@@ -88,7 +88,7 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
                         ContentValues values = new ContentValues();
                         DatabaseUtils.cursorRowToContentValues(c, values);
                         text += (text.equals("") ? "" : "\n");
-                        text += DeadlineUtils.contentValuesToShareUri(values);
+                        text += DeadlinesUtils.contentValuesToShareUri(values);
                     }
 
                     Intent sendIntent = new Intent();
