@@ -25,14 +25,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
-import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
+import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 
 public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cursor> {
     private String[] _TITLES;
     private DrawerLayout _drawerLayout;
     private ActionBarDrawerToggle _drawerToggle;
-    private ListView _grouplist;
+    private ListView _groupList;
     private GroupAdapter _groupAdapter;
     private ViewPager _pager;
     private DeadlinePagerAdapter _pagerAdapter;
@@ -58,20 +58,20 @@ public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cu
         _drawerLayout.setDrawerListener(_drawerToggle);
 
         _groupAdapter = new GroupAdapter(this, null);
-        _grouplist = (ListView) findViewById(R.id.grouplist);
-        _grouplist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        _groupList = (ListView) findViewById(R.id.grouplist);
+        _groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 boolean wasSelected = _currentGroupIdx == position;
                 TextView label = (TextView) view.findViewById(R.id.group);
                 DeadlineListFragment frag = (DeadlineListFragment) _pagerAdapter.getItem(_pager.getCurrentItem());
 
-                _grouplist.setItemChecked(position, !wasSelected);
-                _currentGroupIdx = _grouplist.getCheckedItemPosition();
+                _groupList.setItemChecked(position, !wasSelected);
+                _currentGroupIdx = _groupList.getCheckedItemPosition();
                 frag.setGroupFilter(wasSelected ? null : label.getText().toString());
                 _drawerLayout.closeDrawers();
             }
         });
-        _grouplist.setAdapter(_groupAdapter);
+        _groupList.setAdapter(_groupAdapter);
 
         _pager = (ViewPager) findViewById(R.id.pager);
         _pagerAdapter = new DeadlinePagerAdapter(getSupportFragmentManager());
@@ -145,22 +145,18 @@ public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cu
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (_drawerToggle.onOptionsItemSelected(item))
-            return true;
-
-        if (item.getItemId() == R.id.act_new) {
-            Intent i = new Intent(this, DeadlineEditor.class);
-            i.putExtra(EditorDialogFragment.EXTRA_ISNEW, true);
-            startActivity(i);
-            return true;
+        switch (item.getItemId()) {
+            case R.id.act_new:
+                Intent intent = new Intent(this, DeadlineEditor.class);
+                intent.putExtra(EditorDialogFragment.EXTRA_ISNEW, true);
+                startActivity(intent);
+                break;
+            case R.id.act_settings:
+                startActivity(new Intent(this, Settings.class));
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        if (item.getItemId() == R.id.act_settings) {
-            startActivity(new Intent(this, Settings.class));
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 }

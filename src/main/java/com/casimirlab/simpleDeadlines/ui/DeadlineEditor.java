@@ -19,8 +19,8 @@ public class DeadlineEditor extends Activity
     else
     {
       Bundle extras = getIntent().getExtras();
-      int id = extras.getInt(EditorDialogFragment.EXTRA_ID, -1);
-      boolean isNew = extras.getBoolean(EditorDialogFragment.EXTRA_ISNEW, false);
+      int id = extras == null ? -1 : extras.getInt(EditorDialogFragment.EXTRA_ID, -1);
+      boolean isNew = extras != null && extras.getBoolean(EditorDialogFragment.EXTRA_ISNEW, false);
       dialog = EditorDialogFragment.newInstance(id, isNew);
     }
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:baselineAligned="false">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:baselineAligned="false">
+
+        <FrameLayout
+                android:background="@color/today"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/count_today"
+                    style="@style/day_count"/>
+        </FrameLayout>
+
+        <FrameLayout
+                android:id="@+id/frame_urgent"
+                android:background="@color/urgent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/count_urgent"
+                    style="@style/day_count"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:baselineAligned="false">
+
+        <FrameLayout
+                android:background="@color/worrying"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/count_worrying"
+                    style="@style/day_count"/>
+        </FrameLayout>
+
+        <FrameLayout
+                android:background="@color/nice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/count_nice"
+                    style="@style/day_count"/>
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>
