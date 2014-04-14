@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/casimir/simpleDeadlines.svg?branch=master)](https://travis-ci.org/casimir/simpleDeadlines)
+[![Build Status](https://travis-ci.org/casimir/simpleDeadlines.svg?branch=devel)](https://travis-ci.org/casimir/simpleDeadlines)
 
 This repository contains the source code of the android application Simple Deadlines. A deadline manager meant to be as simple as possible to use. And most important not overkill.  
   
