@@ -3,7 +3,11 @@ package com.casimirlab.simpleDeadlines.ui;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.*;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
@@ -13,7 +17,12 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
+import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
@@ -126,7 +135,6 @@ public class EditorDialogFragment extends DialogFragment implements DatePicker.O
             }
         });
 
-
         if (!_isNew)
             builder.setNeutralButton(R.string.act_delete, listener);
 
@@ -177,7 +185,8 @@ public class EditorDialogFragment extends DialogFragment implements DatePicker.O
         Date dueDateValue = new GregorianCalendar(
                 _dueDateView.getYear(),
                 _dueDateView.getMonth(),
-                _dueDateView.getDayOfMonth()).getTime();
+                _dueDateView.getDayOfMonth()
+        ).getTime();
 
         if (!_isNew)
             values.put(DeadlinesContract.Deadlines.ID, _modelId);

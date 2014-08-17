@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <string name="default_group">keine Gruppe</string>
+
     <string name="dashclock_description">Zeigt Ihre dringendsten Deadlines.</string>
     <string name="dashclock_title">%d Dringende</string>
 

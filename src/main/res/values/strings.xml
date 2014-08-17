@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Simple Deadlines</string>
+    <string name="default_group">No group</string>
 
     <string name="drawer_close" translatable="false">close drawer</string>
     <string name="drawer_open" translatable="false">open drawer</string>

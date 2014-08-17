@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.android.tools.build:gradle:0.12.2'
     }
 }
 
@@ -14,9 +14,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.+'
-    compile 'com.github.gabrielemariotti.cards:library:1.3.+'
-    compile 'com.google.android.apps.dashclock:dashclock-api:2.+'
+    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
 }
 
 android {
