@@ -3,6 +3,7 @@ package com.casimirlab.simpleDeadlines.provider;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -11,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
@@ -127,8 +129,14 @@ public class DeadlineProvider extends ContentProvider {
         if (MATCHER.match(uri) != MATCH_DEADLINES)
             throw new IllegalArgumentException("Unknown or malformed URI. {uri: " + uri + "}");
 
-        if (TextUtils.isEmpty(values.getAsString(Deadlines.GROUP)))
-            values.put(Deadlines.GROUP, getContext().getString(R.string.default_group));
+        if (TextUtils.isEmpty(values.getAsString(Deadlines.GROUP))) {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String group = sp.getString(
+                    getContext().getString(R.string.pref_key_editor_group),
+                    getContext().getString(R.string.default_group)
+            );
+            values.put(Deadlines.GROUP, group);
+        }
 
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
         long id = db.insert(Deadlines.TABLE_NAME, null, values);
@@ -236,8 +244,14 @@ public class DeadlineProvider extends ContentProvider {
         if (MATCHER.match(uri) != MATCH_DEADLINE_ID)
             throw new IllegalArgumentException("Unknown or malformed URI. {uri: " + uri + "}");
 
-        if (TextUtils.isEmpty(values.getAsString(Deadlines.GROUP)))
-            values.put(Deadlines.GROUP, getContext().getString(R.string.default_group));
+        if (TextUtils.isEmpty(values.getAsString(Deadlines.GROUP))) {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String group = sp.getString(
+                    getContext().getString(R.string.pref_key_editor_group),
+                    getContext().getString(R.string.default_group)
+            );
+            values.put(Deadlines.GROUP, group);
+        }
 
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
         String where = Deadlines.ID + " = " + uri.getLastPathSegment();
