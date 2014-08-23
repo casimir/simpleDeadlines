@@ -3,6 +3,7 @@ package com.casimirlab.simpleDeadlines.provider;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -11,11 +12,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
+
+import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import static com.casimirlab.simpleDeadlines.provider.DeadlinesContract.Deadlines;
 
 /**
  * @see DeadlinesContract
@@ -65,28 +72,28 @@ public class DeadlineProvider extends ContentProvider {
                 DeadlinesContract.Count.TABLE_NAME,
                 MATCH_COUNTS);
         MATCHER.addURI(DeadlinesContract.AUTHORITY,
-                DeadlinesContract.Deadlines.TABLE_NAME,
+                Deadlines.TABLE_NAME,
                 MATCH_DEADLINES);
         MATCHER.addURI(DeadlinesContract.AUTHORITY,
-                DeadlinesContract.Deadlines.TABLE_NAME + "/archived",
+                Deadlines.TABLE_NAME + "/archived",
                 MATCH_DEADLINES_ARCHIVED);
         MATCHER.addURI(DeadlinesContract.AUTHORITY,
-                DeadlinesContract.Deadlines.TABLE_NAME + "/archived/group/*",
+                Deadlines.TABLE_NAME + "/archived/group/*",
                 MATCH_DEADLINES_ARCHIVED_GROUP_LABEL);
         MATCHER.addURI(DeadlinesContract.AUTHORITY,
-                DeadlinesContract.Deadlines.TABLE_NAME + "/group/*",
+                Deadlines.TABLE_NAME + "/group/*",
                 MATCH_DEADLINES_GROUP_LABEL);
         MATCHER.addURI(DeadlinesContract.AUTHORITY,
-                DeadlinesContract.Deadlines.TABLE_NAME + "/#",
+                Deadlines.TABLE_NAME + "/#",
                 MATCH_DEADLINE_ID);
         MATCHER.addURI(DeadlinesContract.AUTHORITY,
                 DeadlinesContract.Groups.TABLE_NAME,
                 MATCH_GROUPS);
         MATCHER.addURI(DeadlinesContract.AUTHORITY,
-                DeadlinesContract.Deadlines.TABLE_NAME + "/archived/groups",
+                Deadlines.TABLE_NAME + "/archived/groups",
                 MATCH_GROUP_ARCHIVED);
         MATCHER.addURI(DeadlinesContract.AUTHORITY,
-                DeadlinesContract.Deadlines.TABLE_NAME + "/groups",
+                Deadlines.TABLE_NAME + "/groups",
                 MATCH_GROUP_IN_PROGRESS);
     }
 
@@ -104,8 +111,8 @@ public class DeadlineProvider extends ContentProvider {
             throw new IllegalArgumentException("Unknown or malformed URI. {uri: " + uri + "}");
 
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
-        String where = DeadlinesContract.Deadlines.ID + " = " + uri.getLastPathSegment();
-        int ret = db.delete(DeadlinesContract.Deadlines.TABLE_NAME, where, null);
+        String where = Deadlines.ID + " = " + uri.getLastPathSegment();
+        int ret = db.delete(Deadlines.TABLE_NAME, where, null);
 
         if (ret != -1)
             getContext().getContentResolver().notifyChange(DeadlinesContract.AUTHORITY_URI, null);
@@ -122,25 +129,34 @@ public class DeadlineProvider extends ContentProvider {
         if (MATCHER.match(uri) != MATCH_DEADLINES)
             throw new IllegalArgumentException("Unknown or malformed URI. {uri: " + uri + "}");
 
+        if (TextUtils.isEmpty(values.getAsString(Deadlines.GROUP))) {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String group = sp.getString(
+                    getContext().getString(R.string.pref_key_editor_group),
+                    getContext().getString(R.string.default_group)
+            );
+            values.put(Deadlines.GROUP, group);
+        }
+
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
-        long id = db.insert(DeadlinesContract.Deadlines.TABLE_NAME, null, values);
+        long id = db.insert(Deadlines.TABLE_NAME, null, values);
 
         if (id != -1) {
             getContext().getContentResolver().notifyChange(DeadlinesContract.AUTHORITY_URI, null);
-            return ContentUris.withAppendedId(DeadlinesContract.Deadlines.CONTENT_URI, id);
+            return ContentUris.withAppendedId(Deadlines.CONTENT_URI, id);
         }
         return null;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        String[] groupCols = {DeadlinesContract.Deadlines.ID, DeadlinesContract.Deadlines.GROUP};
+        String[] groupCols = {Deadlines.ID, Deadlines.GROUP};
         int matchCode = MATCHER.match(uri);
         SQLiteDatabase db = _dbHelper.getReadableDatabase();
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         Cursor cursor = null;
 
-        builder.setTables(DeadlinesContract.Deadlines.TABLE_NAME);
+        builder.setTables(Deadlines.TABLE_NAME);
 
         /**
          * Specific cases.
@@ -148,12 +164,11 @@ public class DeadlineProvider extends ContentProvider {
         if (matchCode == MATCH_COUNTS)
             cursor = queryCount();
         else if (matchCode == MATCH_DEADLINE_ID) {
-            builder.appendWhere(DeadlinesContract.Deadlines.ID + " = " + uri.getLastPathSegment());
+            builder.appendWhere(Deadlines.ID + " = " + uri.getLastPathSegment());
             cursor = builder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         } else if (matchCode == MATCH_GROUPS) {
-            String having = DeadlinesContract.Deadlines.GROUP + " != ''";
             cursor = builder.query(db, groupCols, selection, selectionArgs,
-                    DeadlinesContract.Deadlines.GROUP, having, sortOrder);
+                    Deadlines.GROUP, null, sortOrder);
         }
 
         /**
@@ -167,8 +182,8 @@ public class DeadlineProvider extends ContentProvider {
         /**
          * General cases.
          */
-        String archivedSelection = DeadlinesContract.Deadlines.DONE + " = 1 AND "
-                + DeadlinesContract.Deadlines.DUE_DATE + " < " + String.valueOf(new Date().getTime());
+        String archivedSelection = Deadlines.DONE + " = 1 AND "
+                + Deadlines.DUE_DATE + " < " + String.valueOf(new Date().getTime());
         if (matchCode != MATCH_DEADLINES_ARCHIVED
                 && matchCode != MATCH_DEADLINES_ARCHIVED_GROUP_LABEL
                 && matchCode != MATCH_GROUP_ARCHIVED)
@@ -178,14 +193,13 @@ public class DeadlineProvider extends ContentProvider {
         if (matchCode == MATCH_DEADLINES_GROUP_LABEL
                 || matchCode == MATCH_DEADLINES_ARCHIVED_GROUP_LABEL) {
             String group = DatabaseUtils.sqlEscapeString(uri.getLastPathSegment());
-            builder.appendWhere(" AND " + DeadlinesContract.Deadlines.GROUP + " = " + group);
+            builder.appendWhere(" AND " + Deadlines.GROUP + " = " + group);
         }
 
         if (matchCode == MATCH_GROUP_ARCHIVED
                 || matchCode == MATCH_GROUP_IN_PROGRESS) {
-            String having = DeadlinesContract.Deadlines.GROUP + " != ''";
             cursor = builder.query(db, groupCols, selection, selectionArgs,
-                    DeadlinesContract.Deadlines.GROUP, having, sortOrder);
+                    Deadlines.GROUP, null, sortOrder);
             cursor.setNotificationUri(getContext().getContentResolver(), uri);
             return cursor;
         }
@@ -198,9 +212,9 @@ public class DeadlineProvider extends ContentProvider {
     public Cursor queryCount() {
         MatrixCursor c = new MatrixCursor(DeadlinesContract.CountColumns.ALL, 1);
         // FIXME avoidable SQL ?
-        String sql = "SELECT COUNT(*) FROM " + DeadlinesContract.Deadlines.TABLE_NAME
-                + " WHERE " + DeadlinesContract.Deadlines.DUE_DATE
-                + " <= ? AND " + DeadlinesContract.Deadlines.DONE + " = 0;";
+        String sql = "SELECT COUNT(*) FROM " + Deadlines.TABLE_NAME
+                + " WHERE " + Deadlines.DUE_DATE
+                + " <= ? AND " + Deadlines.DONE + " = 0;";
         SQLiteStatement req = _dbHelper.getReadableDatabase().compileStatement(sql);
         String[] param = new String[1];
         int[] levels = new int[]{
@@ -230,9 +244,18 @@ public class DeadlineProvider extends ContentProvider {
         if (MATCHER.match(uri) != MATCH_DEADLINE_ID)
             throw new IllegalArgumentException("Unknown or malformed URI. {uri: " + uri + "}");
 
+        if (TextUtils.isEmpty(values.getAsString(Deadlines.GROUP))) {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String group = sp.getString(
+                    getContext().getString(R.string.pref_key_editor_group),
+                    getContext().getString(R.string.default_group)
+            );
+            values.put(Deadlines.GROUP, group);
+        }
+
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
-        String where = DeadlinesContract.Deadlines.ID + " = " + uri.getLastPathSegment();
-        int ret = db.update(DeadlinesContract.Deadlines.TABLE_NAME, values, where, null);
+        String where = Deadlines.ID + " = " + uri.getLastPathSegment();
+        int ret = db.update(Deadlines.TABLE_NAME, values, where, null);
 
         if (ret != -1)
             getContext().getContentResolver().notifyChange(DeadlinesContract.AUTHORITY_URI, null);
