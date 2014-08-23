@@ -1,41 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="pref_title_notif">Notification</string>
-    <string name="pref_key_notif" translatable="false">notif</string>
 
     <string name="pref_title_notif_persist">Notification persistante</string>
-    <string name="pref_key_notif_persist" translatable="false">notif_persist</string>
     <string name="pref_sum_notif_persist_off">Notification supprimable</string>
     <string name="pref_sum_notif_persist_on">Notification permanente</string>
 
     <string name="pref_title_notif_hour">Heure de notification</string>
-    <string name="pref_key_notif_hour" translatable="false">notif_hour</string>
-    <string name="pref_default_notif_hour" translatable="false">8:00</string>
 
     <string name="pref_title_notif_toggle">Tester la notification</string>
-    <string name="pref_key_notif_toggle" translatable="false">notif_toggle</string>
     <string name="pref_sum_notif_toggle">Afficher ou cacher la notification</string>
 
     <string name="pref_title_editor">Éditeur</string>
 
     <string name="pref_title_editor_calendar">Vue calendrier</string>
-    <string name="pref_key_editor_calendar" translatable="false">editor_calendar</string>
     <string name="pref_sum_editor_calendar_off">Roues</string>
     <string name="pref_sum_editor_calendar_on">Calendrier</string>
 
     <string name="pref_title_editor_group">Groupe par défaut</string>
-    <string name="pref_key_editor_group" translatable="false">default_group</string>
     <string name="pref_sum_editor_group">Nom du groupe par défaut</string>
 
     <string name="pref_title_backup">Sauvegarde</string>
 
     <string name="pref_title_backup_do">Sauvegarder les deadlines</string>
-    <string name="pref_key_backup_do" translatable="false">backup_do</string>
     <string name="pref_sum_backup_do">Utilise une application externe</string>
 
     <string name="pref_title_about">À propos</string>
 
     <string name="pref_title_about_version">Numéro de version</string>
-    <string name="pref_key_about_version" translatable="false">about_version</string>
     <string name="pref_sum_about_version">Numéro de version introuvable</string>
 </resources>

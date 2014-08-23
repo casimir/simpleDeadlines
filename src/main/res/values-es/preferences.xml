@@ -1,41 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="pref_title_notif">Notificación</string>
-    <string name="pref_key_notif" translatable="false">notif</string>
 
     <string name="pref_title_notif_persist">Notificación fija</string>
-    <string name="pref_key_notif_persist" translatable="false">notif_persist</string>
     <string name="pref_sum_notif_persist_off">La notificación puede ser eliminada</string>
     <string name="pref_sum_notif_persist_on">La notificación es permanente</string>
 
     <string name="pref_title_notif_hour">Hora de notificación</string>
-    <string name="pref_key_notif_hour" translatable="false">notif_hour</string>
-    <string name="pref_default_notif_hour" translatable="false">8:00</string>
 
     <string name="pref_title_notif_toggle">Probar la notificación</string>
-    <string name="pref_key_notif_toggle" translatable="false">notif_toggle</string>
     <string name="pref_sum_notif_toggle">Mostrar u ocultar la notificación</string>
 
     <string name="pref_title_editor">Editor</string>
 
     <string name="pref_title_editor_calendar">Vista de calendario</string>
-    <string name="pref_key_editor_calendar" translatable="false">editor_calendar</string>
     <string name="pref_sum_editor_calendar_off">Ruedecillas</string>
     <string name="pref_sum_editor_calendar_on">Calendario</string>
 
     <string name="pref_title_editor_group">Grupo por defecto</string>
-    <string name="pref_key_editor_group" translatable="false">default_group</string>
     <string name="pref_sum_editor_group">Nombre del grupo por defecto</string>
 
     <string name="pref_title_backup">Copia de seguridad</string>
 
     <string name="pref_title_backup_do">Crear el archivo de seguridad</string>
-    <string name="pref_key_backup_do" translatable="false">backup_do</string>
     <string name="pref_sum_backup_do">Utiliza una aplicación externa</string>
 
     <string name="pref_title_about">Acerca de</string>
 
     <string name="pref_title_about_version">Número de versión</string>
-    <string name="pref_key_about_version" translatable="false">about_version</string>
     <string name="pref_sum_about_version">Número de versión no encontrado</string>
 </resources>
