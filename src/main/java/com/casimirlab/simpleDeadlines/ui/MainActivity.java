@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
@@ -145,6 +146,9 @@ public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cu
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (_drawerToggle.onOptionsItemSelected(item))
+            return true;
+
         switch (item.getItemId()) {
             case R.id.act_new:
                 Intent intent = new Intent(this, DeadlineEditor.class);
