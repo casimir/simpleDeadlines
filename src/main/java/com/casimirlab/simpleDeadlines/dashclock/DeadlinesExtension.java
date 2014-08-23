@@ -48,7 +48,7 @@ public class DeadlinesExtension extends DashClockExtension {
 
         ExtensionData data = new ExtensionData()
                 .visible(cursor.getCount() > 0)
-                .icon(R.drawable.ic_app)
+                .icon(R.drawable.ic_launcher_white)
                 .clickIntent(new Intent(getApplicationContext(), MainActivity.class))
                 .status(getString(R.string.dashclock_status, cursor.getCount()))
                 .expandedTitle(getString(R.string.dashclock_title, cursor.getCount()))

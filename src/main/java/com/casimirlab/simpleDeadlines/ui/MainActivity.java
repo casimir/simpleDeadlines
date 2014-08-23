@@ -47,7 +47,7 @@ public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cu
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setIcon(R.drawable.ic_app);
+        getActionBar().setIcon(R.drawable.ic_launcher_white);
         getActionBar().setTitle(_TITLES[0]);
 
         _drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
