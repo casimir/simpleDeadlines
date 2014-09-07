@@ -1,4 +1,4 @@
-Simple Deadlines [![Build Status](https://travis-ci.org/casimir/simpleDeadlines.svg?branch=master)](https://travis-ci.org/casimir/simpleDeadlines)
+Simple Deadlines [![Build Status](https://travis-ci.org/casimir/simpleDeadlines.svg?branch=devel)](https://travis-ci.org/casimir/simpleDeadlines)
 ===
 
 A simple and readable deadline manager for Android: a daily notification to organise your day.
