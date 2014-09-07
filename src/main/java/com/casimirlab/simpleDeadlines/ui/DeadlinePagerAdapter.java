@@ -3,7 +3,9 @@ package com.casimirlab.simpleDeadlines.ui;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class DeadlinePagerAdapter extends FragmentStatePagerAdapter
   {
     super(fm);
 
-    _frags = new LinkedList<DeadlineListFragment>();
+    _frags = new LinkedList<>();
     _frags.add(DeadlineListFragment.newInstance(DeadlinesContract.Deadlines.TYPE_IN_PROGRESS));
     _frags.add(DeadlineListFragment.newInstance(DeadlinesContract.Deadlines.TYPE_ARCHIVED));
   }

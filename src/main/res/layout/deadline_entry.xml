@@ -1,51 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/list_selector_background">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:background="@drawable/list_selector_background">
+
+    <FrameLayout
+        android:id="@+id/group_color"
+        tools:background="#00FF00"
+        android:layout_width="48dp"
+        android:layout_height="6dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
     <com.casimirlab.simpleDeadlines.ui.DayCounterView
-            android:id="@+id/day_counter"
-            android:layout_width="64dp"
-            android:layout_height="64dp"/>
+        android:id="@+id/day_counter"
+        android:layout_width="64dp"
+        android:layout_height="64dp" />
 
     <RelativeLayout
-            android:padding="4dp"
+        android:padding="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/day_counter">
+
+        <TextView
+            android:id="@+id/label"
+            tools:text="Yay deadlines!"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:textSize="22sp" />
 
         <TextView
-                android:id="@+id/label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:textSize="22sp"/>
-
-        <TextView
-                android:id="@+id/group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:padding="2dp"
-                android:textColor="#AAAAAA"/>
+            android:id="@+id/group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="2dp"
+            android:textColor="#AAAAAA" />
 
         <CheckBox
-                android:id="@+id/done"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:padding="2dp"
-                android:paddingRight="0dp"
-                android:focusable="false"/>
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="2dp"
+            android:paddingRight="0dp"
+            android:focusable="false" />
 
         <TextView
-                android:id="@+id/due_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/done"
-                android:layout_alignParentBottom="true"
-                android:padding="2dp"/>
+            android:id="@+id/due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/done"
+            android:layout_alignParentBottom="true"
+            android:padding="2dp" />
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

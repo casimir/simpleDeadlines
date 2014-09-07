@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	     android:layout_width="match_parent"
-	     android:layout_height="match_parent"
-	     android:background="@drawable/list_selector_background">
-  <TextView android:id="@+id/group"
-	    android:layout_width="match_parent"
-	    android:layout_height="48dp"
-	    android:padding="8dp"
-	    android:paddingLeft="16dp"
-	    android:paddingRight="56dp"
-	    android:textSize="22sp"  />
-</FrameLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/list_selector_background">
+
+    <FrameLayout
+        android:id="@+id/group_color"
+        tools:background="#00FF00"
+        android:layout_width="48dp"
+        android:layout_height="6dp"
+        android:layout_gravity="top" />
+
+    <TextView
+        android:id="@+id/group"
+        tools:text="@string/default_group"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:padding="8dp"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingRight="56dp"
+        android:paddingEnd="56dp"
+        android:textSize="18sp" />
+</LinearLayout>

@@ -10,10 +10,16 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
+
 import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -152,5 +158,10 @@ public final class DeadlinesUtils {
         long deadlineDays = time / DateUtils.DAY_IN_MILLIS;
 
         return (int) (deadlineDays - todayDays);
+    }
+
+    public static int labelToColor(String label) {
+        // FIXME Work color
+        return label.hashCode();
     }
 }
