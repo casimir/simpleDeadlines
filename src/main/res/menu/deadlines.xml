@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:id="@+id/act_new"
-	android:title="@string/act_new"
-	android:icon="@drawable/ic_act_new"
-	android:showAsAction="ifRoom" />
-  <item android:id="@+id/act_settings"
-	android:title="@string/act_settings"
-	android:icon="@drawable/ic_act_settings"
-	android:showAsAction="never" />
+    <item
+        android:id="@+id/act_new"
+        android:title="@string/act_new"
+        android:icon="@drawable/ic_act_new"
+        android:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/act_settings"
+        android:title="@string/act_settings"
+        android:icon="@drawable/ic_act_settings"
+        android:showAsAction="ifRoom" />
 </menu>
