@@ -162,6 +162,7 @@ public final class DeadlinesUtils {
 
     public static int labelToColor(String label) {
         // FIXME Work color
-        return label.hashCode();
+//        return label.hashCode();
+        return 0;
     }
 }
