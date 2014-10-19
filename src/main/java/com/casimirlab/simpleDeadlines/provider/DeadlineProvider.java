@@ -245,7 +245,7 @@ public class DeadlineProvider extends ContentProvider {
             throw new IllegalArgumentException("Unknown or malformed URI. {uri: " + uri + "}");
 
         String groupString = values.getAsString(Deadlines.GROUP);
-        if ( groupString != null && TextUtils.getTrimmedLength( groupString) == 0) {
+        if (groupString != null && TextUtils.getTrimmedLength(groupString) == 0) {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
             String group = sp.getString(
                     getContext().getString(R.string.pref_key_editor_group),
