@@ -16,6 +16,7 @@ gen/
 # IntelliJ
 .gradle
 .idea/dictionaries
+.idea/libraries
 .idea/tasks.xml
 .idea/workspace.xml
 local.properties
