@@ -29,7 +29,6 @@ public class NotificationCenter extends BroadcastReceiver {
     private Context _context;
     private NotificationManager _nm;
     private ContentResolver _cr;
-    private ContentObserver _co;
     private Notification.Builder _builder;
 
     @Override
@@ -38,7 +37,7 @@ public class NotificationCenter extends BroadcastReceiver {
         _nm = (NotificationManager) context.getSystemService(Service.NOTIFICATION_SERVICE);
         _cr = context.getContentResolver();
 
-        _co = new ContentObserver(new Handler()) {
+        ContentObserver _co = new ContentObserver(new Handler()) {
             @Override
             public void onChange(boolean selfChange) {
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
