@@ -8,10 +8,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:label="@string/app_name"
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-        android:allowBackup="true">
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
         <activity
             android:name=".ui.DeadlineEditor"
@@ -24,8 +24,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:scheme="http"
-                    android:host="sd.casimir-lab.net" />
+                    android:host="sd.casimir-lab.net"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
@@ -39,10 +39,10 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data
-                    android:scheme="file"
                     android:host="*"
                     android:mimeType="*/*"
-                    android:pathPattern=".*\\.sd" />
+                    android:pathPattern=".*\\.sd"
+                    android:scheme="file" />
                 <!--Handle filenames with a maximum of 4 dots-->
                 <data android:pathPattern=".*\\..*\\.sd" />
                 <data android:pathPattern=".*\\..*\\..*\\.sd" />
@@ -54,8 +54,8 @@
             android:label="@string/act_settings" />
 
         <provider
-            android:authorities="com.casimirlab.simpleDeadlines.provider"
             android:name=".provider.DeadlineProvider"
+            android:authorities="com.casimirlab.simpleDeadlines.provider"
             android:exported="false" />
 
         <receiver android:name="NotificationCenter">

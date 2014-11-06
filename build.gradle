@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.2'
+        classpath 'com.android.tools.build:gradle:0.14.0'
     }
 }
 
@@ -14,14 +14,15 @@ repositories {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:21.0.0"
+    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile 'com.android.support:cardview-v7:21.0.0'
     compile 'com.android.support:support-v4:21.0.0'
     compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
 }
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    buildToolsVersion "21.1.0"
 
     defaultConfig {
         minSdkVersion 14
