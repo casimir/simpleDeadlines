@@ -54,7 +54,7 @@ public class Settings extends PreferenceActivity {
                         i.setAction(Intent.ACTION_SEND);
                         i.setType("text/plain");
                         i.putExtra(Intent.EXTRA_STREAM, DeadlinesUtils.performBackup(getApplicationContext()));
-                        startActivityForResult(i, RESULT_RECOVER_PICK);
+                        startActivity(i);
                         return true;
                     }
                 });
@@ -64,8 +64,8 @@ public class Settings extends PreferenceActivity {
                     @Override
                     public boolean onPreferenceClick(Preference preference) {
                         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                        i.setType("text/*");
-                        startActivity(i);
+                        i.setType("*/*");
+                        startActivityForResult(i, RESULT_RECOVER_PICK);
                         return true;
                     }
                 });
@@ -88,7 +88,7 @@ public class Settings extends PreferenceActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (RESULT_RECOVER_PICK == requestCode) {
-            if (resultCode == RESULT_OK)
+            if (RESULT_OK == resultCode)
                 DeadlinesUtils.performRecover(getApplicationContext(), data.getData());
             else
                 Toast.makeText(this, "Failed to perform recover", Toast.LENGTH_SHORT).show(); // FIXME translate
