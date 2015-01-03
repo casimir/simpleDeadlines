@@ -65,7 +65,7 @@ public class Settings extends PreferenceActivity {
                     public boolean onPreferenceClick(Preference preference) {
                         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                         i.setType("*/*");
-                        startActivityForResult(i, RESULT_RECOVER_PICK);
+                        Settings.this.startActivityForResult(i, RESULT_RECOVER_PICK);
                         return true;
                     }
                 });
@@ -87,12 +87,13 @@ public class Settings extends PreferenceActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         if (RESULT_RECOVER_PICK == requestCode) {
             if (RESULT_OK == resultCode)
                 DeadlinesUtils.performRecover(getApplicationContext(), data.getData());
             else
                 Toast.makeText(this, "Failed to perform recover", Toast.LENGTH_SHORT).show(); // FIXME translate
-        } else
-            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
