@@ -8,9 +8,13 @@ env:
 
 android:
     components:
+        - platform-tools
         - build-tools-21.1.1
+        - extra-android-m2repository
+        - android-21
+        - sys-img-armeabi-v7a-android-21
     licenses:
-        - android-sdk-license-5be876d5
+        - 'android-sdk-license-.+'
 
 before_script:
     - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
