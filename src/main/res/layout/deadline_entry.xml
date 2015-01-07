@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/done"
-            android:padding="2dp"
+            android:padding="4dp"
             android:singleLine="true"
             android:textSize="20sp"
             tools:text="Some deadlines label that really should not be that long, it's ineffective" />
