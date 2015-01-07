@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:background="@drawable/list_selector_background">
+    android:background="@drawable/list_selector_background"
+    android:orientation="horizontal">
 
     <FrameLayout
         android:id="@+id/group_color"
-        tools:background="#00FF00"
         android:layout_width="48dp"
         android:layout_height="6dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        tools:background="#00FF00" />
 
     <com.casimirlab.simpleDeadlines.ui.DayCounterView
         android:id="@+id/day_counter"
@@ -20,26 +20,30 @@
         android:layout_height="64dp" />
 
     <RelativeLayout
-        android:padding="4dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@id/day_counter">
+        android:layout_toRightOf="@id/day_counter"
+        android:padding="4dp">
 
         <TextView
             android:id="@+id/label"
-            tools:text="Yay deadlines!"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/done"
             android:padding="2dp"
-            android:textSize="22sp" />
+            android:singleLine="true"
+            android:textSize="20sp"
+            tools:text="Some deadlines label that really should not be that long, it's ineffective" />
 
         <TextView
             android:id="@+id/group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:padding="2dp"
-            android:textColor="@color/secondary_text" />
+            android:padding="4dp"
+            android:singleLine="true"
+            android:textColor="@color/secondary_text"
+            tools:text="Some group not so long" />
 
         <CheckBox
             android:id="@+id/done"
@@ -47,16 +51,17 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:padding="2dp"
-            android:paddingRight="0dp"
-            android:focusable="false" />
+            android:focusable="false"
+            android:padding="4dp"
+            android:paddingRight="0dp" />
 
         <TextView
             android:id="@+id/due_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/done"
             android:layout_alignParentBottom="true"
-            android:padding="2dp" />
+            android:layout_toLeftOf="@id/done"
+            android:padding="4dp"
+            tools:text="Not today" />
     </RelativeLayout>
 </RelativeLayout>
