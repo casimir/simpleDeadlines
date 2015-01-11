@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="pref_title_notif">Уведомление</string>
+
+    <string name="pref_title_notif_persist">Постоянность уведомления</string>
+    <string name="pref_sum_notif_persist_off">Стираемое уведомление</string>
+    <string name="pref_sum_notif_persist_on">Постоянное уведомление</string>
+
+    <string name="pref_title_notif_hour">Время для уведомления</string>
+
+    <string name="pref_title_notif_toggle">Опробовать уведомление</string>
+    <string name="pref_sum_notif_toggle">Показать или скрыть уведомление</string>
+
+    <string name="pref_title_editor">Редактор</string>
+
+    <string name="pref_title_editor_calendar">Стиль календаря</string>
+    <string name="pref_sum_editor_calendar_off">Прокручиваемый</string>
+    <string name="pref_sum_editor_calendar_on">Классический</string>
+
+    <string name="pref_title_editor_group">Группа по-умолчанию</string>
+    <string name="pref_sum_editor_group">Заметка по-умолчанию</string>
+
+    <string name="pref_title_backup">Резервное копирование</string>
+
+    <string name="pref_title_backup_do">Резервная копия крайних сроков</string>
+    <string name="pref_sum_backup_do">Используйте стороннее приложение</string>
+
+    <string name="pref_title_recover_do">Recover deadlines</string>
+
+    <string name="pref_title_about">О приложении</string>
+
+    <string name="pref_title_about_version">Версия</string>
+    <string name="pref_sum_about_version">Версия не найдена</string>
+</resources>

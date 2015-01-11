@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="act_nav_list">
+    <item>В процессе</item>
+    <item>Архивированные</item>
+  </string-array>
+  <string name="act_delete">Удалить</string>
+  <string name="act_edit">Изменить</string>
+  <string name="act_group">Изменить группу</string>
+  <string name="act_new">Новый крайний срок(deadline)</string>
+  <string name="act_settings">Настройки</string>
+  <string name="act_share">Поделиться</string>
+</resources>
