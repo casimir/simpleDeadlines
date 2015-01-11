@@ -1,13 +1,22 @@
 package com.casimirlab.simpleDeadlines;
 
-import android.app.*;
-import android.content.*;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
+
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 import com.casimirlab.simpleDeadlines.ui.MainActivity;
 
@@ -29,7 +38,6 @@ public class NotificationCenter extends BroadcastReceiver {
     private Context _context;
     private NotificationManager _nm;
     private ContentResolver _cr;
-    private ContentObserver _co;
     private Notification.Builder _builder;
 
     @Override
@@ -38,7 +46,7 @@ public class NotificationCenter extends BroadcastReceiver {
         _nm = (NotificationManager) context.getSystemService(Service.NOTIFICATION_SERVICE);
         _cr = context.getContentResolver();
 
-        _co = new ContentObserver(new Handler()) {
+        ContentObserver _co = new ContentObserver(new Handler()) {
             @Override
             public void onChange(boolean selfChange) {
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);

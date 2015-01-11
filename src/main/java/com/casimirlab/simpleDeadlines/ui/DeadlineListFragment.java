@@ -64,7 +64,7 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
             }
 
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                _selected = new ArrayList<Long>();
+                _selected = new ArrayList<>();
 
                 MenuInflater inflater = mode.getMenuInflater();
                 inflater.inflate(R.menu.cab, menu);

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_group">グループがありません</string>
+
+    <string name="dashclock_description">最も緊急な期限を表示します。</string>
+    <string name="dashclock_title">%d 緊急</string>
+
+    <string name="empty_list">開始するには \"+\" ボタンを押してください</string>
+    <string name="empty_label">少なくともラベルが1つ必要です</string>
+    <string name="hint_label">ラベル</string>
+    <string name="hint_group">グループ</string>
+    <string name="msg_added">\"%s\" 追加しました</string>
+    <string name="msg_confirm_recover">このファイルを復元しますか?</string>
+    <string name="msg_recover">%d アイテムが追加されました</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_group">Нет группы</string>
+
+    <string name="dashclock_description">Отобразить ближайшие крайние сроки</string>
+    <string name="dashclock_title">%d срочно</string>
+
+    <string name="empty_list">Для начала нажмие кнопку \"+\"</string>
+    <string name="empty_label">Введите текст заметки</string>
+    <string name="hint_label">Заметка</string>
+    <string name="hint_group">Группа</string>
+    <string name="msg_added">\"%s\" добавлен</string>
+    <string name="msg_confirm_recover">Восстановить этот файл?</string>
+    <string name="msg_recover">%d элементов добавлено</string>
+</resources>

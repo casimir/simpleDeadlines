@@ -43,6 +43,9 @@
             android:title="@string/pref_title_backup_do"
             android:key="@string/pref_key_backup_do"
             android:summary="@string/pref_sum_backup_do" />
+        <Preference
+            android:title="@string/pref_title_recover_do"
+            android:key="@string/pref_key_recover_do" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_title_about">
         <Preference

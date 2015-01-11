@@ -10,11 +10,11 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +29,7 @@ import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 
-public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cursor> {
+public class MainActivity extends ActionBarActivity implements LoaderCallbacks<Cursor> {
     private String[] _TITLES;
     private DrawerLayout _drawerLayout;
     private ActionBarDrawerToggle _drawerToggle;
@@ -46,16 +46,12 @@ public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cu
 
         _TITLES = getResources().getStringArray(R.array.act_nav_list);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setIcon(R.drawable.ic_launcher_white);
-        getActionBar().setTitle(_TITLES[0]);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(_TITLES[0]);
 
         _drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         _drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        _drawerToggle = new ActionBarDrawerToggle(this, _drawerLayout,
-                R.drawable.ic_drawer,
-                R.string.drawer_open, R.string.drawer_close);
+        _drawerToggle = new ActionBarDrawerToggle(this, _drawerLayout, R.string.drawer_open, R.string.drawer_close);
         _drawerLayout.setDrawerListener(_drawerToggle);
 
         _groupAdapter = new GroupAdapter(this, null);
@@ -80,7 +76,7 @@ public class MainActivity extends FragmentActivity implements LoaderCallbacks<Cu
         _pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                getActionBar().setTitle(_TITLES[position]);
+                getSupportActionBar().setTitle(_TITLES[position]);
                 _currentGroupIdx = ListView.INVALID_POSITION;
                 ((DeadlineListFragment) _pagerAdapter.getItem(position)).setGroupFilter(null);
                 getLoaderManager().restartLoader(position, null, MainActivity.this);

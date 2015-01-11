@@ -65,7 +65,7 @@ public class DeadlinesExtension extends DashClockExtension {
         for (int i = 0; i < cursor.getCount() && i < NB_LINES; ++i) {
             ContentValues values = new ContentValues();
             DatabaseUtils.cursorRowToContentValues(cursor, values);
-            builder.append(values.getAsString(DeadlinesContract.Deadlines.LABEL) + "\n");
+            builder.append(values.getAsString(DeadlinesContract.Deadlines.LABEL)).append('\n');
             cursor.moveToNext();
         }
 

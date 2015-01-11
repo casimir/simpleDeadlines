@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="pref_title_notif">通知</string>
+
+    <string name="pref_title_notif_persist">永続的通知</string>
+    <string name="pref_sum_notif_persist_off">解除可能通知</string>
+    <string name="pref_sum_notif_persist_on">恒久的通知</string>
+
+    <string name="pref_title_notif_hour">通知時間</string>
+
+    <string name="pref_title_notif_toggle">通知をテスト</string>
+    <string name="pref_sum_notif_toggle">通知を表示または非表示にします</string>
+
+    <string name="pref_title_editor">エディター</string>
+
+    <string name="pref_title_editor_calendar">カレンダービュー</string>
+    <string name="pref_sum_editor_calendar_off">スピナー</string>
+    <string name="pref_sum_editor_calendar_on">カレンダービュー</string>
+
+    <string name="pref_title_editor_group">デフォルトグループ</string>
+    <string name="pref_sum_editor_group">デフォルトグループラベル</string>
+
+    <string name="pref_title_backup">バックアップ</string>
+
+    <string name="pref_title_backup_do">期限をバックアップ</string>
+    <string name="pref_sum_backup_do">外部アプリケーションを使用中</string>
+
+    <string name="pref_title_recover_do">期限を復元</string>
+
+    <string name="pref_title_about">アプリについて</string>
+
+    <string name="pref_title_about_version">バージョン番号</string>
+    <string name="pref_sum_about_version">バージョン番号が見つかりません</string>
+</resources>
