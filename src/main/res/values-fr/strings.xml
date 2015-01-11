@@ -12,4 +12,5 @@
     <string name="msg_added">\"%s\" ajouté</string>
     <string name="msg_confirm_recover">Récupérer ce fichier ?</string>
     <string name="msg_recover">%d éléments ajoutés</string>
+    <string name="pref_title_recover_do">Restaurer les deadlines</string>
 </resources>
