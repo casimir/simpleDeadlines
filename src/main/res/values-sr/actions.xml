@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string-array name="act_nav_list">
+    <item>У току</item>
+    <item>Архива</item>
+  </string-array>
+  <string name="act_delete">Обриши</string>
+  <string name="act_edit">Уреди</string>
+  <string name="act_group">Уреди групу</string>
+  <string name="act_new">Нови рок</string>
+  <string name="act_settings">Поставке</string>
+  <string name="act_share">Дели</string>
+</resources>

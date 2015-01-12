@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="pref_title_notif">Обавештење</string>
+
+    <string name="pref_title_notif_persist">Трајно обавештење</string>
+    <string name="pref_sum_notif_persist_off">Привремено обавештење</string>
+    <string name="pref_sum_notif_persist_on">Трајно обавештење</string>
+
+    <string name="pref_title_notif_hour">Време обавештења</string>
+
+    <string name="pref_title_notif_toggle">Тестирај обавештење</string>
+    <string name="pref_sum_notif_toggle">Прикажи/сакриј обавештење</string>
+
+    <string name="pref_title_editor">Уређивач</string>
+
+    <string name="pref_title_editor_calendar">Приказ календара</string>
+    <string name="pref_sum_editor_calendar_off">Спинери</string>
+    <string name="pref_sum_editor_calendar_on">Приказ календара</string>
+
+    <string name="pref_title_editor_group">Подразумевана група</string>
+    <string name="pref_sum_editor_group">Етикета подраз. групе</string>
+
+    <string name="pref_title_backup">Резерва</string>
+
+    <string name="pref_title_backup_do">Направи резерву рокова</string>
+    <string name="pref_sum_backup_do">Користећи спољашњу апликацију</string>
+
+    <string name="pref_title_recover_do">Врати резерву</string>
+
+    <string name="pref_title_about">О програму</string>
+
+    <string name="pref_title_about_version">Издање</string>
+    <string name="pref_sum_about_version">Ознака издања није нађена</string>
+</resources>
