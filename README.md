@@ -11,4 +11,4 @@ Also available in the [F-Droid repository](http://f-droid.org/repository/browse/
 
 ## Contribute - help is always welcome!
 
-If you want to report an issue please use the [issue tracker](https://github.com/chibibi/simpleDeadlines/issues). You can also help with the translation directly at [Get Localization](http://www.getlocalization.com/simpleDeadlines).
+You can report issues with the [issue tracker](https://github.com/chibibi/simpleDeadlines/issues). You can also help with translation at [Get Localization](http://www.getlocalization.com/simpleDeadlines) or by PR.
