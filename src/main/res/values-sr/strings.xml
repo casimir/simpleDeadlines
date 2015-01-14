@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Роковник</string>
+    <string name="default_group">Без групе</string>
+
+    <string name="dashclock_description">Приказ ваших најхитнијих рокова.</string>
+    <string name="dashclock_title">%d хитно</string>
+
+    <string name="empty_list">Да бисте почели тапните „+“ дугме</string>
+    <string name="empty_label">Бар једна етикета је потребна</string>
+    <string name="hint_label">Етикета</string>
+    <string name="hint_group">Група</string>
+    <string name="msg_added">„%s“ додат</string>
+    <string name="msg_confirm_recover">Да вратим овај фајл?</string>
+    <string name="msg_recover">%d ставки додато</string>
+</resources>
