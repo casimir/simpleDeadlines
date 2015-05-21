@@ -61,13 +61,10 @@ public final class DeadlinesUtils {
     }
 
     public static int dayCountToLvl(int days) {
-        Integer[] keys = LVL_ALL.keySet().toArray(new Integer[]{});
-
-        for (int i = 0; i < keys.length - 1; ++i) {
-            if (days <= keys[i])
-                return keys[i];
+        for (int n : LVL_ALL.keySet()) {
+           if (days <= n)
+               return n;
         }
-
         return LVL_NEVERMIND;
     }
 

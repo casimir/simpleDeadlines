@@ -3,6 +3,7 @@ package com.casimirlab.simpleDeadlines.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.DialogPreference;
+import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -38,7 +39,7 @@ public class TimePickerPreference extends DialogPreference
   }
 
   @Override
-  protected void onBindDialogView(View view)
+  protected void onBindDialogView(@NonNull View view)
   {
     super.onBindDialogView(view);
     _picker = (TimePicker)view.findViewById(R.id.time_picker);

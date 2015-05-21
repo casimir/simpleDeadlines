@@ -20,7 +20,6 @@
         android:layout_height="48dp"
         android:padding="8dp"
         android:paddingLeft="16dp"
-        android:paddingStart="16dp"
         android:paddingRight="56dp"
         android:paddingEnd="56dp"
         android:textSize="18sp" />

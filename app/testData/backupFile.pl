@@ -1,12 +1,4 @@
 #!/usr/bin/perl
-##
-## File:	backupFile.pl
-## Author:	Martin Chaine (chaine.martin@gmail.com)
-## Contrib:	Martin Chaine (chaine.martin@gmail.com)
-## Created:	07 May 2013 18:49:21
-## Modified:	07 May 2013 22:50:37
-## Description:	Generate a backup file based on the current day.
-##
 
 use strict;
 
