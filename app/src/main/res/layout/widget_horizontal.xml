@@ -56,6 +56,6 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:background="#CCCCCCCC"
-            android:src="@drawable/ic_act_new"
+            android:src="@drawable/ic_act_add"
             android:contentDescription="@string/act_new"/>
 </LinearLayout>

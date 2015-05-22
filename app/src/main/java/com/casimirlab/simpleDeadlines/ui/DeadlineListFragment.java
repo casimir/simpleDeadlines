@@ -23,17 +23,17 @@ import java.util.List;
 
 public class DeadlineListFragment extends ListFragment implements LoaderCallbacks<Cursor> {
     private static final String TAG = DeadlineListFragment.class.getSimpleName();
+    public static final String EXTRA_ARCHIVED = TAG + ".archived";
     public static final String EXTRA_GROUP = TAG + ".group";
-    public static final String EXTRA_TYPE = TAG + ".type";
-    private int _type;
     private CursorAdapter _adapter;
+    private boolean _archiveMode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        _type = getArguments().getInt(EXTRA_TYPE);
-        _adapter = new DeadlineAdapter(getActivity(), null, _type == DeadlinesContract.Deadlines.TYPE_ARCHIVED);
+        _archiveMode  = getArguments().getBoolean(EXTRA_ARCHIVED);
+        _adapter = new DeadlineAdapter(getActivity(), null, _archiveMode);
         setListAdapter(_adapter);
 
         getLoaderManager().initLoader(0, getArguments(), this);
@@ -149,12 +149,12 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
         Uri.Builder builder = DeadlinesContract.Deadlines.CONTENT_URI.buildUpon();
         String order = "ASC";
 
-        if (_type == DeadlinesContract.Deadlines.TYPE_ARCHIVED){
+        if (_archiveMode){
             builder.appendPath(DeadlinesContract.Deadlines.FILTER_ARCHIVED);
             order = "DESC";
         }
 
-        String group = args.getString(EXTRA_GROUP);
+        String group = args != null ? args.getString(EXTRA_GROUP) : "";
         if (!TextUtils.isEmpty(group)) {
             builder.appendPath(DeadlinesContract.Deadlines.FILTER_GROUP);
             builder.appendPath(group);
@@ -178,9 +178,14 @@ public class DeadlineListFragment extends ListFragment implements LoaderCallback
         getLoaderManager().restartLoader(0, args, this);
     }
 
-    public static DeadlineListFragment newInstance(int type) {
+    public void setArchivedMode(boolean enabled) {
+       _archiveMode = enabled;
+        getLoaderManager().restartLoader(0, null, this);
+    }
+
+    public static DeadlineListFragment newInstance(Boolean archived) {
         Bundle args = new Bundle();
-        args.putInt(EXTRA_TYPE, type);
+        args.putBoolean(EXTRA_ARCHIVED, archived);
 
         DeadlineListFragment f = new DeadlineListFragment();
         f.setArguments(args);

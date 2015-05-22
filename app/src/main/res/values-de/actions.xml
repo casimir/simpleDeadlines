@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string-array name="act_nav_list">
-    <item>Offene Aufgaben</item>
-    <item>Archiviert</item>
-  </string-array>
+  <string name="act_in_progress">Offene Aufgaben</string>
+  <string name="act_archived">Archiviert</string>
   <string name="act_delete">Löschen</string>
   <string name="act_edit">Bearbeiten</string>
   <string name="act_group">Gruppen bearbeiten</string>

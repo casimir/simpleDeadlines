@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string-array name="act_nav_list">
-    <item>В процессе</item>
-    <item>Архивированные</item>
-  </string-array>
+  <string name="act_in_progress">В процессе</string>
+  <string name="act_archived">Архивированные</string>
   <string name="act_delete">Удалить</string>
   <string name="act_edit">Изменить</string>
   <string name="act_group">Изменить группу</string>

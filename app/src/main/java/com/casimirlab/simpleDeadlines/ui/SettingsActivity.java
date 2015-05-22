@@ -14,7 +14,7 @@ import com.casimirlab.simpleDeadlines.NotificationCenter;
 import com.casimirlab.simpleDeadlines.R;
 import com.casimirlab.simpleDeadlines.data.DeadlinesUtils;
 
-public class Settings extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity {
     private static final int RESULT_RECOVER_PICK = 1;
     private static final String TAG = "Settings";
 
@@ -65,7 +65,7 @@ public class Settings extends PreferenceActivity {
                     public boolean onPreferenceClick(Preference preference) {
                         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                         i.setType("*/*");
-                        Settings.this.startActivityForResult(i, RESULT_RECOVER_PICK);
+                        SettingsActivity.this.startActivityForResult(i, RESULT_RECOVER_PICK);
                         return true;
                     }
                 });

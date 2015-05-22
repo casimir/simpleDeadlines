@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,24 +29,19 @@ import com.casimirlab.simpleDeadlines.data.GroupAdapter;
 import com.casimirlab.simpleDeadlines.provider.DeadlinesContract;
 
 public class MainActivity extends ActionBarActivity implements LoaderCallbacks<Cursor> {
-    private String[] _TITLES;
     private DrawerLayout _drawerLayout;
     private ActionBarDrawerToggle _drawerToggle;
+    private DeadlineListFragment _frag;
     private ListView _groupList;
     private GroupAdapter _groupAdapter;
-    private ViewPager _pager;
-    private DeadlinePagerAdapter _pagerAdapter;
     private int _currentGroupIdx;
+    private boolean _archiveMode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.deadlines);
-
-        _TITLES = getResources().getStringArray(R.array.act_nav_list);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(_TITLES[0]);
+        setContentView(R.layout.deadlines);
 
         _drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         _drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -60,28 +54,17 @@ public class MainActivity extends ActionBarActivity implements LoaderCallbacks<C
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 boolean wasSelected = _currentGroupIdx == position;
                 TextView label = (TextView) view.findViewById(R.id.group);
-                DeadlineListFragment frag = (DeadlineListFragment) _pagerAdapter.getItem(_pager.getCurrentItem());
 
                 _groupList.setItemChecked(position, !wasSelected);
                 _currentGroupIdx = _groupList.getCheckedItemPosition();
-                frag.setGroupFilter(wasSelected ? null : label.getText().toString());
+                _frag.setGroupFilter(wasSelected ? null : label.getText().toString());
                 _drawerLayout.closeDrawers();
             }
         });
         _groupList.setAdapter(_groupAdapter);
 
-        _pager = (ViewPager) findViewById(R.id.pager);
-        _pagerAdapter = new DeadlinePagerAdapter(getSupportFragmentManager());
-        _pager.setAdapter(_pagerAdapter);
-        _pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                getSupportActionBar().setTitle(_TITLES[position]);
-                _currentGroupIdx = ListView.INVALID_POSITION;
-                ((DeadlineListFragment) _pagerAdapter.getItem(position)).setGroupFilter(null);
-                getLoaderManager().restartLoader(position, null, MainActivity.this);
-            }
-        });
+        _frag = DeadlineListFragment.newInstance(_archiveMode);
+        getSupportFragmentManager().beginTransaction().replace(R.id.deadlines, _frag).commit();
 
         _currentGroupIdx = ListView.INVALID_POSITION;
 
@@ -117,7 +100,7 @@ public class MainActivity extends ActionBarActivity implements LoaderCallbacks<C
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Uri.Builder builder = DeadlinesContract.Deadlines.CONTENT_URI.buildUpon();
-        if (id == 1)
+        if (_archiveMode)
             builder.appendPath(DeadlinesContract.Deadlines.FILTER_ARCHIVED);
         builder.appendPath(DeadlinesContract.GROUPS_PATH);
 
@@ -137,6 +120,14 @@ public class MainActivity extends ActionBarActivity implements LoaderCallbacks<C
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.deadlines, menu);
+
+        MenuItem toggleItem = menu.findItem(R.id.act_toggle);
+        if (_archiveMode) {
+            menu.removeItem(R.id.act_new);
+            toggleItem.setIcon(R.drawable.ic_act_in_progress);
+            toggleItem.setTitle(R.string.act_in_progress);
+        }
+
         return true;
     }
 
@@ -151,12 +142,23 @@ public class MainActivity extends ActionBarActivity implements LoaderCallbacks<C
                 intent.putExtra(EditorDialogFragment.EXTRA_ISNEW, true);
                 startActivity(intent);
                 break;
+            case R.id.act_toggle:
+                toggleArchivedMode();
+                break;
             case R.id.act_settings:
-                startActivity(new Intent(this, Settings.class));
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    private void toggleArchivedMode() {
+        _archiveMode = !_archiveMode;
+        _frag.setArchivedMode(_archiveMode);
+        getLoaderManager().restartLoader(0, null, this);
+        setTitle(_archiveMode ? R.string.act_archived : R.string.act_in_progress);
+        invalidateOptionsMenu();
     }
 }

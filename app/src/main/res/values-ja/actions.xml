@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <string-array name="act_nav_list">
-    <item>処理中</item>
-    <item>アーカイブ済</item>
-  </string-array>
+  <string name="act_in_progress">処理中</string>
+  <string name="act_archived">アーカイブ済</string>
   <string name="act_delete">削除</string>
   <string name="act_edit">編集</string>
   <string name="act_group">グループを編集</string>
