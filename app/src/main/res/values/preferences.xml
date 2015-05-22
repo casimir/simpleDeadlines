@@ -5,7 +5,7 @@
 
     <string name="pref_title_notif_persist">Persistent notification</string>
     <string name="pref_key_notif_persist" translatable="false">notif_persist</string>
-    <string name="pref_sum_notif_persist_off">Dismissable notification</string>
+    <string name="pref_sum_notif_persist_off">Dismissible notification</string>
     <string name="pref_sum_notif_persist_on">Permanent notification</string>
 
     <string name="pref_title_notif_hour">Notification time</string>
